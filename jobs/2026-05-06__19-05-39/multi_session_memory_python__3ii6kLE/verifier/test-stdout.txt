@@ -1,0 +1,123 @@
+downloading uv 0.9.7 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 7 packages in 34ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 3 items
+
+tests/test_final_state.py .FF                                            [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_script_execution_and_output _______________________
+
+    def test_script_execution_and_output():
+        """Priority 1: Run the script and check output."""
+        result = subprocess.run(
+            ["python3", "memory_test.py"],
+            capture_output=True, text=True, cwd=PROJECT_DIR
+        )
+>       assert result.returncode == 0, f"'python3 memory_test.py' failed: {result.stderr}"
+E       AssertionError: 'python3 memory_test.py' failed: Traceback (most recent call last):
+E           File "/home/user/myproject/memory_test.py", line 2, in <module>
+E             from alchemyst_ai import AlchemystAI
+E         ModuleNotFoundError: No module named 'alchemyst_ai'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'memory_test.py'], returncode=1, stdout='', stderr='Traceback (most recent call last...ine 2, in <module>\n    from alchemyst_ai import AlchemystAI\nModuleNotFoundError: No module named \'alchemyst_ai\'\n').returncode
+
+tests/test_final_state.py:18: AssertionError
+__________________________ test_memory_state_via_sdk ___________________________
+
+    def test_memory_state_via_sdk():
+        """Priority 1: Use a temporary python script to verify the memory state via SDK."""
+        verifier_script = os.path.join(PROJECT_DIR, "verify_memory.py")
+        script_content = '''
+    import os
+    import sys
+    from alchemyst_ai import AlchemystAI
+    
+    def verify():
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            print("Missing API Key")
+            sys.exit(1)
+    
+        alchemyst = AlchemystAI(api_key=api_key)
+    
+        # Check session A
+        result_a = alchemyst.v1.context.memory.search(
+            user_id="user_123",
+            session_id="session_A"
+        )
+    
+        a_found = False
+        if result_a and hasattr(result_a, "memories") and result_a.memories:
+            for mem in result_a.memories:
+                if hasattr(mem, "content") and "User prefers Python over JavaScript." in mem.content:
+                    a_found = True
+    
+        if a_found:
+            print("ERROR: Session A memory was not deleted.")
+            sys.exit(1)
+    
+        # Check session B
+        result_b = alchemyst.v1.context.memory.search(
+            user_id="user_123",
+            session_id="session_B"
+        )
+    
+        b_found = False
+        if result_b and hasattr(result_b, "memories") and result_b.memories:
+            for mem in result_b.memories:
+                if hasattr(mem, "content") and "User likes the Django framework." in mem.content:
+                    b_found = True
+    
+        if not b_found:
+            print("ERROR: Session B memory not found.")
+            sys.exit(1)
+    
+        print("SUCCESS")
+    
+    if __name__ == "__main__":
+        verify()
+    '''
+        with open(verifier_script, "w") as f:
+            f.write(script_content)
+    
+        result = subprocess.run(
+            ["python3", "verify_memory.py"],
+            capture_output=True, text=True, cwd=PROJECT_DIR
+        )
+    
+        # Clean up the verifier script
+        os.remove(verifier_script)
+    
+>       assert result.returncode == 0, f"Memory state verification failed: {result.stdout} {result.stderr}"
+E       AssertionError: Memory state verification failed:  Traceback (most recent call last):
+E           File "/home/user/myproject/verify_memory.py", line 4, in <module>
+E             from alchemyst_ai import AlchemystAI
+E         ModuleNotFoundError: No module named 'alchemyst_ai'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'verify_memory.py'], returncode=1, stdout='', stderr='Traceback (most recent call la...ine 4, in <module>\n    from alchemyst_ai import AlchemystAI\nModuleNotFoundError: No module named \'alchemyst_ai\'\n').returncode
+
+tests/test_final_state.py:86: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_script_exists
+FAILED tests/test_final_state.py::test_script_execution_and_output - Assertio...
+FAILED tests/test_final_state.py::test_memory_state_via_sdk - AssertionError:...
+========================= 2 failed, 1 passed in 0.07s ==========================

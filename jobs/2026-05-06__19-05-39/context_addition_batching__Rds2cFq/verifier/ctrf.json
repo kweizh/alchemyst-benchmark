@@ -1,0 +1,41 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 2,
+            "passed": 1,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778066252.526066,
+            "stop": 1778066253.2717245
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_batch_add_script_exists",
+                "status": "passed",
+                "duration": 0.0004980959929525852,
+                "start": 1778066252.5356393,
+                "stop": 1778066252.5363574,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_documents_added_to_alchemyst",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.7178245258983225,
+                "start": 1778066252.5365593,
+                "stop": 1778066253.2715373,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_documents_added_to_alchemyst():\n        \"\"\"Priority 1: Use a verification script to query Alchemyst AI via SDK.\"\"\"\n        verify_script = os.path.join(PROJECT_DIR, \"verify_context.ts\")\n        script_content = \"\"\"\n    import { AlchemystClient } from '@alchemystai/sdk';\n    \n    async function verify() {\n      const client = new AlchemystClient({ apiKey: process.env.ALCHEMYST_AI_API_KEY });\n      const result = await client.v1.context.search({\n        query: \"policy\",\n        similarity_threshold: 0.0,\n        metadata: { groupName: [\"support\"] }\n      });\n    \n      const files = result.chunks.map((chunk: any) => chunk.metadata?.file_name || chunk.metadata?.fileName);\n      console.log(JSON.stringify(files));\n    }\n    \n    verify().catch(console.error);\n    \"\"\"\n        with open(verify_script, \"w\") as f:\n            f.write(script_content)\n    \n        result = subprocess.run(\n            [\"npx\", \"tsx\", \"verify_context.ts\"],\n            cwd=PROJECT_DIR,\n            capture_output=True,\n            text=True\n        )\n    \n        assert result.returncode == 0, f\"Verification script failed: {result.stderr}\\\\n{result.stdout}\"\n    \n        try:\n            # It's possible the output has other logs, find the JSON array\n            lines = result.stdout.strip().split('\\\\n')\n>           json_line = next(line for line in reversed(lines) if line.startswith('['))\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           StopIteration\n\ntests/test_final_state.py:47: StopIteration\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_documents_added_to_alchemyst():\n        \"\"\"Priority 1: Use a verification script to query Alchemyst AI via SDK.\"\"\"\n        verify_script = os.path.join(PROJECT_DIR, \"verify_context.ts\")\n        script_content = \"\"\"\n    import { AlchemystClient } from '@alchemystai/sdk';\n    \n    async function verify() {\n      const client = new AlchemystClient({ apiKey: process.env.ALCHEMYST_AI_API_KEY });\n      const result = await client.v1.context.search({\n        query: \"policy\",\n        similarity_threshold: 0.0,\n        metadata: { groupName: [\"support\"] }\n      });\n    \n      const files = result.chunks.map((chunk: any) => chunk.metadata?.file_name || chunk.metadata?.fileName);\n      console.log(JSON.stringify(files));\n    }\n    \n    verify().catch(console.error);\n    \"\"\"\n        with open(verify_script, \"w\") as f:\n            f.write(script_content)\n    \n        result = subprocess.run(\n            [\"npx\", \"tsx\", \"verify_context.ts\"],\n            cwd=PROJECT_DIR,\n            capture_output=True,\n            text=True\n        )\n    \n        assert result.returncode == 0, f\"Verification script failed: {result.stderr}\\\\n{result.stdout}\"\n    \n        try:\n            # It's possible the output has other logs, find the JSON array\n            lines = result.stdout.strip().split('\\\\n')\n            json_line = next(line for line in reversed(lines) if line.startswith('['))\n            files = json.loads(json_line)\n        except (json.JSONDecodeError, StopIteration):\n>           pytest.fail(f\"Failed to parse JSON output from verify script: {result.stdout}\")\nE           Failed: Failed to parse JSON output from verify script:\n\ntests/test_final_state.py:50: Failed",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

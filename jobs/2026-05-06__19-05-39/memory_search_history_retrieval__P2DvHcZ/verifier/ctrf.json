@@ -1,0 +1,56 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 3,
+            "passed": 0,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778066127.0883274,
+            "stop": 1778066127.131834
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_script_execution",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.01455919025465846,
+                "start": 1778066127.0978622,
+                "stop": 1778066127.1269615,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_script_execution():\n        \"\"\"Priority 1: Execute the script and ensure it succeeds.\"\"\"\n        assert os.path.isfile(SCRIPT_FILE), f\"Script {SCRIPT_FILE} does not exist.\"\n        result = subprocess.run(\n            [\"python3\", \"memory_test.py\"],\n            capture_output=True, text=True, cwd=PROJECT_DIR\n        )\n>       assert result.returncode == 0, f\"Script execution failed: {result.stderr}\"\nE       AssertionError: Script execution failed: Traceback (most recent call last):\nE           File \"/home/user/project/memory_test.py\", line 1, in <module>\nE             from alchemyst_ai import AlchemystAI\nE         ModuleNotFoundError: No module named 'alchemyst_ai'\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'memory_test.py'], returncode=1, stdout='', stderr='Traceback (most recent call last...ine 1, in <module>\\n    from alchemyst_ai import AlchemystAI\\nModuleNotFoundError: No module named \\'alchemyst_ai\\'\\n').returncode\n\ntests/test_final_state.py:16: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005381109658628702,
+                "start": 1778066127.1271915,
+                "stop": 1778066127.129607,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_log_file_exists():\n        \"\"\"Priority 3: Check if the output log file exists.\"\"\"\n>       assert os.path.isfile(LOG_FILE), f\"Log file {LOG_FILE} does not exist.\"\nE       AssertionError: Log file /home/user/project/output.log does not exist.\nE       assert False\nE        +  where False = <function isfile at 0x740a5b6fc220>('/home/user/project/output.log')\nE        +    where <function isfile at 0x740a5b6fc220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:20: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_content",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004619110841304064,
+                "start": 1778066127.1297975,
+                "stop": 1778066127.131676,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_log_file_content():\n        \"\"\"Priority 3: Check the contents of the log file.\"\"\"\n>       with open(LOG_FILE, \"r\") as f:\n             ^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/home/user/project/output.log'\n\ntests/test_final_state.py:24: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

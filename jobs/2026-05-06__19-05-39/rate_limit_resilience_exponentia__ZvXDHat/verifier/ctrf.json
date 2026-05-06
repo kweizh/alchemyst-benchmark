@@ -1,0 +1,59 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 3,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778066284.40412,
+            "stop": 1778066284.446287
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_script_exists",
+                "status": "passed",
+                "duration": 0.0005533182993531227,
+                "start": 1778066284.4135623,
+                "stop": 1778066284.4144282,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_script_execution",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.015001166146248579,
+                "start": 1778066284.4146295,
+                "stop": 1778066284.4445736,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_script_execution():\n        result = subprocess.run([\"python3\", \"search_loop.py\"], cwd=PROJECT_DIR, capture_output=True, text=True)\n>       assert result.returncode == 0, f\"Script execution failed: {result.stderr}\"\nE       AssertionError: Script execution failed: Traceback (most recent call last):\nE           File \"/home/user/app/search_loop.py\", line 3, in <module>\nE             from alchemyst_ai import AlchemystAI\nE         ModuleNotFoundError: No module named 'alchemyst_ai'\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'search_loop.py'], returncode=1, stdout='', stderr='Traceback (most recent call last...ine 3, in <module>\\n    from alchemyst_ai import AlchemystAI\\nModuleNotFoundError: No module named \\'alchemyst_ai\\'\\n').returncode\n\ntests/test_final_state.py:14: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_exists",
+                "status": "passed",
+                "duration": 0.00042940699495375156,
+                "start": 1778066284.4447887,
+                "stop": 1778066284.4453654,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_content",
+                "status": "passed",
+                "duration": 0.0004009348340332508,
+                "start": 1778066284.4455376,
+                "stop": 1778066284.4460597,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

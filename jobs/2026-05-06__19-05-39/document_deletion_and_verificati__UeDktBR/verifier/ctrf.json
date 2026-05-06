@@ -1,0 +1,41 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 2,
+            "passed": 1,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778065637.179604,
+            "stop": 1778065637.2113314
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_update_doc_exists",
+                "status": "passed",
+                "duration": 0.0007619836833328009,
+                "start": 1778065637.1916554,
+                "stop": 1778065637.192812,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_update_document",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009555199649184942,
+                "start": 1778065637.1931083,
+                "stop": 1778065637.2111368,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_update_document():\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        if not api_key:\n            pytest.skip(\"ALCHEMYST_AI_API_KEY environment variable is not set\")\n    \n        try:\n>           from alchemyst_ai import AlchemystAI\nE           ModuleNotFoundError: No module named 'alchemyst_ai'\n\ntests/test_final_state.py:17: ModuleNotFoundError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_update_document():\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        if not api_key:\n            pytest.skip(\"ALCHEMYST_AI_API_KEY environment variable is not set\")\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n            client = AlchemystAI(api_key=api_key)\n        except ImportError as e:\n>           pytest.fail(f\"Failed to import AlchemystAI: {e}\")\nE           Failed: Failed to import AlchemystAI: No module named 'alchemyst_ai'\n\ntests/test_final_state.py:20: Failed",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

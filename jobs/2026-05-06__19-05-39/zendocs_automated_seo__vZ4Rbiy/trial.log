@@ -1,0 +1,90 @@
+Running command: apt-get update && apt-get install -y curl ripgrep
+Command outputs captured
+Running command: set -euo pipefail; curl -fsSL https://getpochi.com/install.sh | bash  && mkdir -p /logs/agent/pochi && ~/.pochi/bin/pochi --version
+Command outputs captured
+Running command: ln -sf ~/.pochi/bin/pochi /usr/local/bin/pochi
+Command outputs captured
+Running command: echo zendocs_automated_seo__vZ4Rbiy > /logs/artifacts/trial_id
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" -e "s/ANTHROPIC_API_KEY/${ANTHROPIC_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "anthropic": {
+      "kind": "openai",
+      "baseURL": "https://api.anthropic.com/v1",
+      "apiKey": "ANTHROPIC_API_KEY",
+      "models": {
+        "claude-opus-4-6": {
+          "name": "claude-opus-4-6"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: mkdir -p /logs/artifacts
+Command outputs captured
+Running command: export PATH="$HOME/.pochi/bin:$PATH"; pochi --model google/gemini-3-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Preserving your work
+
+Save a copy of files you create during this task to `/logs/artifacts/`. This directory is preserved after the run so outputs can be inspected. Organize with subdirectories if helpful (e.g., `/logs/artifacts/code/`, `/logs/artifacts/reports/`). The directory already exists and is writable.
+
+---
+
+# Zendocs Backend
+
+## Background
+You are building the backend for Zendocs, an automated SEO and indexing tool. You will use Express.js, SQLite, and the `@alchemystai/sdk` to ingest documents and make them searchable.
+
+## Requirements
+1. You have an empty directory at `/home/user/zendocs-backend`. Initialize a Node.js project in it.
+2. Install `express`, `sqlite3`, and `@alchemystai/sdk`.
+3. Create an Express server in `index.js` listening on port 3000.
+4. Initialize a SQLite database `zendocs.db` with a `documents` table (`file_name` TEXT PRIMARY KEY, `content` TEXT, `group_name` TEXT).
+5. Implement `POST /api/docs/generate`:
+   - Accepts JSON: `{ "fileName": "string", "content": "string", "group": "string" }`.
+   - Saves or updates the document in the SQLite database.
+   - Adds the document to Alchemyst AI using `client.v1.context.add({ documents: [{ content, metadata: { file_name: fileName, group_name: [group] } }], scope: 'internal' })`.
+   - **Handling Updates**: If a document with the same `fileName` already exists in Alchemyst AI, the `add` operation will fail with a 409 Conflict. You must catch this error, delete the old document from Alchemyst AI (using `client.v1.context.delete({ metadata: { file_name: fileName } })`), and then retry adding the new document.
+6. Implement `GET /api/docs/search`:
+   - Accepts query parameters `q` (search query) and `group` (group to filter by).
+   - Searches Alchemyst AI using `client.v1.context.search` with `similarity_threshold: 0.5` and `scope: 'internal'`.
+   - Filters the search by the provided group. *Hint: The Alchemyst AI TypeScript SDK has a parameter naming inconsistency. Storage uses `group_name` (snake_case), but search filtering requires `groupName` (camelCase) inside the `metadata` filter.*
+   - Returns the search results as JSON: `{ "results": [...] }` (where the array contains the contexts returned by Alchemyst).
+
+## Constraints
+- Project path: `/home/user/zendocs-backend`
+- Start command: `node index.js`
+- Port: 3000
+- The Alchemyst API key will be provided in the `ALCHEMYST_AI_API_KEY` environment variable.
+EOF
+Command outputs captured
+Running command: rm -f ~/.pochi/config.jsonc
+Command outputs captured

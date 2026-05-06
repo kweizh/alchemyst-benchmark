@@ -1,0 +1,12 @@
+{
+  "name": "alchemyst-test",
+  "version": "1.0.0",
+  "dependencies": {
+    "@alchemystai/sdk": "latest"
+  },
+  "devDependencies": {
+    "tsx": "latest",
+    "typescript": "latest",
+    "@types/node": "latest"
+  }
+}

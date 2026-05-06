@@ -1,0 +1,247 @@
+downloading uv 0.9.7 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 7 packages in 23ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 2 items
+
+tests/test_final_state.py EE                                             [100%]
+
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_agent_with_context ___________________
+
+    @pytest.fixture(scope="module", autouse=True)
+    def setup_seed():
+        """Run seed.js to populate Alchemyst AI context."""
+        assert os.path.isfile(os.path.join(PROJECT_DIR, "seed.js")), "seed.js not found in /home/user/agent"
+    
+        result = subprocess.run(
+            ["node", "seed.js"],
+            cwd=PROJECT_DIR,
+            capture_output=True,
+            text=True
+        )
+>       assert result.returncode == 0, f"seed.js failed to execute: {result.stderr}"
+E       AssertionError: seed.js failed to execute: Error adding document: BadRequestError: 400 Fields missing. Detailed error: [
+E           {
+E             "expected": "number",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "fileSize"
+E             ],
+E             "message": "Invalid input: expected number, received undefined"
+E           },
+E           {
+E             "expected": "string",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "fileType"
+E             ],
+E             "message": "Invalid input: expected string, received undefined"
+E           },
+E           {
+E             "expected": "string",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "lastModified"
+E             ],
+E             "message": "Invalid input: expected string, received undefined"
+E           }
+E         ]
+E             at APIError.generate (/home/user/agent/node_modules/@alchemystai/sdk/core/error.js:40:20)
+E             at AlchemystAI.makeStatusError (/home/user/agent/node_modules/@alchemystai/sdk/client.js:126:32)
+E             at AlchemystAI.makeRequest (/home/user/agent/node_modules/@alchemystai/sdk/client.js:267:30)
+E             at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+E             at async main (/home/user/agent/seed.js:9:5) {
+E           status: 400,
+E           headers: Headers {
+E             date: 'Wed, 06 May 2026 11:11:44 GMT',
+E             'content-type': 'application/json; charset=utf-8',
+E             'content-length': '751',
+E             connection: 'keep-alive',
+E             vary: 'Origin, Accept-Encoding',
+E             'access-control-allow-credentials': 'true',
+E             'content-security-policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
+E             'cross-origin-opener-policy': 'same-origin',
+E             'cross-origin-resource-policy': 'same-origin',
+E             'origin-agent-cluster': '?1',
+E             'referrer-policy': 'no-referrer',
+E             'strict-transport-security': 'max-age=31536000; includeSubDomains',
+E             'x-content-type-options': 'nosniff',
+E             'x-dns-prefetch-control': 'off',
+E             'x-download-options': 'noopen',
+E             'x-frame-options': 'SAMEORIGIN',
+E             'x-permitted-cross-domain-policies': 'none',
+E             'x-xss-protection': '0',
+E             etag: 'W/"2ef-mATKyCdLmPoXs3761k4sYD5X2JQ"'
+E           },
+E           error: {
+E             statusText: 'BAD_REQUEST',
+E             success: false,
+E             message: 'Fields missing. Detailed error: [\n' +
+E               '  {\n' +
+E               '    "expected": "number",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "fileSize"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected number, received undefined"\n' +
+E               '  },\n' +
+E               '  {\n' +
+E               '    "expected": "string",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "fileType"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected string, received undefined"\n' +
+E               '  },\n' +
+E               '  {\n' +
+E               '    "expected": "string",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "lastModified"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected string, received undefined"\n' +
+E               '  }\n' +
+E               ']',
+E             status: 400
+E           }
+E         }
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', 'seed.js'], returncode=1, stdout='', stderr='Error adding document: BadRequestError: 40...valid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n').returncode
+
+tests/test_final_state.py:18: AssertionError
+____________________ ERROR at setup of test_agent_fallback _____________________
+
+    @pytest.fixture(scope="module", autouse=True)
+    def setup_seed():
+        """Run seed.js to populate Alchemyst AI context."""
+        assert os.path.isfile(os.path.join(PROJECT_DIR, "seed.js")), "seed.js not found in /home/user/agent"
+    
+        result = subprocess.run(
+            ["node", "seed.js"],
+            cwd=PROJECT_DIR,
+            capture_output=True,
+            text=True
+        )
+>       assert result.returncode == 0, f"seed.js failed to execute: {result.stderr}"
+E       AssertionError: seed.js failed to execute: Error adding document: BadRequestError: 400 Fields missing. Detailed error: [
+E           {
+E             "expected": "number",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "fileSize"
+E             ],
+E             "message": "Invalid input: expected number, received undefined"
+E           },
+E           {
+E             "expected": "string",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "fileType"
+E             ],
+E             "message": "Invalid input: expected string, received undefined"
+E           },
+E           {
+E             "expected": "string",
+E             "code": "invalid_type",
+E             "path": [
+E               "metadata",
+E               "lastModified"
+E             ],
+E             "message": "Invalid input: expected string, received undefined"
+E           }
+E         ]
+E             at APIError.generate (/home/user/agent/node_modules/@alchemystai/sdk/core/error.js:40:20)
+E             at AlchemystAI.makeStatusError (/home/user/agent/node_modules/@alchemystai/sdk/client.js:126:32)
+E             at AlchemystAI.makeRequest (/home/user/agent/node_modules/@alchemystai/sdk/client.js:267:30)
+E             at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+E             at async main (/home/user/agent/seed.js:9:5) {
+E           status: 400,
+E           headers: Headers {
+E             date: 'Wed, 06 May 2026 11:11:44 GMT',
+E             'content-type': 'application/json; charset=utf-8',
+E             'content-length': '751',
+E             connection: 'keep-alive',
+E             vary: 'Origin, Accept-Encoding',
+E             'access-control-allow-credentials': 'true',
+E             'content-security-policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
+E             'cross-origin-opener-policy': 'same-origin',
+E             'cross-origin-resource-policy': 'same-origin',
+E             'origin-agent-cluster': '?1',
+E             'referrer-policy': 'no-referrer',
+E             'strict-transport-security': 'max-age=31536000; includeSubDomains',
+E             'x-content-type-options': 'nosniff',
+E             'x-dns-prefetch-control': 'off',
+E             'x-download-options': 'noopen',
+E             'x-frame-options': 'SAMEORIGIN',
+E             'x-permitted-cross-domain-policies': 'none',
+E             'x-xss-protection': '0',
+E             etag: 'W/"2ef-mATKyCdLmPoXs3761k4sYD5X2JQ"'
+E           },
+E           error: {
+E             statusText: 'BAD_REQUEST',
+E             success: false,
+E             message: 'Fields missing. Detailed error: [\n' +
+E               '  {\n' +
+E               '    "expected": "number",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "fileSize"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected number, received undefined"\n' +
+E               '  },\n' +
+E               '  {\n' +
+E               '    "expected": "string",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "fileType"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected string, received undefined"\n' +
+E               '  },\n' +
+E               '  {\n' +
+E               '    "expected": "string",\n' +
+E               '    "code": "invalid_type",\n' +
+E               '    "path": [\n' +
+E               '      "metadata",\n' +
+E               '      "lastModified"\n' +
+E               '    ],\n' +
+E               '    "message": "Invalid input: expected string, received undefined"\n' +
+E               '  }\n' +
+E               ']',
+E             status: 400
+E           }
+E         }
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', 'seed.js'], returncode=1, stdout='', stderr='Error adding document: BadRequestError: 40...valid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n').returncode
+
+tests/test_final_state.py:18: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_final_state.py::test_agent_with_context - AssertionError: se...
+ERROR tests/test_final_state.py::test_agent_fallback - AssertionError: seed.j...
+============================== 2 errors in 2.11s ===============================

@@ -1,0 +1,30 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 1,
+            "passed": 0,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778066943.7581198,
+            "stop": 1778066945.6824658
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_alchemyst_memory_chat",
+                "status": "failed",
+                "duration": 1.8587100480217487,
+                "start": 1778066943.7894323,
+                "stop": 1778066945.682218,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def start_app():\n        # Verify project exists\n        assert os.path.exists(PROJECT_DIR), f\"Project directory {PROJECT_DIR} does not exist.\"\n    \n        # Build the app\n        build_process = subprocess.run(\n            [\"npm\", \"run\", \"build\"],\n            cwd=PROJECT_DIR,\n            stdout=subprocess.PIPE,\n            stderr=subprocess.PIPE,\n            text=True\n        )\n>       assert build_process.returncode == 0, f\"npm run build failed: {build_process.stderr}\"\nE       AssertionError: npm run build failed: \u2a2f Another next build process is already running.\nE         \nE           This could be:\nE           - A next build still in progress\nE           - A previous build that didn't exit cleanly\nE         \nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['npm', 'run', 'build'], returncode=1, stdout=\"\\n> app@0.1.0 build\\n> NODE_OPTIONS='--max-old-sp...y running.\\n\\n  This could be:\\n  - A next build still in progress\\n  - A previous build that didn't exit cleanly\\n\\n\").returncode\n\ntests/test_final_state.py:32: AssertionError"
+            }
+        ]
+    }
+}

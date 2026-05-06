@@ -1,0 +1,53 @@
+downloading uv 0.9.7 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 7 packages in 15ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 2 items
+
+tests/test_final_state.py .F                                             [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_add_and_get_memories ___________________________
+
+    def test_add_and_get_memories():
+        session_id = f"ticket_{uuid.uuid4().hex[:8]}"
+        user_id = "customer_test"
+    
+        msg1 = "Day 1: I have a problem with my router."
+        msg2 = "Day 2: The router is blinking red."
+    
+        # Run add msg1
+        res1 = subprocess.run(
+            ["python3", "ticket_manager.py", "add", user_id, session_id, msg1],
+            capture_output=True, text=True, cwd=PROJECT_DIR
+        )
+>       assert res1.returncode == 0, f"Failed to add first message: {res1.stderr}\n{res1.stdout}"
+E       AssertionError: Failed to add first message: Traceback (most recent call last):
+E           File "/home/user/app/ticket_manager.py", line 3, in <module>
+E             from alchemystai import AlchemystAI
+E         ModuleNotFoundError: No module named 'alchemystai'
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'ticket_manager.py', 'add', 'customer_test', 'ticket_69888f36', 'Day 1: I have a pro... line 3, in <module>\n    from alchemystai import AlchemystAI\nModuleNotFoundError: No module named \'alchemystai\'\n').returncode
+
+tests/test_final_state.py:24: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_script_exists
+FAILED tests/test_final_state.py::test_add_and_get_memories - AssertionError:...
+========================= 1 failed, 1 passed in 0.04s ==========================

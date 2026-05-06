@@ -1,0 +1,53 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 3,
+            "passed": 1,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778065795.6083682,
+            "stop": 1778065795.655557
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_script_execution",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.015573716023936868,
+                "start": 1778065795.6202512,
+                "stop": 1778065795.6509151,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_script_execution():\n        \"\"\"Priority 1: Run the user script and verify it executes without crashing.\"\"\"\n        result = subprocess.run(\n            [\"python3\", \"test_memory_error.py\"],\n            capture_output=True, text=True, cwd=PROJECT_DIR\n        )\n>       assert result.returncode == 0, \\\n            f\"'python3 test_memory_error.py' failed with error: {result.stderr}\"\nE       AssertionError: 'python3 test_memory_error.py' failed with error: Traceback (most recent call last):\nE           File \"/home/user/test_memory_error.py\", line 2, in <module>\nE             from alchemyst_ai import AlchemystAI\nE         ModuleNotFoundError: No module named 'alchemyst_ai'\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'test_memory_error.py'], returncode=1, stdout='', stderr='Traceback (most recent cal...ine 2, in <module>\\n    from alchemyst_ai import AlchemystAI\\nModuleNotFoundError: No module named \\'alchemyst_ai\\'\\n').returncode\n\ntests/test_final_state.py:14: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_error_log_exists",
+                "status": "passed",
+                "duration": 0.0005167669150978327,
+                "start": 1778065795.6511917,
+                "stop": 1778065795.6518955,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_error_log_contents",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0008527280297130346,
+                "start": 1778065795.6520772,
+                "stop": 1778065795.655377,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_error_log_contents():\n        \"\"\"Priority 3 fallback: check that error log contains missing parameter indication.\"\"\"\n        with open(LOG_FILE) as f:\n            content = f.read()\n    \n        assert len(content.strip()) > 0, \"error.log is empty\"\n        # The error might mention MISSING_PARAMETERS or user_id missing\n>       assert \"MISSING_PARAMETERS\" in content or \"user_id\" in content.lower(), \\\n            f\"Expected 'MISSING_PARAMETERS' or 'user_id' in error log, got: {content}\"\nE       AssertionError: Expected 'MISSING_PARAMETERS' or 'user_id' in error log, got: Error code: 402 - {'statusText': 'PAYMENT_REQUIRED'}\nE       assert ('MISSING_PARAMETERS' in \"Error code: 402 - {'statusText': 'PAYMENT_REQUIRED'}\" or 'user_id' in \"error code: 402 - {'statustext': 'payment_required'}\")\nE        +  where \"error code: 402 - {'statustext': 'payment_required'}\" = <built-in method lower of str object at 0x77c9c91601b0>()\nE        +    where <built-in method lower of str object at 0x77c9c91601b0> = \"Error code: 402 - {'statusText': 'PAYMENT_REQUIRED'}\".lower\n\ntests/test_final_state.py:29: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

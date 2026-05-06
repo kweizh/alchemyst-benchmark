@@ -1,0 +1,53 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 3,
+            "passed": 1,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1778066523.9211702,
+            "stop": 1778066523.9950778
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_script_exists",
+                "status": "passed",
+                "duration": 0.0006052700337022543,
+                "start": 1778066523.9324293,
+                "stop": 1778066523.9332936,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_script_execution_and_output",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.02021857723593712,
+                "start": 1778066523.9335582,
+                "stop": 1778066523.9690273,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_script_execution_and_output():\n        \"\"\"Priority 1: Run the script and check output.\"\"\"\n        result = subprocess.run(\n            [\"python3\", \"memory_test.py\"],\n            capture_output=True, text=True, cwd=PROJECT_DIR\n        )\n>       assert result.returncode == 0, f\"'python3 memory_test.py' failed: {result.stderr}\"\nE       AssertionError: 'python3 memory_test.py' failed: Traceback (most recent call last):\nE           File \"/home/user/myproject/memory_test.py\", line 2, in <module>\nE             from alchemyst_ai import AlchemystAI\nE         ModuleNotFoundError: No module named 'alchemyst_ai'\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'memory_test.py'], returncode=1, stdout='', stderr='Traceback (most recent call last...ine 2, in <module>\\n    from alchemyst_ai import AlchemystAI\\nModuleNotFoundError: No module named \\'alchemyst_ai\\'\\n').returncode\n\ntests/test_final_state.py:18: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_memory_state_via_sdk",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.022368136793375015,
+                "start": 1778066523.9692948,
+                "stop": 1778066523.9948645,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_memory_state_via_sdk():\n        \"\"\"Priority 1: Use a temporary python script to verify the memory state via SDK.\"\"\"\n        verifier_script = os.path.join(PROJECT_DIR, \"verify_memory.py\")\n        script_content = '''\n    import os\n    import sys\n    from alchemyst_ai import AlchemystAI\n    \n    def verify():\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        if not api_key:\n            print(\"Missing API Key\")\n            sys.exit(1)\n    \n        alchemyst = AlchemystAI(api_key=api_key)\n    \n        # Check session A\n        result_a = alchemyst.v1.context.memory.search(\n            user_id=\"user_123\",\n            session_id=\"session_A\"\n        )\n    \n        a_found = False\n        if result_a and hasattr(result_a, \"memories\") and result_a.memories:\n            for mem in result_a.memories:\n                if hasattr(mem, \"content\") and \"User prefers Python over JavaScript.\" in mem.content:\n                    a_found = True\n    \n        if a_found:\n            print(\"ERROR: Session A memory was not deleted.\")\n            sys.exit(1)\n    \n        # Check session B\n        result_b = alchemyst.v1.context.memory.search(\n            user_id=\"user_123\",\n            session_id=\"session_B\"\n        )\n    \n        b_found = False\n        if result_b and hasattr(result_b, \"memories\") and result_b.memories:\n            for mem in result_b.memories:\n                if hasattr(mem, \"content\") and \"User likes the Django framework.\" in mem.content:\n                    b_found = True\n    \n        if not b_found:\n            print(\"ERROR: Session B memory not found.\")\n            sys.exit(1)\n    \n        print(\"SUCCESS\")\n    \n    if __name__ == \"__main__\":\n        verify()\n    '''\n        with open(verifier_script, \"w\") as f:\n            f.write(script_content)\n    \n        result = subprocess.run(\n            [\"python3\", \"verify_memory.py\"],\n            capture_output=True, text=True, cwd=PROJECT_DIR\n        )\n    \n        # Clean up the verifier script\n        os.remove(verifier_script)\n    \n>       assert result.returncode == 0, f\"Memory state verification failed: {result.stdout} {result.stderr}\"\nE       AssertionError: Memory state verification failed:  Traceback (most recent call last):\nE           File \"/home/user/myproject/verify_memory.py\", line 4, in <module>\nE             from alchemyst_ai import AlchemystAI\nE         ModuleNotFoundError: No module named 'alchemyst_ai'\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'verify_memory.py'], returncode=1, stdout='', stderr='Traceback (most recent call la...ine 4, in <module>\\n    from alchemyst_ai import AlchemystAI\\nModuleNotFoundError: No module named \\'alchemyst_ai\\'\\n').returncode\n\ntests/test_final_state.py:86: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

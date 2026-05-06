@@ -1,0 +1,68 @@
+downloading uv 0.9.7 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 7 packages in 18ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 3 items
+
+tests/test_final_state.py FFF                                            [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_script_execution _____________________________
+
+    def test_script_execution():
+        """Priority 1: Execute the script and ensure it succeeds."""
+        assert os.path.isfile(SCRIPT_FILE), f"Script {SCRIPT_FILE} does not exist."
+        result = subprocess.run(
+            ["python3", "memory_test.py"],
+            capture_output=True, text=True, cwd=PROJECT_DIR
+        )
+>       assert result.returncode == 0, f"Script execution failed: {result.stderr}"
+E       AssertionError: Script execution failed: Traceback (most recent call last):
+E           File "/home/user/project/memory_test.py", line 1, in <module>
+E             from alchemyst_ai import AlchemystAI
+E         ModuleNotFoundError: No module named 'alchemyst_ai'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', 'memory_test.py'], returncode=1, stdout='', stderr='Traceback (most recent call last...ine 1, in <module>\n    from alchemyst_ai import AlchemystAI\nModuleNotFoundError: No module named \'alchemyst_ai\'\n').returncode
+
+tests/test_final_state.py:16: AssertionError
+_____________________________ test_log_file_exists _____________________________
+
+    def test_log_file_exists():
+        """Priority 3: Check if the output log file exists."""
+>       assert os.path.isfile(LOG_FILE), f"Log file {LOG_FILE} does not exist."
+E       AssertionError: Log file /home/user/project/output.log does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x740a5b6fc220>('/home/user/project/output.log')
+E        +    where <function isfile at 0x740a5b6fc220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:20: AssertionError
+____________________________ test_log_file_content _____________________________
+
+    def test_log_file_content():
+        """Priority 3: Check the contents of the log file."""
+>       with open(LOG_FILE, "r") as f:
+             ^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/user/project/output.log'
+
+tests/test_final_state.py:24: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_script_execution - AssertionError: Scr...
+FAILED tests/test_final_state.py::test_log_file_exists - AssertionError: Log ...
+FAILED tests/test_final_state.py::test_log_file_content - FileNotFoundError: ...
+============================== 3 failed in 0.04s ===============================
