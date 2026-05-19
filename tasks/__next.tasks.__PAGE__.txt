@@ -1,8 +1,8 @@
 1:"$Sreact.fragment"
-2:I[42654,["/alchemyst-benchmark/_next/static/chunks/babff0e7418ab052.js","/alchemyst-benchmark/_next/static/chunks/3ecbb78a8ff87549.js","/alchemyst-benchmark/_next/static/chunks/99fe8673c667ed86.js","/alchemyst-benchmark/_next/static/chunks/be08138953094657.js"],"TasksPageClient"]
-19:I[75049,["/alchemyst-benchmark/_next/static/chunks/d2c13bb33c4fcd54.js","/alchemyst-benchmark/_next/static/chunks/c21188132e0e0d48.js"],"OutletBoundary"]
-1a:"$Sreact.suspense"
-3:T438,# B2B Newsletter API with Alchemyst AI
+2:"$Sreact.suspense"
+3:I[42654,["/alchemyst-benchmark/_next/static/chunks/babff0e7418ab052.js","/alchemyst-benchmark/_next/static/chunks/3ecbb78a8ff87549.js","/alchemyst-benchmark/_next/static/chunks/bcaa16b1898f8e4b.js","/alchemyst-benchmark/_next/static/chunks/ab9c434cfac62bb4.js"],"TasksPageClient"]
+1a:I[75049,["/alchemyst-benchmark/_next/static/chunks/d2c13bb33c4fcd54.js","/alchemyst-benchmark/_next/static/chunks/c21188132e0e0d48.js"],"OutletBoundary"]
+4:T438,# B2B Newsletter API with Alchemyst AI
 
 ## Background
 Create a Node.js Express server that acts as a B2B Newsletter research workflow using the Alchemyst AI Context Engine.
@@ -20,7 +20,7 @@ Create a Node.js Express server that acts as a B2B Newsletter research workflow 
 ## Constraints
 - Project path: `/home/user/project`
 - Start command: `node index.js`
-- Port: 30004:T58d,# Basic RAG Flow with Alchemyst AI (Python)
+- Port: 30005:T58d,# Basic RAG Flow with Alchemyst AI (Python)
 
 ## Background
 Create a Python script that uses Alchemyst AI to store a specific policy document and retrieve it using context search to answer a question.
@@ -45,7 +45,7 @@ Create a Python script that uses Alchemyst AI to store a specific policy documen
 - Project path: `/home/user/project`
 - Log file: `/home/user/project/output.txt`
 - You must use the `alchemystai` Python package.
-- The `ALCHEMYST_AI_API_KEY` environment variable will be provided.5:T659,# Context-Aware CLI Agent with Alchemyst AI
+- The `ALCHEMYST_AI_API_KEY` environment variable will be provided.6:T659,# Context-Aware CLI Agent with Alchemyst AI
 
 ## Background
 Build a Node.js CLI agent that acts as a context-aware terminal assistant. The agent will accept a question, search Alchemyst AI for relevant context, inject that context into a prompt, and generate a response using OpenAI.
@@ -71,7 +71,7 @@ Build a Node.js CLI agent that acts as a context-aware terminal assistant. The a
 
 ## Constraints
 - Project path: `/home/user/agent`
-- Use Node.js 18+.6:T48f,# Batch Add Documents to Alchemyst AI
+- Use Node.js 18+.7:T48f,# Batch Add Documents to Alchemyst AI
 
 ## Background
 Alchemyst AI provides a `v1.context.add` method to ingest documents. We need to ingest a batch of markdown files from a directory into the context engine.
@@ -88,7 +88,7 @@ Alchemyst AI provides a `v1.context.add` method to ingest documents. We need to 
 - Project path: `/home/user/project`
 - The script must be named `batch_add.ts` and placed in `/home/user/project`.
 - The script must run successfully using `npx tsx batch_add.ts`.
-- The environment variable `ALCHEMYST_AI_API_KEY` is provided.7:T6b5,# Context Arithmetic: Union Filtering with Alchemyst AI
+- The environment variable `ALCHEMYST_AI_API_KEY` is provided.8:T6b5,# Context Arithmetic: Union Filtering with Alchemyst AI
 
 ## Background
 Alchemyst AI uses Context Arithmetic to filter documents. By default, specifying multiple tags in `groupName` performs an INTERSECTION (AND). To perform a UNION (OR) across different groups (e.g., retrieving documents from either `["eng", "v1"]` OR `["eng", "v2"]`), you must perform multiple searches and combine the results, or search a broader group and filter locally.
@@ -106,7 +106,7 @@ Write a Python script `/home/user/project/search_union.py` that:
 ## Constraints
 - Project path: `/home/user/project`
 - Output file: `/home/user/project/output.json`
-- The output JSON file must contain exactly the two engineering document contents.8:T538,# Multi-Day Customer Support Ticket
+- The output JSON file must contain exactly the two engineering document contents.9:T538,# Multi-Day Customer Support Ticket
 
 ## Background
 You are building a customer support bot using Alchemyst AI. The bot needs to remember user context across multiple days for the same support ticket. You need to write a Python script that stores user messages into Alchemyst AI memory and retrieves them.
@@ -125,7 +125,7 @@ Write a Python script `/home/user/app/ticket_manager.py` with the following CLI 
 ## Constraints
 - Project path: `/home/user/app`
 - The script must be named `ticket_manager.py`.
-- You don't need to call an LLM, just store and retrieve the raw messages.9:T540,# Update Document in Alchemyst AI
+- You don't need to call an LLM, just store and retrieve the raw messages.a:T540,# Update Document in Alchemyst AI
 
 ## Background
 Alchemyst AI triggers a 409 Conflict if you attempt to add a document with an existing `file_name` in its metadata. To update a document, you must first delete the old version by its `file_name` and then add the new version.
@@ -150,7 +150,7 @@ Write a Python script `update_doc.py` that updates a document in Alchemyst AI.
 - The script should not execute anything if imported, only define the function.
 
 ## Integrations
-- Alchemyst AIa:T53d,# Memory Search and History Retrieval
+- Alchemyst AIb:T53d,# Memory Search and History Retrieval
 
 ## Background
 Alchemyst AI provides memory management capabilities to store and retrieve conversation history using `user_id` and `session_id`. In this task, you will use the Python SDK to add memories to a session and then retrieve the memory history.
@@ -169,7 +169,7 @@ Write a Python script that stores two specific memories for a user and then retr
 ## Constraints
 - Project path: `/home/user/project`
 - Log file: `/home/user/project/output.log`
-- Use the `alchemystai` Python package.b:T54e,# Metadata Limitations Type Check
+- Use the `alchemystai` Python package.c:T54e,# Metadata Limitations Type Check
 
 ## Background
 Alchemyst AI allows adding metadata to documents to help with context filtering. However, metadata values must be `string` or `number` only. Nested objects or arrays (other than `group_name`) may cause the API to return an error or be ignored.
@@ -188,7 +188,7 @@ Alchemyst AI allows adding metadata to documents to help with context filtering.
 - Project path: `/home/user/myproject`
 - Output file: `/home/user/myproject/result.json`
 - Use the `alchemystai` Python package.
-- Read the `ALCHEMYST_AI_API_KEY` environment variable for authentication.c:T4d6,# Alchemyst AI Memory Error Handling
+- Read the `ALCHEMYST_AI_API_KEY` environment variable for authentication.d:T4d6,# Alchemyst AI Memory Error Handling
 
 ## Background
 In Alchemyst AI, memory operations require both `user_id` and `session_id`. Omitting either of these parameters results in a `MISSING_PARAMETERS` error. It's important to properly handle these errors in an application.
@@ -209,7 +209,7 @@ In Alchemyst AI, memory operations require both `user_id` and `session_id`. Omit
 ## Constraints
 - Project path: /home/user
 - Log file: /home/user/error.log
-- Script path: /home/user/test_memory_error.pyd:T44b,# Alchemyst AI Python Memory Script
+- Script path: /home/user/test_memory_error.pye:T44b,# Alchemyst AI Python Memory Script
 
 ## Background
 Create a Python script that uses the Alchemyst AI Python SDK to manage multi-session memories for a user.
@@ -228,7 +228,7 @@ Create a Python script that uses the Alchemyst AI Python SDK to manage multi-ses
 ## Constraints
 - Project path: `/home/user/myproject`
 - The script must be named `memory_test.py`.
-- The script must run without errors and print the memory content from `session_A`.e:T531,# Fix Parameter Inconsistency in Alchemyst AI Search
+- The script must run without errors and print the memory content from `session_A`.f:T531,# Fix Parameter Inconsistency in Alchemyst AI Search
 
 ## Background
 You have a TypeScript project at `/home/user/app` using the `@alchemystai/sdk`. The script `index.ts` attempts to add a document with the metadata `group_name: ['engineering']` and then search for it using the same metadata structure. However, due to a parameter inconsistency in the Alchemyst AI TypeScript SDK, the search fails to find the document. Storage uses `group_name` (snake_case) but search uses `groupName` (camelCase).
@@ -250,7 +250,7 @@ You have a TypeScript project at `/home/user/app` using the `@alchemystai/sdk`. 
 - Do not change the `add` method's metadata structure, only fix the `search` method.
 
 ## Integrations
-- Nonef:T524,# Rate Limit Resilience with Exponential Backoff
+- None10:T524,# Rate Limit Resilience with Exponential Backoff
 
 ## Background
 You are building an application using the Alchemyst AI Python SDK. During peak loads, your search operations may hit the 429 Rate Limit (1000 requests/minute). You need to implement a robust search loop with exponential backoff.
@@ -271,7 +271,7 @@ You are building an application using the Alchemyst AI Python SDK. During peak l
 
 ## Constraints
 - Project path: `/home/user/app`
-- Log file: `/home/user/app/output.log`10:T653,# Shared Team Memory with Alchemyst AI
+- Log file: `/home/user/app/output.log`11:T653,# Shared Team Memory with Alchemyst AI
 
 ## Background
 Alchemyst AI provides memory management across sessions and users. Using the same `session_id` across different `user_id` values creates a shared memory space for team conversations. In this task, you will create a Python script to simulate a shared team discussion and verify that memories added by different users in the same session can be retrieved by another user.
@@ -294,7 +294,7 @@ Alchemyst AI provides memory management across sessions and users. Using the sam
 ## Constraints
 - Project path: `/home/user/project`
 - Output file: `/home/user/project/shared_memory.json`
-- Script path: `/home/user/project/test_shared_memory.py`11:T7df,# SyllabAI Backend Integration
+- Script path: `/home/user/project/test_shared_memory.py`12:T7df,# SyllabAI Backend Integration
 
 ## Background
 You need to build the backend API for SyllabAI, an educational assistant that answers questions based on a syllabus. You will use Express.js and the Alchemyst AI SDK.
@@ -316,7 +316,7 @@ Create an Express.js server that provides three endpoints:
 - Project path: /home/user/syllabai
 - Start command: `node server.js`
 - Port: 3000
-- Return proper JSON responses for all endpoints.12:T43b,# Threshold Sensitivity Test
+- Return proper JSON responses for all endpoints.13:T43b,# Threshold Sensitivity Test
 
 ## Background
 Alchemyst AI allows adjusting the `similarity_threshold` when searching for context. A higher threshold (e.g., 0.9) requires precise matches, while a lower threshold (e.g., 0.5) is more exploratory.
@@ -332,7 +332,7 @@ Write a Python script `test_threshold.py` in `/home/user/project` that:
 ## Constraints
 - Project path: `/home/user/project`
 - The script must wait a few seconds after adding the document to ensure it is indexed before searching.
-- Output file: `/home/user/project/output.json`13:T9e4,# Alchemyst AI Context Search Dashboard
+- Output file: `/home/user/project/output.json`14:T9e4,# Alchemyst AI Context Search Dashboard
 
 ## Background
 Build a web-based dashboard for managing and searching AI context using Alchemyst AI. You will build a Next.js application that provides a UI for ingesting documents into the context engine and searching them using Context Arithmetic.
@@ -359,7 +359,7 @@ Build a web-based dashboard for managing and searching AI context using Alchemys
 - Start command: `npm run build && npm start`
 - Port: 3000
 - The environment will provide `ALCHEMYST_AI_API_KEY`.
-- You must use Node.js and Next.js.14:T57a,# Alchemyst AI WebUI Memory Agent
+- You must use Node.js and Next.js.15:T57a,# Alchemyst AI WebUI Memory Agent
 
 ## Background
 Create a Next.js application that implements a chat interface backed by Alchemyst AI's memory agent. This application should allow users to chat with an AI that automatically remembers their preferences across different sessions.
@@ -382,7 +382,7 @@ Create a Next.js application that implements a chat interface backed by Alchemys
 - Project path: `/home/user/app`
 - Start command: `npm run build && npm start`
 - Port: `3000`
-- You must use `@alchemystai/aisdk` to handle memory automatically.15:T835,# Zendocs Backend
+- You must use `@alchemystai/aisdk` to handle memory automatically.16:T835,# Zendocs Backend
 
 ## Background
 You are building the backend for Zendocs, an automated SEO and indexing tool. You will use Express.js, SQLite, and the `@alchemystai/sdk` to ingest documents and make them searchable.
@@ -407,8 +407,8 @@ You are building the backend for Zendocs, an automated SEO and indexing tool. Yo
 - Project path: `/home/user/zendocs-backend`
 - Start command: `node index.js`
 - Port: 3000
-- The Alchemyst API key will be provided in the `ALCHEMYST_AI_API_KEY` environment variable.0:{"buildId":"gY7oqRWhIa0wyVOzDG3jL","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-background text-foreground font-sans selection:bg-primary/20","children":[["$","div",null,{"className":"fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 dark:opacity-40"}],["$","$L2",null,{"tasksData":[{"taskName":"b2b_newsletter_research_workflow","instruction":"$3","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"b2b_newsletter_research_workflow__BrPfNy7","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":187.775,"latency_breakdown":{"env_setup":11.333,"agent_setup":26.863,"agent_exec":61.438,"verifier":72.903},"taskName":"b2b_newsletter_research_workflow","jobId":"BrPfNy7","exec_duration":61.438}]},{"taskName":"basic_rag_flow_python","instruction":"$4","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"basic_rag_flow_python__PNEH44h","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":263.328,"latency_breakdown":{"env_setup":3.919,"agent_setup":33.166,"agent_exec":190.794,"verifier":12.486},"taskName":"basic_rag_flow_python","jobId":"PNEH44h","exec_duration":190.794}]},{"taskName":"cli_context_aware_agent","instruction":"$5","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"cli_context_aware_agent__TLj6bmp","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":187.825,"latency_breakdown":{"env_setup":8.49,"agent_setup":29.921,"agent_exec":118.616,"verifier":14.128},"taskName":"cli_context_aware_agent","jobId":"TLj6bmp","exec_duration":118.616}]},{"taskName":"context_addition_batching","instruction":"$6","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"context_addition_batching__Rds2cFq","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":266.899,"latency_breakdown":{"env_setup":4.004,"agent_setup":26.472,"agent_exec":202.77,"verifier":13.638},"taskName":"context_addition_batching","jobId":"Rds2cFq","exec_duration":202.77}]},{"taskName":"context_arithmetic_union_filtering","instruction":"$7","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"context_arithmetic_union_filteri__m65Wzcf","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":460.204,"latency_breakdown":{"env_setup":11.411,"agent_setup":97.289,"agent_exec":323.644,"verifier":12.331},"taskName":"context_arithmetic_union_filteri","jobId":"m65Wzcf","exec_duration":323.644}]},{"taskName":"customer_support_multi_day_ticket","instruction":"$8","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"customer_support_multi_day_ticke__4HURw2x","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":130.083,"latency_breakdown":{"env_setup":4.267,"agent_setup":32.847,"agent_exec":60.396,"verifier":12.662},"taskName":"customer_support_multi_day_ticke","jobId":"4HURw2x","exec_duration":60.396}]},{"taskName":"document_deletion_and_verification","instruction":"$9","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"document_deletion_and_verificati__UeDktBR","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":112.187,"latency_breakdown":{"env_setup":11.293,"agent_setup":30.154,"agent_exec":35.799,"verifier":13.8},"taskName":"document_deletion_and_verificati","jobId":"UeDktBR","exec_duration":35.799}]},{"taskName":"memory_search_history_retrieval","instruction":"$a","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"memory_search_history_retrieval__P2DvHcZ","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":596.233,"latency_breakdown":{"env_setup":11.367,"agent_setup":40.253,"agent_exec":516.747,"verifier":12.562},"taskName":"memory_search_history_retrieval","jobId":"P2DvHcZ","exec_duration":516.747}]},{"taskName":"metadata_limitations_type_check","instruction":"$b","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"metadata_limitations_type_check__QsRURyN","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":254.589,"latency_breakdown":{"env_setup":11.424,"agent_setup":27.557,"agent_exec":187.584,"verifier":12.506},"taskName":"metadata_limitations_type_check","jobId":"QsRURyN","exec_duration":187.584}]},{"taskName":"missing_memory_parameters_error_handling","instruction":"$c","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"missing_memory_parameters_error__oJLP6V2","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":152.577,"latency_breakdown":{"env_setup":3.954,"agent_setup":27.859,"agent_exec":92.682,"verifier":12.789},"taskName":"missing_memory_parameters_error","jobId":"oJLP6V2","exec_duration":92.682}]},{"taskName":"multi_session_memory_python","instruction":"$d","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"multi_session_memory_python__3ii6kLE","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":285.013,"latency_breakdown":{"env_setup":9.957,"agent_setup":31.384,"agent_exec":201.777,"verifier":13.243},"taskName":"multi_session_memory_python","jobId":"3ii6kLE","exec_duration":201.777}]},{"taskName":"parameter_inconsistency_ts_vs_python","instruction":"$e","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"parameter_inconsistency_ts_vs_py__JxE3qU4","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":533.683,"latency_breakdown":{"env_setup":14.712,"agent_setup":34.128,"agent_exec":454.217,"verifier":15.106},"taskName":"parameter_inconsistency_ts_vs_py","jobId":"JxE3qU4","exec_duration":454.217}]},{"taskName":"rate_limit_resilience_exponential_backoff","instruction":"$f","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"rate_limit_resilience_exponentia__ZvXDHat","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":226.933,"latency_breakdown":{"env_setup":8.726,"agent_setup":28.864,"agent_exec":159.668,"verifier":12.905},"taskName":"rate_limit_resilience_exponentia","jobId":"ZvXDHat","exec_duration":159.668}]},{"taskName":"shared_team_memory_multiple_users","instruction":"$10","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"shared_team_memory_multiple_user__xaufgVo","model":"gemini-3-flash","agent":"Pochi","passed":true,"reward":1,"error":false,"latency_sec":347.969,"latency_breakdown":{"env_setup":4.12,"agent_setup":26.452,"agent_exec":289.781,"verifier":12.321},"taskName":"shared_team_memory_multiple_user","jobId":"xaufgVo","exec_duration":289.781}]},{"taskName":"syllabai_educational_assistant","instruction":"$11","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"syllabai_educational_assistant__doKKUyg","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":345.866,"latency_breakdown":{"env_setup":7.138,"agent_setup":46.439,"agent_exec":232.702,"verifier":42.566},"taskName":"syllabai_educational_assistant","jobId":"doKKUyg","exec_duration":232.702}]},{"taskName":"threshold_sensitivity_broad_vs_specific","instruction":"$12","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"threshold_sensitivity_broad_vs_s__dnTKLJJ","model":"gemini-3-flash","agent":"Pochi","passed":true,"reward":1,"error":false,"latency_sec":281.78,"latency_breakdown":{"env_setup":23.531,"agent_setup":33.072,"agent_exec":186.249,"verifier":13.273},"taskName":"threshold_sensitivity_broad_vs_s","jobId":"dnTKLJJ","exec_duration":186.249}]},{"taskName":"webui_context_search_dashboard","instruction":"$13","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"webui_context_search_dashboard__xSBMzNo","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":1620.663,"latency_breakdown":{"env_setup":8.377,"agent_setup":35.889,"agent_exec":360.785,"verifier":1201.193},"taskName":"webui_context_search_dashboard","jobId":"xSBMzNo","exec_duration":360.785}]},{"taskName":"webui_memory_agent_chat","instruction":"$14","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"webui_memory_agent_chat__WjHcYig","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":724.729,"latency_breakdown":{"env_setup":22.788,"agent_setup":33.325,"agent_exec":600.274,"verifier":16.108},"taskName":"webui_memory_agent_chat","jobId":"WjHcYig","exec_duration":600.274}]},{"taskName":"zendocs_automated_seo","instruction":"$15","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"zendocs_automated_seo__vZ4Rbiy","model":"gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":199.03,"latency_breakdown":{"env_setup":15.126,"agent_setup":49.378,"agent_exec":97.471,"verifier":12.675},"taskName":"zendocs_automated_seo","jobId":"vZ4Rbiy","exec_duration":97.471}]}]}]]}],["$L16","$L17"],"$L18"]}],"loading":null,"isPartial":false}
-16:["$","script","script-0",{"src":"/alchemyst-benchmark/_next/static/chunks/99fe8673c667ed86.js","async":true}]
-17:["$","script","script-1",{"src":"/alchemyst-benchmark/_next/static/chunks/be08138953094657.js","async":true}]
-18:["$","$L19",null,{"children":["$","$1a",null,{"name":"Next.MetadataOutlet","children":"$@1b"}]}]
+- The Alchemyst API key will be provided in the `ALCHEMYST_AI_API_KEY` environment variable.0:{"buildId":"oBd-NgexCeVx7h_TOFd2B","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-background text-foreground font-sans selection:bg-primary/20","children":[["$","div",null,{"className":"fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 dark:opacity-40"}],["$","$2",null,{"fallback":["$","div",null,{"className":"container mx-auto py-8 text-center","children":"Loading tasks..."}],"children":["$","$L3",null,{"tasksData":[{"taskName":"b2b_newsletter_research_workflow","instruction":"$4","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"b2b_newsletter_research_workflow__BrPfNy7","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":187.775,"latency_breakdown":{"env_setup":11.333,"agent_setup":26.863,"agent_exec":61.438,"verifier":72.903},"taskName":"b2b_newsletter_research_workflow","jobId":"BrPfNy7","exec_duration":61.438}]},{"taskName":"basic_rag_flow_python","instruction":"$5","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"basic_rag_flow_python__PNEH44h","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":263.328,"latency_breakdown":{"env_setup":3.919,"agent_setup":33.166,"agent_exec":190.794,"verifier":12.486},"taskName":"basic_rag_flow_python","jobId":"PNEH44h","exec_duration":190.794}]},{"taskName":"cli_context_aware_agent","instruction":"$6","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"cli_context_aware_agent__TLj6bmp","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":187.825,"latency_breakdown":{"env_setup":8.49,"agent_setup":29.921,"agent_exec":118.616,"verifier":14.128},"taskName":"cli_context_aware_agent","jobId":"TLj6bmp","exec_duration":118.616}]},{"taskName":"context_addition_batching","instruction":"$7","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"context_addition_batching__Rds2cFq","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":266.899,"latency_breakdown":{"env_setup":4.004,"agent_setup":26.472,"agent_exec":202.77,"verifier":13.638},"taskName":"context_addition_batching","jobId":"Rds2cFq","exec_duration":202.77}]},{"taskName":"context_arithmetic_union_filtering","instruction":"$8","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"context_arithmetic_union_filteri__m65Wzcf","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":460.204,"latency_breakdown":{"env_setup":11.411,"agent_setup":97.289,"agent_exec":323.644,"verifier":12.331},"taskName":"context_arithmetic_union_filteri","jobId":"m65Wzcf","exec_duration":323.644}]},{"taskName":"customer_support_multi_day_ticket","instruction":"$9","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"customer_support_multi_day_ticke__4HURw2x","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":130.083,"latency_breakdown":{"env_setup":4.267,"agent_setup":32.847,"agent_exec":60.396,"verifier":12.662},"taskName":"customer_support_multi_day_ticke","jobId":"4HURw2x","exec_duration":60.396}]},{"taskName":"document_deletion_and_verification","instruction":"$a","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"document_deletion_and_verificati__UeDktBR","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":112.187,"latency_breakdown":{"env_setup":11.293,"agent_setup":30.154,"agent_exec":35.799,"verifier":13.8},"taskName":"document_deletion_and_verificati","jobId":"UeDktBR","exec_duration":35.799}]},{"taskName":"memory_search_history_retrieval","instruction":"$b","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"memory_search_history_retrieval__P2DvHcZ","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":596.233,"latency_breakdown":{"env_setup":11.367,"agent_setup":40.253,"agent_exec":516.747,"verifier":12.562},"taskName":"memory_search_history_retrieval","jobId":"P2DvHcZ","exec_duration":516.747}]},{"taskName":"metadata_limitations_type_check","instruction":"$c","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"metadata_limitations_type_check__QsRURyN","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":254.589,"latency_breakdown":{"env_setup":11.424,"agent_setup":27.557,"agent_exec":187.584,"verifier":12.506},"taskName":"metadata_limitations_type_check","jobId":"QsRURyN","exec_duration":187.584}]},{"taskName":"missing_memory_parameters_error_handling","instruction":"$d","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"missing_memory_parameters_error__oJLP6V2","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":152.577,"latency_breakdown":{"env_setup":3.954,"agent_setup":27.859,"agent_exec":92.682,"verifier":12.789},"taskName":"missing_memory_parameters_error","jobId":"oJLP6V2","exec_duration":92.682}]},{"taskName":"multi_session_memory_python","instruction":"$e","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"multi_session_memory_python__3ii6kLE","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":285.013,"latency_breakdown":{"env_setup":9.957,"agent_setup":31.384,"agent_exec":201.777,"verifier":13.243},"taskName":"multi_session_memory_python","jobId":"3ii6kLE","exec_duration":201.777}]},{"taskName":"parameter_inconsistency_ts_vs_python","instruction":"$f","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"parameter_inconsistency_ts_vs_py__JxE3qU4","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":533.683,"latency_breakdown":{"env_setup":14.712,"agent_setup":34.128,"agent_exec":454.217,"verifier":15.106},"taskName":"parameter_inconsistency_ts_vs_py","jobId":"JxE3qU4","exec_duration":454.217}]},{"taskName":"rate_limit_resilience_exponential_backoff","instruction":"$10","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"rate_limit_resilience_exponentia__ZvXDHat","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":226.933,"latency_breakdown":{"env_setup":8.726,"agent_setup":28.864,"agent_exec":159.668,"verifier":12.905},"taskName":"rate_limit_resilience_exponentia","jobId":"ZvXDHat","exec_duration":159.668}]},{"taskName":"shared_team_memory_multiple_users","instruction":"$11","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"shared_team_memory_multiple_user__xaufgVo","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":true,"reward":1,"error":false,"latency_sec":347.969,"latency_breakdown":{"env_setup":4.12,"agent_setup":26.452,"agent_exec":289.781,"verifier":12.321},"taskName":"shared_team_memory_multiple_user","jobId":"xaufgVo","exec_duration":289.781}]},{"taskName":"syllabai_educational_assistant","instruction":"$12","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"syllabai_educational_assistant__doKKUyg","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":345.866,"latency_breakdown":{"env_setup":7.138,"agent_setup":46.439,"agent_exec":232.702,"verifier":42.566},"taskName":"syllabai_educational_assistant","jobId":"doKKUyg","exec_duration":232.702}]},{"taskName":"threshold_sensitivity_broad_vs_specific","instruction":"$13","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"threshold_sensitivity_broad_vs_s__dnTKLJJ","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":true,"reward":1,"error":false,"latency_sec":281.78,"latency_breakdown":{"env_setup":23.531,"agent_setup":33.072,"agent_exec":186.249,"verifier":13.273},"taskName":"threshold_sensitivity_broad_vs_s","jobId":"dnTKLJJ","exec_duration":186.249}]},{"taskName":"webui_context_search_dashboard","instruction":"$14","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"webui_context_search_dashboard__xSBMzNo","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":1620.663,"latency_breakdown":{"env_setup":8.377,"agent_setup":35.889,"agent_exec":360.785,"verifier":1201.193},"taskName":"webui_context_search_dashboard","jobId":"xSBMzNo","exec_duration":360.785}]},{"taskName":"webui_memory_agent_chat","instruction":"$15","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"webui_memory_agent_chat__WjHcYig","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":724.729,"latency_breakdown":{"env_setup":22.788,"agent_setup":33.325,"agent_exec":600.274,"verifier":16.108},"taskName":"webui_memory_agent_chat","jobId":"WjHcYig","exec_duration":600.274}]},{"taskName":"zendocs_automated_seo","instruction":"$16","trials":[{"job_name":"2026-05-06__19-05-39","trial_name":"zendocs_automated_seo__vZ4Rbiy","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":199.03,"latency_breakdown":{"env_setup":15.126,"agent_setup":49.378,"agent_exec":97.471,"verifier":12.675},"taskName":"zendocs_automated_seo","jobId":"vZ4Rbiy","exec_duration":97.471}]}]}]}]]}],["$L17","$L18"],"$L19"]}],"loading":null,"isPartial":false}
+17:["$","script","script-0",{"src":"/alchemyst-benchmark/_next/static/chunks/bcaa16b1898f8e4b.js","async":true}]
+18:["$","script","script-1",{"src":"/alchemyst-benchmark/_next/static/chunks/ab9c434cfac62bb4.js","async":true}]
+19:["$","$L1a",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@1b"}]}]
 1b:null
