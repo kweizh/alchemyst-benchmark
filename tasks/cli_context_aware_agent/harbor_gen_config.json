@@ -1,7 +1,0 @@
-{
-  "library_name": "Alchemyst AI",
-  "complexity_level": "multi-step sequential commands sets",
-  "deep_research_path": "../plan.md",
-  "task_name": "cli_context_aware_agent",
-  "output_dir": "tasks/"
-}
