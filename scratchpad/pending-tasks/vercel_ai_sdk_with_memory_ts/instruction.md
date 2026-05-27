@@ -1,0 +1,43 @@
+# Cross-Session Memory with Vercel AI SDK + Alchemyst Middleware (TypeScript)
+
+## Background
+Alchemyst AI provides a `withAlchemyst` middleware for the Vercel AI SDK that transparently wires automatic cross-session memory into calls such as `generateText`. By calling the wrapped function with `userId` and `sessionId`, the middleware retrieves prior memories for that user, augments the LLM prompt, and stores new exchanges so future sessions can recall them.
+
+In this task you will build a small Node.js/TypeScript program that uses `withAlchemyst` together with `generateText` from the `ai` package to demonstrate cross-session memory: a fact is stated by the user in one session, and a different session (different `sessionId`, same `userId`) is then able to recall that fact.
+
+## Requirements
+- Project must be written in TypeScript and runnable on Node.js 20+.
+- Wrap the Vercel AI SDK `generateText` function with `withAlchemyst` from the `@alchemystai/aisdk` package, using `process.env.ALCHEMYST_AI_API_KEY` for authentication.
+- Use an OpenAI chat model via the Vercel AI SDK (`@ai-sdk/openai`); authenticate with `process.env.OPENAI_API_KEY`.
+- Read the `run-id` from the `ZEALT_RUN_ID` environment variable and use it to scope user/session identifiers so concurrent runs do not collide.
+- The program must perform two calls to the wrapped `generateText`:
+  1. **Session A (write)**: With `userId = harbor-user-${run-id}` and `sessionId = session-a-${run-id}`, send a prompt that tells the assistant the user's favorite web framework is **Svelte** (for example, "Please remember that my favorite web framework is Svelte."). This call must succeed and its result must be stored as memory by the middleware.
+  2. **Session B (read)**: With the same `userId = harbor-user-${run-id}` but a **different** `sessionId = session-b-${run-id}`, send a prompt asking what the user's favorite web framework is (for example, "Based on what you remember about me, what is my favorite web framework? Answer in one sentence."). The assistant response (`response.text`) must mention `Svelte`.
+- After Session B returns, write the Session B response text (the value of `response.text`) to `/workspace/answer.txt` (UTF-8, no extra wrapping or JSON encoding).
+- Both calls must run sequentially in the same process invocation (Session A first, then Session B), so the memory written by Session A is available to Session B.
+
+## Implementation Hints
+- The Alchemyst AI SDK documentation shows the wrapper pattern:
+  ```ts
+  import { generateText } from 'ai';
+  import { withAlchemyst } from '@alchemystai/aisdk';
+  const generateTextWithMemory = withAlchemyst(generateText, { apiKey: process.env.ALCHEMYST_AI_API_KEY });
+  ```
+- Pass `userId` and `sessionId` directly to the wrapped function alongside `model` and `prompt`.
+- For the OpenAI model, you can use the `@ai-sdk/openai` provider (e.g., `openai('gpt-4o-mini')`). The `OPENAI_API_KEY` environment variable is picked up automatically.
+- Make sure the second call uses a different `sessionId` than the first to demonstrate cross-session recall (same `userId`).
+- Mention Svelte explicitly and unambiguously in the Session A prompt so that the memory can be retrieved reliably.
+- Use the `run-id` from `ZEALT_RUN_ID` in both `userId` and `sessionId` so the test data is isolated per run.
+- Be sure to install dependencies (`ai`, `@ai-sdk/openai`, `@alchemystai/aisdk`) and configure TypeScript to compile/execute (e.g., via `tsx` or `ts-node`).
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Output file: /workspace/answer.txt
+- The program must be runnable from the project directory with a single command (for example, `npm start` or `npx tsx index.ts`).
+- The program must read `ZEALT_RUN_ID`, `ALCHEMYST_AI_API_KEY`, and `OPENAI_API_KEY` from environment variables.
+- The program must use the wrapped `generateText` (via `withAlchemyst`) for both Session A and Session B.
+- After execution:
+  - The file `/workspace/answer.txt` must exist.
+  - The file content must be the textual response from Session B (i.e., `response.text` of the second wrapped call).
+  - The content must contain the substring `svelte` (case-insensitive), demonstrating that memory from Session A was recalled in Session B.
+

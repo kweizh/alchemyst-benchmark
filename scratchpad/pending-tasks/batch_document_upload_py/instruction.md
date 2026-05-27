@@ -1,0 +1,40 @@
+# Batch Upload FAQ Documents with Alchemyst AI (Python)
+
+## Background
+You are migrating a small FAQ knowledge base into Alchemyst AI's Context Engine so it can later be used for RAG. To minimize round-trips and API usage, all FAQ entries must be ingested in a single batched `v1.context.add` call using the Alchemyst AI Python SDK (`alchemystai`). After ingestion, your script should confirm the documents are retrievable through `v1.context.search` and record the result.
+
+## Requirements
+- Use the Alchemyst AI Python SDK (`alchemystai`) authenticated via the `ALCHEMYST_AI_API_KEY` environment variable.
+- Define 5 distinct short FAQ entries (each ~1-3 sentences) covering different topics, for example: refunds, shipping, account creation, password reset, and contact support.
+- Upload all 5 documents in a SINGLE `client.v1.context.add(...)` call (batched).
+- Each document must include a `metadata` field with a unique `file_name`. The `file_name` MUST be unique per document and per task run: it must follow the pattern `<uuid>-<topic>-<run-id>.md`, where `<run-id>` is read from the `ZEALT_RUN_ID` environment variable and `<uuid>` is a freshly generated UUID4 prefix. This prevents `409 Conflict` errors on repeat runs and isolates concurrent runs.
+- Use `context_type="resource"`, `source="faq"`, and `scope="internal"` for the batched call.
+- After uploading, run `client.v1.context.search` once per FAQ topic (5 searches total) using a topic-specific query and `similarity_threshold=0.5`. Count how many of the 5 uploaded documents you can locate by matching their `file_name` in the returned contexts' metadata.
+- Write the resulting count to `/workspace/result.json` in the exact JSON shape `{"retrievable": <int>, "uploaded": 5, "run_id": "<run-id>", "file_names": ["<file_name_1>", ..., "<file_name_5>"]}`.
+
+## Implementation Hints
+- Initialize the SDK with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- Build the documents list ahead of time and pass it in one `documents=[...]` argument so only one HTTP request is made for ingestion.
+- The `v1.context.search` response exposes a `contexts` collection; each context carries a `metadata` field where `file_name` is preserved from upload.
+- The ingestion is asynchronous on the backend; a short delay (a few seconds) between upload and search is usually enough for indexing to complete. Retry the search a small number of times if needed.
+- Remember that uploading two documents with the same `file_name` triggers `409 Conflict`. Including the `ZEALT_RUN_ID` and a UUID in each `file_name` keeps the task safe to run concurrently and re-runnable.
+
+## Acceptance Criteria
+- Project path: /workspace
+- Result file: /workspace/result.json
+- The result file must be valid JSON with the following shape:
+
+  ```json
+  {
+    "retrievable": 5,
+    "uploaded": 5,
+    "run_id": "<run-id>",
+    "file_names": ["<file_name_1>", "<file_name_2>", "<file_name_3>", "<file_name_4>", "<file_name_5>"]
+  }
+  ```
+
+- `retrievable` must equal `5` and `uploaded` must equal `5`.
+- `run_id` must equal the value of the `ZEALT_RUN_ID` environment variable.
+- `file_names` must be an array of 5 unique strings, each containing the `ZEALT_RUN_ID` value as a substring.
+- All 5 documents listed in `file_names` must be retrievable from Alchemyst AI via `v1.context.search` using their own topic as the query.
+

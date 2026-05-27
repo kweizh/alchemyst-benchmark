@@ -1,0 +1,7 @@
+{
+  "library_name": "Alchemyst AI (Python SDK)",
+  "task_name": "rate_limit_backoff_py",
+  "complexity_level": "much more complicated task that is not easy for LLM agents to solve",
+  "research_plan_path": "/Users/kw/code/zealt/alchemyst-benchmark/plan.md",
+  "output_dir": "scratchpad/pending-tasks/"
+}

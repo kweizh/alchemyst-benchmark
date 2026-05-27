@@ -1,0 +1,4 @@
+{
+    "task": ["ALCHEMYST_AI_API_KEY", "ZEALT_RUN_ID"],
+    "verifier": ["ZEALT_RUN_ID"]
+}
