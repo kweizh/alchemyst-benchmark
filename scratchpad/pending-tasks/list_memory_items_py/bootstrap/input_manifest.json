@@ -1,7 +1,0 @@
-{
-  "library_name": "Alchemyst AI",
-  "task_name": "list_memory_items_py",
-  "complexity_level": "simple set of 2-5 commands",
-  "research_plan_path": "/Users/kw/code/zealt/alchemyst-benchmark/plan.md",
-  "output_dir": "scratchpad/pending-tasks/"
-}

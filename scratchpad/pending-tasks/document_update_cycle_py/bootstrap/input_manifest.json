@@ -1,7 +1,0 @@
-{
-  "library_name": "Alchemyst AI (Python SDK)",
-  "task_name": "document_update_cycle_py",
-  "complexity_level": "multi-step sequential command set",
-  "research_plan_path": "/Users/kw/code/zealt/alchemyst-benchmark/plan.md",
-  "output_dir": "scratchpad/pending-tasks/"
-}

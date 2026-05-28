@@ -1,7 +1,0 @@
-{
-  "library_name": "Alchemyst AI (Python SDK)",
-  "task_name": "scope_filtered_search_py",
-  "complexity_level": "simple set of 2-5 commands",
-  "research_plan_path": "plan.md",
-  "output_dir": "scratchpad/pending-tasks/"
-}
