@@ -1,5 +1,873 @@
 1:"$Sreact.fragment"
-2:I[75049,["/alchemyst-benchmark/_next/static/chunks/d2c13bb33c4fcd54.js","/alchemyst-benchmark/_next/static/chunks/c21188132e0e0d48.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"buildId":"LdKe6DtjVtkY-ggx1RdF2","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-background text-foreground font-sans selection:bg-primary/20","children":[["$","div",null,{"className":"fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 dark:opacity-40"}],["$","div",null,{"className":"container mx-auto px-4 sm:px-8 lg:px-12 py-8 max-w-screen-2xl h-[100dvh] flex flex-col overflow-hidden","children":[["$","div",null,{"className":"mb-6 space-y-4 shrink-0","children":[["$","div",null,{"className":"flex items-center gap-4","children":["$","a",null,{"href":"/","className":"text-sm text-muted-foreground hover:text-foreground transition-colors","children":"← Back to Leaderboard"}]}],["$","div",null,{"children":["$","h1",null,{"className":"text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50","children":"Task"}]}]]}],["$","div",null,{"className":"relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card/90 to-background/90 px-5 pb-10 pt-6 text-center shadow-[0_0_0_1px_hsl(var(--primary)/0.18),0_28px_72px_-32px_hsl(var(--foreground)/0.45)] backdrop-blur-sm sm:px-8 sm:pb-14 sm:pt-8","children":[["$","div",null,{"className":"pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-primary/20 blur-3xl sm:-right-14 sm:-top-14 sm:h-40 sm:w-40"}],["$","div",null,{"className":"pointer-events-none absolute -left-20 bottom-0 h-32 w-32 rounded-full bg-foreground/10 blur-3xl sm:h-36 sm:w-36"}],["$","div",null,{"className":"relative mx-auto mb-8 inline-flex items-center rounded-full border border-primary/40 bg-primary/15 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-foreground sm:text-sm sm:tracking-[0.16em]","children":"⏳ PIPELINE PENDING REVIEW"}],["$","p",null,{"className":"relative mx-auto max-w-2xl px-4 text-center text-lg font-semibold tracking-wide text-foreground sm:px-5 sm:text-xl","children":[20," sample cases generated — pending review"]}],["$","p",null,{"className":"relative mx-auto mt-2 max-w-2xl px-4 text-left text-sm leading-relaxed text-muted-foreground sm:px-5","children":"Your sample cases are ready. Before moving forward, we do a quick review together to make sure everything looks right and aligns with real-world usage."}],["$","div",null,{"className":"relative mx-auto mt-8 max-w-2xl rounded-xl bg-primary/10 px-4 py-4 text-left sm:px-5","children":[["$","p",null,{"className":"text-base font-semibold text-foreground sm:text-lg text-center","children":"Next step: join Slack for review"}],["$","p",null,{"className":"mt-1 text-sm leading-relaxed text-muted-foreground","children":"We've sent you a Slack invitation to your registered email with Zealt. Please join and we'll walk through the next step together."}],["$","p",null,{"className":"mt-3 text-xs text-muted-foreground","children":["If you don't see it, just reach out at"," ",["$","a",null,{"href":"mailto:zealtdev@tabbyml.com","className":"font-normal text-foreground underline decoration-primary/60 underline-offset-4 hover:text-primary transition-colors","children":"zealtdev@tabbyml.com"}],"."]}]]}]]}]]}]]}],[["$","script","script-0",{"src":"/alchemyst-benchmark/_next/static/chunks/bcaa16b1898f8e4b.js","async":true}],["$","script","script-1",{"src":"/alchemyst-benchmark/_next/static/chunks/f9f579c42c486944.js","async":true}]],["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
-4:null
+2:"$Sreact.suspense"
+3:I[42654,["/alchemyst-benchmark/_next/static/chunks/babff0e7418ab052.js","/alchemyst-benchmark/_next/static/chunks/3ecbb78a8ff87549.js","/alchemyst-benchmark/_next/static/chunks/bcaa16b1898f8e4b.js","/alchemyst-benchmark/_next/static/chunks/f9f579c42c486944.js"],"TasksPageClient"]
+1b:I[75049,["/alchemyst-benchmark/_next/static/chunks/d2c13bb33c4fcd54.js","/alchemyst-benchmark/_next/static/chunks/c21188132e0e0d48.js"],"OutletBoundary"]
+4:Tbfd,# Basic RAG Search with Alchemyst AI (Python SDK)
+
+## Background
+Alchemyst AI is a Context Engine that provides AI agents with persistent memory and business-specific data through built-in chunking, embedding, and retrieval. In this task you will use the official Python SDK (`alchemystai`) to ingest a small policy document into the Alchemyst context engine and then query that same context engine for an answer.
+
+## Requirements
+- Create a Python script at `/home/user/myproject/rag_search.py` that:
+  - Initializes an `AlchemystAI` client using the `ALCHEMYST_AI_API_KEY` environment variable.
+  - Ingests exactly one document via `client.v1.context.add(...)` whose `content` is the refund policy text below.
+  - Sets `context_type="resource"`, `source="docs"`, and `scope="internal"` when adding the document.
+  - Provides `metadata` for the document including a `file_name` field that is unique per run, of the form `refund-policy-<run-id>.md` (see Implementation Hints).
+  - After ingesting, calls `client.v1.context.search(...)` with the query `What is the refund policy?`, `similarity_threshold=0.7`, `scope="internal"`, and prints the content of the top match to stdout.
+  - Mirrors the printed top-match line into the log file `/home/user/myproject/output.log`.
+- Run the script so that it actually ingests the document into Alchemyst and writes the log file.
+- Document content (must be ingested verbatim):
+
+  ```
+  Our refund policy: We offer a 30-day money back guarantee. Contact support@example.com to request a refund.
+  ```
+
+## Implementation Hints
+- Install the Alchemyst Python SDK with `pip install alchemystai`; import it as `from alchemyst_ai import AlchemystAI`.
+- Read `run-id` from the `ZEALT_RUN_ID` environment variable and append it to the `file_name` metadata value to avoid `409 Conflict` errors across repeated runs (the Alchemyst API rejects duplicate `file_name` values).
+- Use `client.v1.context.add` to ingest the document (it accepts a list under `documents=[{...}]`).
+- Use `client.v1.context.search` to retrieve the top match; the response object exposes a `contexts` attribute (a list) where each entry has a `content` attribute.
+- After printing the top match, also write that same content into `/home/user/myproject/output.log` on a line beginning with `Top Match:`.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Script path: /home/user/myproject/rag_search.py
+- Log file: /home/user/myproject/output.log
+- The agent MUST read `run-id` from the `ZEALT_RUN_ID` environment variable and use the value `refund-policy-${run-id}.md` as the `metadata.file_name` for the ingested document.
+- After running the script:
+  - A document with `metadata.file_name = refund-policy-${run-id}.md` MUST be retrievable from the Alchemyst context engine via `v1.context.search` for the query `What is the refund policy?` with `scope="internal"` and `similarity_threshold=0.7`.
+  - The log file MUST contain a line of the format `Top Match: <content>` where `<content>` includes the exact substring `30-day money back guarantee`.
+
+5:Teaa,# Basic RAG Ingest and Search with Alchemyst AI (TypeScript)
+
+## Background
+You are building the simplest possible Retrieval-Augmented Generation (RAG) flow on top of [Alchemyst AI](https://getalchemystai.com/docs/getting-started/quickstart), a managed Context Engine. Your job is to write a small Node.js/TypeScript script that uses the official `@alchemystai/sdk` package to (1) ingest a short FAQ document into the Alchemyst context store and (2) search for the answer to a question and print the matching snippet.
+
+The script must hit the real Alchemyst API using the `ALCHEMYST_AI_API_KEY` environment variable. Do not mock the SDK.
+
+## Requirements
+- Create a Node.js/TypeScript project at `/home/user/rag_task`.
+- Use the official `@alchemystai/sdk` package (already installed in the environment).
+- Implement a script named `index.ts` that:
+  1. Reads `ZEALT_RUN_ID` from the environment and generates a UUID suffix for the document `file_name` to avoid `409 Conflict` errors on retries.
+  2. Ingests the following FAQ document into the Alchemyst context store using `client.v1.context.add`:
+     - `content`: `"Refund policy: We offer a 30-day money back guarantee. To request a refund, email support@example.com with your order ID."`
+     - `metadata.file_name`: `faq-<run-id>-<uuid>.md` (must be globally unique per run/retry).
+     - `metadata.group_name`: `["alchemyst-harbor", "<run-id>"]`.
+     - `context_type`: `"resource"`, `source`: `"docs"`, `scope`: `"internal"`.
+  3. Searches for the question `"What is the refund policy?"` using `client.v1.context.search` with:
+     - `similarity_threshold`: `0.5`
+     - `scope`: `"internal"`
+     - `metadata.groupName`: `["<run-id>"]` (note camelCase `groupName` is required for the search endpoint in the TS SDK).
+  4. Prints output to **stdout** AND appends it to `/home/user/rag_task/output.log` in the exact format described in **Acceptance Criteria** below.
+- The script must be runnable with `npx tsx /home/user/rag_task/index.ts` from the project directory.
+
+## Implementation Hints
+- The Alchemyst TS SDK is imported as the default export: `import AlchemystAI from '@alchemystai/sdk'` and constructed with `new AlchemystAI({ apiKey: process.env.ALCHEMYST_AI_API_KEY })`.
+- Watch out for the documented parameter inconsistency: storage uses `group_name` (snake_case) inside `metadata`, while the TS search endpoint expects `groupName` (camelCase) inside `metadata`.
+- Use any UUID library available (e.g. `node:crypto`'s `randomUUID()`) to guarantee uniqueness of `file_name` per run.
+- `client.v1.context.search` returns `{ contexts: [...] }` where each context has a `content` field. Use the first context's `content` for the snippet output.
+- Read the current `run-id` from the `ZEALT_RUN_ID` environment variable and embed it in the `file_name` and `group_name` so that concurrent runs do not interfere with each other.
+
+## Acceptance Criteria
+- Project path: `/home/user/rag_task`
+- Log file: `/home/user/rag_task/output.log`
+- The script must successfully call the real Alchemyst API (no mocks).
+- The document `file_name` in the ingested metadata must follow the pattern `faq-<run-id>-<uuid>.md` and be unique per run (using a UUID suffix).
+- The document `group_name` must include `"<run-id>"` (the value of `ZEALT_RUN_ID`).
+- After execution, `/home/user/rag_task/output.log` must contain, in order, lines matching the following patterns (one item per line):
+  - `Stored file_name: <file_name>` — the exact `file_name` used during ingestion.
+  - `Search matches: <N>` — the number of contexts returned by the search (must be `>= 1`).
+  - `Top snippet: <content>` — the `content` of the top-ranked context, which must include the substring `30-day money back guarantee`.
+
+6:Td26,# Batch Upload FAQ Documents with Alchemyst AI (Python)
+
+## Background
+You are migrating a small FAQ knowledge base into Alchemyst AI's Context Engine so it can later be used for RAG. To minimize round-trips and API usage, all FAQ entries must be ingested in a single batched `v1.context.add` call using the Alchemyst AI Python SDK (`alchemystai`). After ingestion, your script should confirm the documents are retrievable through `v1.context.search` and record the result.
+
+## Requirements
+- Use the Alchemyst AI Python SDK (`alchemystai`) authenticated via the `ALCHEMYST_AI_API_KEY` environment variable.
+- Define 5 distinct short FAQ entries (each ~1-3 sentences) covering different topics, for example: refunds, shipping, account creation, password reset, and contact support.
+- Upload all 5 documents in a SINGLE `client.v1.context.add(...)` call (batched).
+- Each document must include a `metadata` field with a unique `file_name`. The `file_name` MUST be unique per document and per task run: it must follow the pattern `<uuid>-<topic>-<run-id>.md`, where `<run-id>` is read from the `ZEALT_RUN_ID` environment variable and `<uuid>` is a freshly generated UUID4 prefix. This prevents `409 Conflict` errors on repeat runs and isolates concurrent runs.
+- Use `context_type="resource"`, `source="faq"`, and `scope="internal"` for the batched call.
+- After uploading, run `client.v1.context.search` once per FAQ topic (5 searches total) using a topic-specific query and `similarity_threshold=0.5`. Count how many of the 5 uploaded documents you can locate by matching their `file_name` in the returned contexts' metadata.
+- Write the resulting count to `/workspace/result.json` in the exact JSON shape `{"retrievable": <int>, "uploaded": 5, "run_id": "<run-id>", "file_names": ["<file_name_1>", ..., "<file_name_5>"]}`.
+
+## Implementation Hints
+- Initialize the SDK with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- Build the documents list ahead of time and pass it in one `documents=[...]` argument so only one HTTP request is made for ingestion.
+- The `v1.context.search` response exposes a `contexts` collection; each context carries a `metadata` field where `file_name` is preserved from upload.
+- The ingestion is asynchronous on the backend; a short delay (a few seconds) between upload and search is usually enough for indexing to complete. Retry the search a small number of times if needed.
+- Remember that uploading two documents with the same `file_name` triggers `409 Conflict`. Including the `ZEALT_RUN_ID` and a UUID in each `file_name` keeps the task safe to run concurrently and re-runnable.
+
+## Acceptance Criteria
+- Project path: /workspace
+- Result file: /workspace/result.json
+- The result file must be valid JSON with the following shape:
+
+  ```json
+  {
+    "retrievable": 5,
+    "uploaded": 5,
+    "run_id": "<run-id>",
+    "file_names": ["<file_name_1>", "<file_name_2>", "<file_name_3>", "<file_name_4>", "<file_name_5>"]
+  }
+  ```
+
+- `retrievable` must equal `5` and `uploaded` must equal `5`.
+- `run_id` must equal the value of the `ZEALT_RUN_ID` environment variable.
+- `file_names` must be an array of 5 unique strings, each containing the `ZEALT_RUN_ID` value as a substring.
+- All 5 documents listed in `file_names` must be retrievable from Alchemyst AI via `v1.context.search` using their own topic as the query.
+
+7:Te21,# Context-Aware CLI Chatbot with Alchemyst AI Memory (Python)
+
+## Background
+Build a non-interactive command-line chatbot in Python that uses Alchemyst AI as its context/memory layer and OpenAI as its language model. The CLI should be safely re-runnable: each time it is invoked it must search the Alchemyst context engine for prior conversation snippets scoped to the current run, feed them as system context to an OpenAI chat completion, print the assistant reply on stdout, and then persist the new user/assistant turn back into the Alchemyst context engine so future invocations can recall it.
+
+This pattern is inspired by the Alchemyst CLI chatbot example but extends it with cross-invocation memory: because each invocation is a fresh process, the only way to remember earlier turns is to store them in Alchemyst keyed by a stable `userId`/`sessionId` and read them back on the next call.
+
+## Requirements
+- Implement a Python 3.11+ CLI named `chat.py` that takes the user message as a single positional argument:
+  `python chat.py "<question>"`.
+- The CLI must read the current `run-id` from the `ZEALT_RUN_ID` environment variable and derive a deterministic `userId` and `sessionId` from it (so concurrent runs do not collide).
+- On every invocation the CLI must:
+  1. Search the Alchemyst context engine for snippets relevant to the current message, scoped to this run's `userId`/`sessionId`.
+  2. Build an OpenAI chat completion request using the retrieved snippets as system context together with the new user message.
+  3. Print only the assistant's reply text on stdout (no extra prefixes/banners on the line containing the answer).
+  4. Store the new turn (the user message and the assistant reply) back into Alchemyst under the same `userId`/`sessionId` so it can be retrieved on subsequent invocations.
+- Two consecutive invocations within the same `ZEALT_RUN_ID` must share state: a fact stated in the first call must be recallable in the second call's answer.
+- Read `ALCHEMYST_AI_API_KEY` and `OPENAI_API_KEY` from environment variables. Do not hardcode credentials.
+
+## Implementation Hints
+- Use the `alchemystai` Python SDK to talk to the Alchemyst context engine and the `openai` Python SDK for chat completions.
+- Memory in Alchemyst is keyed by `userId` and `sessionId`; both are required. Derive stable values from `ZEALT_RUN_ID` such as `cli-user-${ZEALT_RUN_ID}` and `cli-session-${ZEALT_RUN_ID}`.
+- After retrieving snippets, format them into a system message so the LLM has the prior facts available before answering the new question.
+- Keep stdout clean so a calling shell can capture the reply with `$(python chat.py "...")` or by redirection.
+- Choose an OpenAI chat model that is generally available (e.g., `gpt-4o-mini`).
+
+## Acceptance Criteria
+- Project path: /home/user/cli-chatbot
+- Entry script: /home/user/cli-chatbot/chat.py
+- Command: `python chat.py "<question>"` (the question is a single positional argument)
+- The script exits with status 0 on success and prints the assistant reply to stdout.
+- Memory scoping: the `userId` and `sessionId` used by the script must be derived from the `ZEALT_RUN_ID` environment variable so two invocations in the same run share memory and two invocations in different runs do not.
+- Cross-invocation recall: when invoked twice in sequence within the same `ZEALT_RUN_ID`, where the first invocation states a fact and the second asks about that fact, the second invocation's stdout must include the fact previously stated.
+- The script must call the real Alchemyst AI API and the real OpenAI API; mocking either provider is not allowed.
+
+8:T18b4,# Alchemyst AI: Graceful 409 Conflict Handling on Document Re-Add
+
+## Background
+You are integrating the Alchemyst AI Context Engine into a content pipeline. The pipeline periodically refreshes the same logical document (identified by a stable `file_name`). Alchemyst uses `metadata.file_name` as a deduplication key on the `v1.context.add` endpoint, so attempting to re-add a document that already exists raises a **`409 Conflict`** (Alchemyst's recommended remediation is to delete the previous version, then re-add the new content — see the troubleshooting docs).
+
+Your task is to write a Python script that **detects** this conflict at runtime, **recovers** from it programmatically, and **records** what happened in a structured status report.
+
+The environment has been pre-seeded with one document that the script will collide with. The collision target is deterministic and derived from the run id (see `Acceptance Criteria`).
+
+## Requirements
+- Use the official Python SDK (`alchemystai` on PyPI, imported as `alchemyst_ai`).
+- Read `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from the environment. Derive the collision target identifiers from `ZEALT_RUN_ID` exactly as specified in `Acceptance Criteria` (this is how the pre-seeded document was registered).
+- Attempt to add a NEW version of the document (different `content`) but with the SAME `source`, `metadata.file_name`, and same `context_type`/`scope` as the pre-loaded document.
+- The script MUST detect the resulting `409 Conflict` from the SDK (do NOT rely on automatic retries succeeding — disable retries on the initial conflicting `add` call so the conflict surfaces as an exception).
+- When the 409 is observed, the script MUST: (a) delete the existing document(s) for that source via the SDK delete API, then (b) re-add the new content. The second add MUST succeed.
+- After the recovery completes, write a JSON status report file documenting what happened (see schema in `Acceptance Criteria`).
+- If the initial add succeeds without a 409 (unexpected — the environment is pre-seeded specifically to trigger it), the script MUST exit non-zero and the status report MUST set `conflict_detected` to `false`.
+
+## Implementation Hints
+- Read `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from `os.environ`. Optionally read `ALCHEMYST_ORG_ID` (default to `""` if unset — personal API keys accept an empty organization id on the delete endpoint).
+- The SDK exposes a `client.v1.context.add(context_type=..., documents=[...], scope=..., source=..., metadata={...})` signature; the deduplication key is the top-level `metadata.file_name`. See the [Python SDK docs](https://getalchemystai.com/docs/integrations/sdk/python-sdk).
+- Errors are surfaced as subclasses of `alchemyst_ai.APIStatusError`; a 409 has `status_code == 409` (the more specific class `alchemyst_ai.ConflictError` is also acceptable to catch). See the [Handling errors](https://getalchemystai.com/docs/integrations/sdk/python-sdk#handling-errors) section.
+- Use `client.with_options(max_retries=0).v1.context.add(...)` for the conflicting call so the 409 is not silently swallowed by SDK retries (the SDK retries 409 by default).
+- For deletion, call `client.v1.context.delete(source=<source>, organization_id=<org_id_or_empty_string>, by_doc=True)`. See [Delete context data](https://getalchemystai.com/docs/api-reference/endpoint/api/v1/context/delete/post).
+- After re-adding, you do NOT need to immediately query Alchemyst to verify — record the outcome in the status report; the verifier will independently query Alchemyst.
+- Useful reference patterns: [Pattern 2 — Document Updates](https://getalchemystai.com/docs/advanced/usage-patterns#pattern-2%3A-handling-document-updates) and [Troubleshooting — Common Errors (Add)](https://getalchemystai.com/docs/advanced/troubleshooting#common-errors-add).
+- The new (v2) content you re-add MUST literally contain the marker substring `POLICY_V2_MARKER` somewhere in its text, so the verifier can locate it via the Alchemyst search API.
+
+## Acceptance Criteria
+- Project path: `/home/user/myproject`
+- Command: `python3 /home/user/myproject/solution.py`
+- Status report path: `/home/user/myproject/status.json`
+- Required environment variables read by the script:
+  - `ALCHEMYST_AI_API_KEY` (API auth)
+  - `ZEALT_RUN_ID` (run id; used to derive the collision target identifiers below)
+  - `ALCHEMYST_ORG_ID` (optional; default to empty string `""` if unset)
+- Collision target identifiers MUST be derived from `ZEALT_RUN_ID` exactly as follows (these match how the pre-seeded v1 document was registered):
+  - `source`           = `f"conflict409-{ZEALT_RUN_ID}"`
+  - `metadata.file_name` = `f"policy-{ZEALT_RUN_ID}.md"`
+  - `metadata.group_name` = `[f"conflict-eval-{ZEALT_RUN_ID}"]`
+  - `context_type`     = `"resource"`
+  - `scope`            = `"internal"`
+- The script must exit with code `0` on the happy path (initial add fails with 409 → delete → re-add succeeds).
+- The script must exit with a non-zero code if the initial add does NOT raise a 409, or if the recovery `add` fails.
+- `status.json` must be valid JSON with EXACTLY these top-level keys and value types:
+  ```json
+  {
+    "conflict_detected": true,
+    "initial_add_status_code": 409,
+    "delete_status": "success",
+    "re_added": true,
+    "file_name": "policy-<ZEALT_RUN_ID>.md",
+    "source": "conflict409-<ZEALT_RUN_ID>",
+    "run_id": "<ZEALT_RUN_ID>"
+  }
+  ```
+  - `conflict_detected` (boolean): `true` only if the initial add raised a 409.
+  - `initial_add_status_code` (number): the numeric HTTP status code observed on the initial add (409 on happy path).
+  - `delete_status` (string): `"success"` if the SDK delete call returned without raising.
+  - `re_added` (boolean): `true` if the second `add` call succeeded.
+  - `file_name`, `source`, `run_id` (strings): the derived/provided values.
+- After the script runs, the new content must be present in Alchemyst:
+  - The new (re-added) document content MUST literally contain the marker substring `POLICY_V2_MARKER`.
+  - A `client.v1.context.search` query targeting the new content must return a result whose `content` contains `POLICY_V2_MARKER`.
+  - The pre-seeded marker phrase `POLICY_V1_MARKER` must NOT appear in search results for the same query window (the old document has been replaced).
+
+9:T109e,# Context Arithmetic: Group Intersection with the Alchemyst AI Python SDK
+
+## Background
+[Alchemyst AI](https://getalchemystai.com/) is a Context Engine that uses *Context Arithmetic* — a set-algebra mental model — to retrieve documents at query time. When you ingest documents tagged with multiple values in the `group_name` metadata list, Alchemyst treats each value as a set membership. A search filtered by a list of `group_name` values returns only documents that belong to **all** of those groups (intersection / AND semantics).
+
+In this task you will use the official Python SDK (`alchemystai` package, imported as `alchemyst_ai`) to demonstrate this intersection behavior end-to-end against the real Alchemyst Cloud API.
+
+## Requirements
+- Write a Python 3.11 script that, in a single execution:
+  1. Reads the `ZEALT_RUN_ID` environment variable and uses it (together with random UUID suffixes) to build collision-free `file_name` values so the script can be re-run safely.
+  2. Ingests **three** distinct documents via `client.v1.context.add(...)`, each tagged with a different `group_name` list:
+     - Document A — groups `["eng", "v1"]`, content mentions the marker string `MARKER_ENG_V1_<run-id>`.
+     - Document B — groups `["eng", "v2"]`, content mentions the marker string `MARKER_ENG_V2_<run-id>`.
+     - Document C — groups `["docs", "v1"]`, content mentions the marker string `MARKER_DOCS_V1_<run-id>`.
+     Each document's content should be a short paragraph that is *semantically related* (e.g. about an internal service or product), so that a single semantic search query can match all three before group filtering is applied.
+  3. Performs **one** search via `client.v1.context.search(...)` using the query text supplied below, with the metadata filter `group_name=["eng", "v1"]` (intersection of the `eng` and `v1` sets).
+  4. Writes the resulting contexts to `/workspace/result.json` using the schema described under *Acceptance Criteria*.
+- The script must use the real Alchemyst Cloud API (no mocking). The `ALCHEMYST_AI_API_KEY` environment variable will be available in the container.
+
+## Implementation Hints
+- Install and import the SDK: `pip install alchemystai`, then `from alchemyst_ai import AlchemystAI`.
+- Construct the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- For each `add` call, set `context_type="resource"`, `scope="internal"`, a meaningful `source` string, and pass a `metadata` dict that includes both `file_name` (unique per run) and `group_name` (list of strings). The Python SDK uses snake_case `group_name` consistently for both storage and search.
+- For the search call, pass `metadata={"group_name": ["eng", "v1"]}` and use `scope="internal"` together with a low-to-moderate `similarity_threshold` (e.g. `0.5`) so that the intersection document is reliably returned. The Alchemyst engine performs intersection across the supplied `group_name` values, so only documents tagged with both `eng` and `v1` should come back.
+- `client.v1.context.search(...)` returns a Pydantic response object; convert it via `.model_dump()` / `.to_dict()` or iterate `result.contexts` to extract `id` and `content` fields.
+- Make sure to flush/close the file after writing JSON, and exit with a non-zero status if any API call fails.
+
+## Acceptance Criteria
+- Project path: `/workspace`
+- Script entrypoint: `python3 /workspace/run_intersection.py`
+- Output file: `/workspace/result.json` containing a single JSON object with the following shape:
+  ```json
+  {
+    "query": "<the query string used for the search>",
+    "intersection_filter": ["eng", "v1"],
+    "run_id": "<value of ZEALT_RUN_ID>",
+    "results": [
+      { "id": "<context id>", "content": "<chunk content excerpt>" }
+    ]
+  }
+  ```
+- The `results` array must be non-empty and must only contain chunks whose `content` includes the `MARKER_ENG_V1_<run-id>` marker. It must **not** include any chunk whose content contains `MARKER_ENG_V2_<run-id>` or `MARKER_DOCS_V1_<run-id>`.
+- The query used for the search must be the string `What does the v1 engineering service do?`.
+- All `file_name` metadata values created by the run must include the `ZEALT_RUN_ID` value as a substring so concurrent runs do not collide.
+
+a:Tc5c,# Delete a User's Memory and Verify Removal (Alchemyst AI, Python SDK)
+
+## Background
+Alchemyst AI is a context engine that provides AI agents with persistent memory across sessions. The `alchemystai` Python SDK exposes a `v1.context.memory` resource (with `add`, `update`, and `delete` methods) and a `v1.context.search` method that searches stored context (including memory) for relevant chunks.
+
+This task exercises the *memory deletion lifecycle*: you will store a piece of memory for a single user/session, delete it through the documented Python SDK delete API, and then verify by searching that nothing referencing the memory remains.
+
+## Requirements
+- Use the official `alchemystai` Python package and the real Alchemyst AI Platform API.
+- Read the credential `ALCHEMYST_AI_API_KEY` from the environment.
+- Read the `run-id` from the `ZEALT_RUN_ID` environment variable so the task is safe to run concurrently.
+- Use UUIDs scoped by `run-id` for both `userId` and `sessionId` so each run is isolated.
+- The memory entry to insert MUST contain the text `User's nickname is Bumble`.
+- After insertion, delete the memory through `v1.context.memory.delete` (the documented delete method on the Python SDK's memory resource).
+- After deletion, search the Alchemyst context for the query `Bumble` (scoped to the same `userId`) and write the JSON result to `/workspace/post_delete_search.json`.
+- The JSON file must demonstrate that no surviving result mentions `Bumble`.
+- Log the user id, session id, and a final status line to a log file.
+
+## Implementation Hints
+- Install/import the Python SDK as `alchemyst_ai` (PyPI name: `alchemystai`).
+- Construct the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- The memory resource lives at `client.v1.context.memory`; the delete method's parameter names are documented in the SDK's `api.md` / source — read the docstring or signature if you are unsure which keyword arguments to pass.
+- Use `client.v1.context.search(...)` to verify post-deletion state; pass the same `user_id` you used when adding the memory and provide the required `query`, `similarity_threshold`, and `minimum_similarity_threshold` parameters.
+- Serialize the search result with the SDK response's `.to_dict()` / `model_dump()` (or `json.loads(json.dumps(..., default=str))`) before writing JSON.
+- Allow a brief wait (a few seconds) between writes and reads — the platform indexes asynchronously.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Log file: /home/user/myproject/output.log
+- Output artifact: /workspace/post_delete_search.json
+- The `run-id` value (from `ZEALT_RUN_ID`) MUST be embedded in both the `userId` and `sessionId` so concurrent runs do not collide.
+- The log file MUST contain lines in the following formats (one occurrence each):
+  - `UserId: <userId>`
+  - `SessionId: <sessionId>`
+  - `Status: success`
+- After execution:
+  - `/workspace/post_delete_search.json` MUST exist and contain valid JSON.
+  - When the JSON is serialized as a string, it MUST NOT contain the substring `Bumble` (case-insensitive) — i.e., no surviving search result mentions the deleted memory.
+
+b:Tc6a,# Update an Existing Document in the Alchemyst AI Context Engine
+
+## Background
+Alchemyst AI is a context engine that stores documents and makes them retrievable via semantic search. When the *same* `file_name` is added again, the API returns a `409 Conflict` because Alchemyst uses `metadata.file_name` as a deduplication key.
+
+An organization has already ingested an outdated policy document with `metadata.file_name = "policy_v1.md"`. The policy needs to be revised, but the file name must stay the same so downstream consumers keep working. You must implement the "delete-then-add" update pattern using the Alchemyst AI Python SDK.
+
+## Requirements
+- Write a Python script that, when executed, updates the existing policy document stored in Alchemyst AI.
+- Remove the old version of the document using the Alchemyst context-delete API.
+- Ingest the new version of the document using `v1.context.add` with `metadata.file_name = "policy_v1.md"` (the file name must NOT change).
+- The new document content must replace the old one. After your script runs, a semantic search for the policy must surface the **new** content, and the **old** content must no longer be retrievable.
+- The script must run end-to-end without raising an exception (including no `409 Conflict`).
+- Log the outcome to a log file so the verifier can confirm execution.
+
+## Implementation Hints
+- Read `ZEALT_RUN_ID` from the environment. The pre-existing document was ingested with `source = "policy-docs-${ZEALT_RUN_ID}"`. Reuse that exact `source` value for both delete and add so the update is scoped correctly and parallel runs do not collide.
+- Read `ALCHEMYST_AI_API_KEY` from the environment and use the `alchemystai` (`alchemyst_ai`) Python package to talk to Alchemyst.
+- The new policy content to ingest is:
+  > `Refund Policy v2: We now offer a 90-day money-back guarantee for all customers worldwide. Contact refunds@example.com to request a refund.`
+- Keep `context_type = "resource"` and `scope = "internal"` for the add call, matching the initial ingestion.
+- The Alchemyst delete endpoint operates per `source`. Refer to the Alchemyst API reference for the exact parameter names accepted by the Python SDK's `v1.context.delete` method.
+- After deleting, give the backend a brief moment before re-adding to avoid race conditions.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Log file: /home/user/myproject/output.log
+- Use the Alchemyst AI Python SDK (`alchemyst_ai` package) and the `ALCHEMYST_AI_API_KEY` environment variable.
+- The script must read `ZEALT_RUN_ID` from the environment and use `source = "policy-docs-${ZEALT_RUN_ID}"` for both the delete and the add operation.
+- The new document must be added with `metadata.file_name = "policy_v1.md"` (same file name as the original).
+- After the script runs, the log file must contain a line in the exact format `Update status: success`.
+- After the script runs, calling `v1.context.search` with a relevant query about the refund policy must return at least one context whose content contains the phrase `90-day` (the new content), and no returned context content may contain the phrase `7-day` (the old content).
+
+c:T12ac,# Update an Existing Document with the Alchemyst AI TypeScript SDK
+
+## Background
+Alchemyst AI is a managed Context Engine that stores documents for semantic retrieval. Alchemyst uses `metadata.file_name` as a deduplication key: trying to `add` a document whose `file_name` already exists in the same scope returns a `409 Conflict`. The recommended way to update an existing document is the **delete-then-add** pattern: first delete the stored document by its `file_name`, then `add` the new version with the same `file_name`.
+
+An organization has already ingested an onboarding policy into Alchemyst with a `file_name` of `onboarding_v1-${ZEALT_RUN_ID}.md` and an effective date of `2024-01-01`. The policy has been revised and now uses an effective date of `2025-05-01`. Your job is to write a Node.js + TypeScript script using the official `@alchemystai/sdk` package that applies this update against the **real** Alchemyst API.
+
+## Requirements
+- Use Node.js 20+ and the official `@alchemystai/sdk` package (already installed in the environment).
+- The script must hit the real Alchemyst API using `ALCHEMYST_AI_API_KEY` from the environment. Do **not** mock the SDK.
+- The project lives at `/home/user/update_task`. Write your script at `/home/user/update_task/index.ts`.
+- The script must implement the **delete-then-add** update pattern:
+  1. Read `ZEALT_RUN_ID` from the environment and reconstruct the existing document's `file_name` as `onboarding_v1-${ZEALT_RUN_ID}.md`.
+  2. Delete the existing document from the Alchemyst context store using its `file_name`.
+  3. Add the new version of the document with the **same** `file_name` (so downstream consumers keep working) but with the updated content.
+- The new document content must be exactly:
+  > `Onboarding Policy: Effective date: 2025-05-01. All new hires must complete onboarding within 14 days of their start date.`
+- After the script runs, a semantic search for the onboarding policy must surface the **new** content. The old phrase `Effective date: 2024-01-01` must no longer be returned by search results scoped to this run.
+- The script must run end-to-end without raising an exception (in particular, no `409 Conflict`) and write a structured log file so the verifier can confirm execution.
+
+## Implementation Hints
+- Import the SDK as the default export and construct a client with the API key:
+  - `import AlchemystAI from '@alchemystai/sdk'`
+  - `new AlchemystAI({ apiKey: process.env.ALCHEMYST_AI_API_KEY })`
+- The Alchemyst TypeScript SDK exposes context operations under `client.v1.context.*` (e.g., `add`, `delete`, `search`).
+- The deduplication key is `metadata.file_name`. When deleting by file name, consult the [Alchemyst troubleshooting docs](https://getalchemystai.com/docs/advanced/troubleshooting) and the [usage-patterns guide](https://getalchemystai.com/docs/advanced/usage-patterns) for the exact delete-then-add flow.
+- Watch out for the documented parameter inconsistency: storage uses `group_name` (snake_case) in metadata, while the TS search endpoint expects `groupName` (camelCase). Use `metadata.group_name = ["<run-id>"]` on `add`, and `metadata.groupName = ["<run-id>"]` on `search`.
+- The initial document was ingested with `context_type: "resource"`, `source: "onboarding-docs-${ZEALT_RUN_ID}"`, and `scope: "internal"`. Reuse those exact values for both the delete and the add operations so the update is scoped correctly and parallel runs do not collide.
+- After deleting, give the backend a brief moment (a few hundred milliseconds) before re-adding, to avoid race conditions.
+- The script can be executed with `npx tsx /home/user/update_task/index.ts` from the project directory.
+
+## Acceptance Criteria
+- Project path: `/home/user/update_task`
+- Log file: `/home/user/update_task/output.log`
+- The script must successfully call the real Alchemyst API (no mocks) and read `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from the environment.
+- The script must use the existing `file_name` `onboarding_v1-${ZEALT_RUN_ID}.md` for both the delete and the re-add operations (the file name must NOT change across the update).
+- After execution, `/home/user/update_task/output.log` must contain, on separate lines:
+  - A line in the exact format `Updated file_name: onboarding_v1-<run-id>.md` where `<run-id>` is the value of `ZEALT_RUN_ID`.
+  - A line in the exact format `Update status: success`.
+- After execution, calling `client.v1.context.search` (or the equivalent REST endpoint) with `metadata.groupName = ["<run-id>"]` and `scope = "internal"` for a query about the onboarding policy must return at least one context whose content contains the substring `Effective date: 2025-05-01`, and **no** returned context content may contain the substring `Effective date: 2024-01-01`.
+
+d:T107c,# List Per-User Memory Items with Alchemyst AI (Python)
+
+## Background
+Alchemyst AI is a Context Engine that stores conversational memories keyed by `user_id` and `session_id`. A common operational need is to enumerate the memory items that belong to a single end user, even when those memories were written across multiple sessions. In this task you will write a small Python program that seeds three distinct memory items for one user across two sessions and then queries the memory API to list every memory item that was stored for that user. The recovered list must be persisted as JSON for downstream auditing.
+
+## Requirements
+- Implement a Python script `run.py` that uses the official `alchemystai` Python SDK.
+- The script must:
+  - Read `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from the environment.
+  - Generate one `user_id` and two distinct `session_id` values, embedding both `ZEALT_RUN_ID` and a `uuid` component so that concurrent runs do not collide.
+  - Store **exactly three** distinct memory items for that `user_id` using `client.v1.context.memory.add(...)`:
+    - Two memories in the first session whose content includes the marker strings `MEM_ONE` and `MEM_TWO` respectively.
+    - One memory in the second session whose content includes the marker string `MEM_THREE`.
+  - Retrieve every memory item for that `user_id` via a broad call to the memory search API (`client.v1.context.memory.search(...)`) using both sessions. You may need a bounded retry loop because indexing is not always instantaneous.
+  - Build a JSON object describing the result and write it to `/workspace/memory_list.json` as UTF-8 with the following shape:
+    - `user_id` (string): the generated user id (must contain `ZEALT_RUN_ID`).
+    - `session_ids` (array of strings, length 2): the two session ids actually used.
+    - `count` (integer): the number of distinct memory items recovered for the user (must be >= 3).
+    - `contents` (array of strings): the textual content of every recovered memory item. The combined text must contain each of the markers `MEM_ONE`, `MEM_TWO`, and `MEM_THREE` at least once.
+  - Append a single line `Memory list OK: count=<count> user_id=<user_id>` to `/workspace/output.log` after `memory_list.json` is written.
+- The script must call the live Alchemyst AI API. Do not mock the SDK.
+
+## Implementation Hints
+- Install the SDK with `pip install alchemystai` and import it as `from alchemyst_ai import AlchemystAI`.
+- Instantiate the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- Memory writes go through `client.v1.context.memory.add({"user_id": ..., "session_id": ..., "content": ...})`.
+- Listing is performed via `client.v1.context.memory.search(user_id=..., session_id=...)`; iterate the `memories` attribute and read each item's `content`. Because memories are scoped per session, you will likely need to search each session id and merge the results to enumerate every entry for the user.
+- Use `uuid.uuid4().hex` together with `ZEALT_RUN_ID` to build unique `user_id` and `session_id` values so parallel evaluations do not collide.
+- Use `json.dump` (or `json.dumps`) to serialize the result, and remember to set `ensure_ascii=False` is optional but the file must be valid JSON.
+
+## Acceptance Criteria
+- Project path: /workspace
+- Run command: `python3 /workspace/run.py`
+- Output JSON file: /workspace/memory_list.json
+- Log file: /workspace/output.log
+- After the run command exits with code 0:
+  - `/workspace/memory_list.json` exists and parses as a JSON object with keys `user_id`, `session_ids`, `count`, and `contents`.
+  - `user_id` is a string containing the value of `ZEALT_RUN_ID`.
+  - `session_ids` is a list of exactly two distinct strings.
+  - `count` is an integer >= 3 and matches `len(contents)`.
+  - The concatenation of every string in `contents` contains each of the substrings `MEM_ONE`, `MEM_TWO`, and `MEM_THREE`.
+  - `/workspace/output.log` contains a line matching `Memory list OK: count=<count> user_id=<user_id>` where `<user_id>` includes the value of `ZEALT_RUN_ID`.
+- The script must isolate per-run state by deriving the `user_id` and both `session_id`s from `ZEALT_RUN_ID` so that concurrent runs do not interfere.
+
+e:Td25,# Alchemyst AI TypeScript: Filtered Search by `groupName`
+
+## Background
+The Alchemyst AI TypeScript SDK (`@alchemystai/sdk`) has a documented parameter-casing inconsistency: documents are **stored** with `metadata.group_name` (snake_case), but **searched** with `metadata.groupName` (camelCase). Write a small Node.js script that exercises this inconsistency by ingesting documents into two groups and then retrieving only one of them.
+
+## Requirements
+- Add six documents to the Alchemyst context engine using `@alchemystai/sdk`:
+  - Three documents tagged with `metadata.group_name = ["alpha-${ZEALT_RUN_ID}"]`.
+  - Three documents tagged with `metadata.group_name = ["beta-${ZEALT_RUN_ID}"]`.
+  - Every document MUST use a `metadata.file_name` that includes a fresh `uuid` suffix to avoid `409 Conflict` errors (the file name must also include `${ZEALT_RUN_ID}` so concurrent trials do not collide).
+  - Document `content` must be distinct so search results are meaningful.
+- Issue a single search via `v1.context.search` that filters by `metadata.groupName: ["alpha-${ZEALT_RUN_ID}"]` (camelCase, as required by the search API) and a `query` that is generic enough to match the alpha-group content.
+- Write the result to `/workspace/group_result.json` containing the count of returned context items and the de-duplicated, sorted list of group names observed across all returned contexts' `metadata.group_name` values.
+
+## Implementation Hints
+- Read your API key from the `ALCHEMYST_AI_API_KEY` environment variable.
+- Read the `ZEALT_RUN_ID` environment variable and use it to namespace both group names and file names so the task is safe to re-run.
+- Use the official quickstart pattern: `new AlchemystAI({ apiKey })` then `client.v1.context.add({ documents, context_type: 'resource', source: 'docs', scope: 'internal' })` for ingestion and `client.v1.context.search({ query, similarity_threshold, scope: 'internal', metadata: { groupName: [...] } })` for retrieval.
+- The search filter MUST be `groupName` (camelCase) — this is the inconsistency this task is designed to exercise.
+- Use a `similarity_threshold` low enough (e.g. 0.3-0.5) to ensure the three alpha documents are retrievable.
+- After search returns, inspect each context's `metadata.group_name` array, flatten and de-duplicate them, then sort lexicographically before writing the JSON.
+- Ingestion is asynchronous server-side; consider giving the index a short wait (e.g. ~10 seconds) before searching so the documents are indexed.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Log file: /workspace/group_result.json
+- The script is executable end-to-end from the project directory using `npm` and Node.js 20+.
+- The script reads `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from the environment.
+- `/workspace/group_result.json` MUST exist after the script completes and MUST be a JSON object with exactly these top-level keys and types:
+  ```json
+  {
+    "count": number,
+    "groups": string[]
+  }
+  ```
+  - `count` is the number of context items returned by the single search call.
+  - `groups` is the sorted, de-duplicated list of group names extracted from `metadata.group_name` across all returned contexts.
+- All returned context items MUST be tagged exclusively with the alpha group for the current `ZEALT_RUN_ID` (i.e. no beta-group contexts leak into the result).
+
+f:Tbc5,# Cross-Session Memory Recall with Alchemyst AI (Python)
+
+## Background
+Alchemyst AI is a Context Engine that provides AI agents with persistent, cross-session user memory. Memory is scoped by `user_id` and `session_id`: when the same `user_id` issues a query in a brand-new `session_id`, the engine can still surface preferences and facts stored under any prior session for that user. In this task you will write a small Python script that demonstrates this cross-session recall using the official `alchemystai` Python SDK (`v1.context.memory.add` and `v1.context.memory.search`).
+
+## Requirements
+- Implement a Python script `run.py` that:
+  - Reads the `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` environment variables.
+  - Generates a fresh `user_id` and two distinct `session_id` values (`session_a`, `session_b`) on every run so that concurrent and repeated invocations do not collide. Embed both `ZEALT_RUN_ID` and a `uuid` component in those identifiers.
+  - In `session_a`, stores a memory whose content includes the user preference text `I'm vegan` using `v1.context.memory.add`.
+  - In `session_b` (different `session_id`, **same** `user_id`), retrieves memories for that user using `v1.context.memory.search` and concatenates the textual content of every returned memory.
+  - Writes the recalled text to `/workspace/recalled.txt` (UTF-8). The file must contain the literal substring `vegan` once retrieval succeeds.
+  - Appends a single line `Recall OK: user_id=<user_id>` to `/workspace/output.log` after the file has been written.
+- The script must call the live Alchemyst AI API (no mocking) and use the `alchemystai` package.
+
+## Implementation Hints
+- Install dependencies with `pip install alchemystai`.
+- Instantiate the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- The Python SDK exposes memory APIs via `client.v1.context.memory.add({...})` and `client.v1.context.memory.search(user_id=..., session_id=...)`. Returned objects expose a `memories` collection whose items have a `content` attribute.
+- Because `user_id` and `session_id` are required for every memory call, build them deterministically from `ZEALT_RUN_ID` plus `uuid.uuid4().hex` so each run is unique and safe under parallel execution.
+- Searching may need a short retry/wait loop because indexing is not always instantaneous; keep retries bounded and fail loudly if recall never produces the preference.
+
+## Acceptance Criteria
+- Project path: /workspace
+- Log file: /workspace/output.log
+- Recall file: /workspace/recalled.txt
+- Run command: `python3 /workspace/run.py`
+- After the run command exits with code 0:
+  - `/workspace/recalled.txt` must exist and contain the substring `vegan` (case-insensitive).
+  - `/workspace/output.log` must contain a line matching `Recall OK: user_id=<user_id>` where `<user_id>` includes the value of `ZEALT_RUN_ID`.
+- The script must isolate per-run state by deriving `user_id` and both `session_id`s from `ZEALT_RUN_ID` so that concurrent runs do not interfere.
+
+10:T1237,# Cross-Session Memory Recall with Alchemyst AI (TypeScript)
+
+## Background
+[Alchemyst AI](https://getalchemystai.com/) is a Context Engine that gives AI agents persistent memory across sessions. With the official TypeScript SDK `@alchemystai/sdk`, an application can store conversational memories tied to a `sessionId` and later recall those memories from a completely different session using a semantic `query`. This task exercises that cross-session recall capability end-to-end against the real Alchemyst platform.
+
+You will build a small Node.js (TypeScript) program that:
+
+1. Generates a unique synthetic `userId`, a session A id, and a session B id.
+2. In session A, adds a memory entry stating that the user's preferred coding language is Rust.
+3. In session B (different `sessionId`, same `userId`), queries the Alchemyst memory/context for the user's preferred coding language.
+4. Writes the search result to `/workspace/recall.json`.
+
+## Requirements
+- Use Node.js 20+ and the official `@alchemystai/sdk` npm package.
+- Read the API key from the `ALCHEMYST_AI_API_KEY` environment variable (the package picks it up automatically when set; you may also pass it explicitly to the client constructor).
+- Generate fresh, unique IDs with `crypto.randomUUID()` (from Node's built-in `node:crypto`). To keep parallel runs isolated, read the `ZEALT_RUN_ID` environment variable and combine it with the random UUIDs (for example `zealt-${ZEALT_RUN_ID}-<uuid>`).
+- Add the memory entry in session A using `client.v1.context.memory.add` with a `sessionId` and a `contents` array; the stored text MUST include the literal word `Rust` (case-sensitive) and convey that it is the user's preferred coding language.
+- After adding, wait long enough for the platform to index the memory (a few seconds is sufficient) before searching.
+- From session B, search for the preference using `client.v1.context.search` with a natural-language query about the user's preferred coding language. Use `scope: "internal"` and reasonable similarity thresholds (e.g. `similarity_threshold: 0.8`, `minimum_similarity_threshold: 0.5`). If no results come back, retry the search a few times with a short delay before giving up.
+- Write the recall result to `/workspace/recall.json` as a JSON object with at least these top-level fields:
+  - `userId`: the synthetic user id used for the run.
+  - `sessionA`: the session id used to store the memory.
+  - `sessionB`: the session id used to perform the recall.
+  - `query`: the natural-language query string sent to `context.search`.
+  - `contexts`: the array returned by the SDK (use the SDK's `contexts` field as-is; each entry should preserve its `content` and any score/timestamp fields).
+- The final state of `/workspace/recall.json` MUST contain at least one entry in `contexts` whose `content` field mentions `Rust`.
+
+## Implementation Hints
+- Install the SDK with `npm install @alchemystai/sdk` and write your program in TypeScript; you can run it via `tsx`, `ts-node`, or by compiling with `tsc` and then running with `node`.
+- The client is constructed as `new AlchemystAI({ apiKey: process.env.ALCHEMYST_AI_API_KEY })` (default import from `@alchemystai/sdk`).
+- `client.v1.context.memory.add` takes `{ sessionId, contents: [{ content: "..." }], metadata? }`. The platform-side user identity is bound to the API key, so the `userId` you generate is application-side metadata; you may also embed it inside the stored `content` string so semantic search can find it.
+- `client.v1.context.search` returns `{ contexts: Array<{ content?: string; score?: number; ... }> }`.
+- Use `fs/promises` to write the JSON file. Make sure the file is valid JSON.
+- Indexing is not instantaneous; consider polling with a few retries until a Rust-related context is returned, then write the file.
+- Use a sensible exit code: `0` on success, non-zero on failure.
+
+## Acceptance Criteria
+- Project path: `/workspace`
+- Log file: `/workspace/run.log` (capture stdout/stderr of the script there; include the chosen `userId`, `sessionA`, `sessionB`, and the search response summary).
+- Output file: `/workspace/recall.json`
+- The script reads `ZEALT_RUN_ID` from the environment and uses it as part of every generated id.
+- `/workspace/recall.json` must be valid JSON and contain top-level keys `userId`, `sessionA`, `sessionB`, `query`, and `contexts` (an array).
+- `sessionA` and `sessionB` must differ from each other.
+- At least one element of `contexts` must have a `content` field that contains the substring `Rust` (case-sensitive).
+- The script must successfully complete the add-then-search flow against the real Alchemyst AI API (no mocking).
+
+11:T10d3,# Rate Limit Resilience with Alchemyst AI Python SDK
+
+## Background
+Production RAG systems frequently issue bursts of search requests against the Alchemyst AI Context Engine. When request volume exceeds the platform limit (1000 requests/minute), the API responds with HTTP `429 RateLimit`. A resilient client must transparently retry these requests using exponential backoff so end users see no failures.
+
+Your job is to write a Python script that exercises the Alchemyst AI Python SDK's built-in retry capabilities by ingesting a small corpus and then hammering the search endpoint with a burst of concurrent requests. The script must accurately track retry behavior and emit a structured report.
+
+## Requirements
+- Ingest exactly 3 documents into the Alchemyst AI Context Engine using `client.v1.context.add` (Python SDK).
+- Each ingested document must use a per-run-unique `file_name` in metadata (UUID-based) so concurrent task runs do not collide with `409 Conflict`.
+- After ingestion, fire exactly 20 concurrent `client.v1.context.search` requests against the same query using threads or asyncio.
+- Use the SDK's documented retry capability (e.g., `client.with_options(max_retries=...)`) to automatically retry `429 RateLimit` responses with exponential backoff.
+- Set `max_retries` to at least 5 so transient rate-limit responses are handled gracefully.
+- For every search attempt (including each retry), record whether it observed a 429 and the wall-clock time spent waiting before its successful response.
+- Write a JSON report to `/home/user/myproject/backoff_report.json` summarizing the burst.
+- All 20 search requests must eventually succeed.
+
+## Implementation Hints
+- Read the run-id from the `ZEALT_RUN_ID` environment variable and use it inside each document's `file_name` (e.g., `f"rl-doc-{run_id}-{uuid4().hex}.txt"`).
+- Read `ALCHEMYST_AI_API_KEY` from the environment (already set in the task environment).
+- Concurrency can be achieved with `concurrent.futures.ThreadPoolExecutor`, `asyncio.gather` with `AsyncAlchemystAI`, or a similar primitive.
+- Use `client.with_options(max_retries=...)` (or pass `max_retries=` to the client constructor) to control the SDK's automatic retry of `429` responses.
+- To capture whether a 429 was observed without disabling retries, you can wrap each call with `time.perf_counter()` around the SDK call. A request that takes substantially longer than the baseline median latency very likely retried; alternatively, you can subclass/monkeypatch the SDK's HTTP layer or use `with_raw_response` plus a manual loop. Either approach is acceptable as long as the final report is accurate.
+- The simplest robust approach is: perform each search in a manual try/except loop using `client.with_options(max_retries=0)` so you fully control the backoff and can count 429s precisely; use `alchemyst_ai.RateLimitError` to detect 429s; sleep using exponential backoff (e.g., `base * 2**attempt + jitter`); record the maximum backoff delay actually slept across all attempts.
+- Whichever strategy you choose, the four fields in the report must be populated truthfully.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Log file: /home/user/myproject/backoff_report.json
+- Entrypoint command: `python3 /home/user/myproject/run.py`
+- The script must read `run-id` from the `ZEALT_RUN_ID` environment variable and use it to disambiguate document `file_name` values.
+- Exactly 3 documents are ingested via `client.v1.context.add`; each document has a metadata `file_name` containing the current `run-id`.
+- Exactly 20 concurrent search requests are issued.
+- The file `/home/user/myproject/backoff_report.json` must exist after the script completes successfully.
+- The JSON file must contain exactly these top-level fields with the documented types:
+  ```json
+  {
+    "total_requests": number,
+    "successful_requests": number,
+    "encountered_429": number,
+    "max_backoff_delay_seconds": number
+  }
+  ```
+- `total_requests` must equal `20`.
+- `successful_requests` must equal `total_requests` (all 20 search calls eventually succeed).
+- `encountered_429` must be a non-negative integer (0 is acceptable if no rate limit was hit during the run).
+- `max_backoff_delay_seconds` must be a non-negative number (0 is acceptable if no retry was required).
+
+12:T106e,# Scope-Filtered Context Search with the Alchemyst AI Python SDK
+
+## Background
+[Alchemyst AI](https://getalchemystai.com/) is a Context Engine that organises ingested documents along several dimensions. One of those dimensions is `scope`, an enum with the values `internal` and `external` (default `internal`). Documents stored under one scope must not surface when a search is filtered by the other scope.
+
+In this task you will use the official Python SDK (`alchemystai` package, imported as `alchemyst_ai`) to demonstrate this scope partitioning end-to-end against the real Alchemyst Cloud API.
+
+## Requirements
+- Write a Python 3.11 script that, in a single execution:
+  1. Reads the `ZEALT_RUN_ID` environment variable and uses it (together with random UUID suffixes) to build collision-free `file_name` values so the script can be re-run safely.
+  2. Ingests **four** documents via `client.v1.context.add(...)`:
+     - Two documents with `scope="internal"`, whose content includes the marker `MARKER_INTERNAL_<run-id>`.
+     - Two documents with `scope="external"`, whose content includes the marker `MARKER_EXTERNAL_<run-id>`.
+     Each document's content should be a short, semantically-related paragraph (e.g. about a company knowledge-base entry) so that a single semantic search query can match all four before scope filtering is applied.
+  3. Performs **two** searches via `client.v1.context.search(...)` against the same query string, one with `scope="internal"` and one with `scope="external"`.
+  4. Writes a summary of the two searches to `/workspace/scope_report.json` using the schema described under *Acceptance Criteria*.
+- The script must use the real Alchemyst Cloud API (no mocking). The `ALCHEMYST_AI_API_KEY` environment variable will be available in the container.
+
+## Implementation Hints
+- Install and import the SDK: `pip install alchemystai`, then `from alchemyst_ai import AlchemystAI`.
+- Construct the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- For each `add` call, set `context_type="resource"`, a meaningful `source` string, the appropriate `scope` value, and a `metadata` dict whose `file_name` is unique per run (include `ZEALT_RUN_ID` and a UUID suffix).
+- For the two search calls, reuse the same `query` string, use a low-to-moderate `similarity_threshold` (e.g. `0.5`) so the documents are reliably returned, and only change the `scope` value between calls. The Alchemyst engine partitions results strictly by scope, so an `internal` search must not return `external` chunks and vice versa.
+- `client.v1.context.search(...)` returns a Pydantic response object; convert it via `.model_dump()` / `.to_dict()` or iterate `result.contexts` to extract `id` and `content` fields.
+- Make sure to flush/close the file after writing JSON, and exit with a non-zero status if any API call fails.
+
+## Acceptance Criteria
+- Project path: `/workspace`
+- Script entrypoint: `python3 /workspace/run_scope_search.py`
+- Output file: `/workspace/scope_report.json` containing a single JSON object with the following shape:
+  ```json
+  {
+    "query": "<the query string used for both searches>",
+    "run_id": "<value of ZEALT_RUN_ID>",
+    "internal": {
+      "count": <number of items returned by the internal-scope search>,
+      "results": [
+        { "id": "<context id>", "content": "<chunk content excerpt>" }
+      ]
+    },
+    "external": {
+      "count": <number of items returned by the external-scope search>,
+      "results": [
+        { "id": "<context id>", "content": "<chunk content excerpt>" }
+      ]
+    }
+  }
+  ```
+- Both `internal.results` and `external.results` arrays must be non-empty.
+- Each item in `internal.results` must contain the marker `MARKER_INTERNAL_<run-id>` in its `content` and must NOT contain `MARKER_EXTERNAL_<run-id>`.
+- Each item in `external.results` must contain the marker `MARKER_EXTERNAL_<run-id>` in its `content` and must NOT contain `MARKER_INTERNAL_<run-id>`.
+- `internal.count` and `external.count` must equal the lengths of their respective `results` arrays.
+- All `file_name` metadata values created by the run must include the `ZEALT_RUN_ID` value as a substring so concurrent runs do not collide.
+
+13:Tb8c,# Shared Team Session Memory with Alchemyst AI (TypeScript SDK)
+
+## Background
+Alchemyst AI's memory API supports team collaboration scenarios where multiple `userId`s share the same `sessionId`, creating a shared memory space. In this task, you will simulate two teammates collaborating in the same session: user A stores a project codename, and user B later searches the shared session memory to recall it.
+
+## Requirements
+- Use the `@alchemystai/sdk` TypeScript SDK to interact with the Alchemyst AI Memory API.
+- Generate two distinct user IDs (`userA`, `userB`) and one shared session ID using `crypto.randomUUID()`, then append the current `run-id` (from the `ZEALT_RUN_ID` environment variable) to each identifier to keep concurrent runs isolated.
+- As user A, add a memory containing the sentence `Project codename is Falcon` under the shared session.
+- As user B, search the memory under the **same** `sessionId` (but with userB's `userId`) and persist the recalled content.
+- Write a JSON report of the recall to `/workspace/team_recall.json`.
+- Write a log of the full run to `/workspace/output.log`.
+
+## Implementation Hints
+- Authenticate the SDK with the `ALCHEMYST_AI_API_KEY` environment variable.
+- The TypeScript memory client lives at `client.v1.context.memory` and exposes `add` and `search` operations. Both `userId` and `sessionId` are required.
+- Generate fresh UUIDs at runtime so that repeated executions do not collide; suffix them with `ZEALT_RUN_ID` for parallel-run safety.
+- After user B's search, extract the recalled memory contents (an array of strings/objects from `memories`) and serialize them to the recall report.
+- Allow a short propagation delay after adding the memory before searching, so the search call can locate the freshly added entry.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Log file: /workspace/output.log
+- Recall report: /workspace/team_recall.json
+- The script must be executable with: `node --experimental-vm-modules /home/user/myproject/index.mjs` (or via `npm start` from the project directory).
+- The script must read `ZEALT_RUN_ID` from the environment and incorporate it into both `userId` values and the `sessionId`.
+- `/workspace/team_recall.json` must be a JSON object with the following shape:
+  ```json
+  {
+    "userA": string,
+    "userB": string,
+    "sessionId": string,
+    "recalled": string[]
+  }
+  ```
+  where `recalled` is the list of memory content strings that user B retrieved from the shared session.
+- The `recalled` array must include at least one entry that contains the substring `Falcon` (case-sensitive).
+- `userA` and `userB` must be different strings, but both must contain the value of `ZEALT_RUN_ID` as a suffix.
+- `sessionId` must contain the value of `ZEALT_RUN_ID` as a suffix.
+- `/workspace/output.log` must contain a line of the form `Recall complete: <session_id>` where `<session_id>` matches the `sessionId` written to the recall report.
+
+14:Te3d,# Demonstrate `similarity_threshold` Sensitivity with the Alchemyst AI Python SDK
+
+## Background
+Alchemyst AI is a Context Engine that ingests documents and retrieves relevant chunks based on semantic similarity. The `v1.context.search` API accepts a `similarity_threshold` parameter (typically between 0.0 and 1.0) that controls how strict the retrieval is: low values increase recall (return more, possibly loosely related chunks), while high values increase precision (return only very strong matches).
+
+In this task, you will use the Python SDK `alchemystai` to ingest a small corpus that contains both directly relevant and loosely related documents about a specific topic. You will then issue two searches against the same query with different `similarity_threshold` values (`0.5` and `0.9`) and persist the count of returned context chunks for each search to a JSON report file.
+
+## Requirements
+- Use the official Python SDK package `alchemystai` (import path: `alchemyst_ai`).
+- Read the API key from the `ALCHEMYST_AI_API_KEY` environment variable.
+- Read the current run identifier from the `ZEALT_RUN_ID` environment variable. Use it to make every ingested document's `file_name` metadata unique per run (e.g. `<base-name>-${ZEALT_RUN_ID}.md`) so the task is safe to run concurrently and is retryable against the shared Alchemyst tenant.
+- Ingest at least five documents into the Alchemyst context engine using `client.v1.context.add`:
+  - At least two documents whose content is directly about the query topic (the company's refund / money-back policy).
+  - At least three documents whose content is on loosely related topics (e.g. shipping, privacy, returns of damaged items, general customer support).
+  - Each ingested document MUST set `metadata.file_name` to a unique value that includes the run id.
+  - Use `context_type="resource"`, `source="docs"`, and `scope="internal"` for ingestion.
+- After ingestion, perform two searches with `client.v1.context.search` using the SAME query string `"What is the refund policy?"` and `scope="internal"`:
+  - First search: `similarity_threshold=0.5`.
+  - Second search: `similarity_threshold=0.9`.
+- Write the result counts to `/workspace/threshold_report.json` with the exact schema described in the Acceptance Criteria.
+
+## Implementation Hints
+- Instantiate the client with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- The search response object exposes a `contexts` list; count its length for each threshold.
+- Because Alchemyst rejects duplicate `file_name`s with HTTP 409, derive file names from the run id to keep them unique on every run.
+- After ingestion, you may need to give the index a brief moment before searching.
+- Ensure the script exits with a non-zero status if any API call fails so problems are surfaced clearly.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Output file: /workspace/threshold_report.json
+- The output file MUST be valid JSON with exactly the following top-level shape:
+
+  ```json
+  {
+    "query": "What is the refund policy?",
+    "threshold_0_5_count": <non-negative integer>,
+    "threshold_0_9_count": <non-negative integer>,
+    "run_id": "<value of ZEALT_RUN_ID>"
+  }
+  ```
+
+- `threshold_0_5_count` and `threshold_0_9_count` MUST both be non-negative integers reflecting the actual number of chunks returned by the two real Alchemyst searches (no mocking).
+- The relationship `threshold_0_5_count >= threshold_0_9_count` MUST hold, demonstrating that lowering `similarity_threshold` does not reduce recall.
+- `run_id` in the report MUST match the value of the `ZEALT_RUN_ID` environment variable at run time.
+
+15:T1753,# Multi-Day Customer Support Ticket with Alchemyst AI Memory (TypeScript)
+
+## Background
+[Alchemyst AI](https://getalchemystai.com/) is a Context Engine that gives AI agents persistent memory across sessions. Real-world customer support tickets often span several days: a customer reports an issue on day 1, the support team adds investigation notes on day 2, and on day 3 the customer asks for an update. The agent that handles day 3 must reconstruct everything that has happened so far from durable memory, not from in-process state.
+
+In this task you will build a small Node.js (TypeScript) program that simulates this multi-day flow against the **real** Alchemyst platform. The program runs all three "days" in a single invocation (no need to actually sleep between days), uses `@alchemystai/sdk` to persist and retrieve memories, and uses the Vercel AI SDK (`ai` + `@ai-sdk/openai`) with OpenAI to produce a final status summary that demonstrates the agent has access to the full ticket history.
+
+## Requirements
+- Use Node.js 20+, the official `@alchemystai/sdk` package, the Vercel AI SDK `ai` package, and `@ai-sdk/openai`.
+- Read credentials from environment variables:
+  - `ALCHEMYST_AI_API_KEY` for the Alchemyst client.
+  - `OPENAI_API_KEY` for the Vercel AI SDK OpenAI provider.
+- Read the `ZEALT_RUN_ID` environment variable and build run-isolated identifiers so that parallel runs cannot collide. In particular:
+  - The synthetic customer `userId` MUST contain the value of `ZEALT_RUN_ID` as a substring.
+  - The support ticket `sessionId` MUST contain the value of `ZEALT_RUN_ID` as a substring **and** MUST start with the literal prefix `ticket-` (e.g. `ticket-${ZEALT_RUN_ID}-<random>`).
+  - The same `userId`/`sessionId` pair MUST be used for all three days in the same run.
+- Persist the following memory entries via `client.v1.context.memory.add`, both bound to the same `userId` and the same `sessionId`:
+  - **Day 1 (customer message)**: the stored text MUST include the literal substring `order #12345` and convey that the customer is reporting that the order has not arrived.
+  - **Day 2 (support agent update)**: the stored text MUST include the literal substring `shipping carrier delay` and convey that the support team is investigating the issue.
+- On **Day 3**, the program MUST:
+  1. Search Alchemyst memory using `client.v1.context.memory.search` (or `client.v1.context.search`) scoped to the same `userId` and `sessionId` to recover the day-1 and day-2 entries. Retry a few times with a short delay if the platform has not finished indexing yet.
+  2. Call an OpenAI chat model through the Vercel AI SDK (e.g. `generateText({ model: openai('gpt-4o-mini'), ... })`) and pass the retrieved memory entries to the model as conversational context. The user prompt on day 3 is: `What is the status of my order?`.
+  3. Write the model's natural-language reply to `/workspace/summary.txt` exactly as returned by the model (UTF-8, no JSON wrapping). The summary MUST contain both the substring `12345` and the substring `shipping carrier` (case-sensitive) so the verifier can confirm the model actually used the recalled context. Do not hard-code those strings into the file; they must come from the LLM output.
+- Also write a structured trace of the run to `/workspace/run.log` as JSON with at least the following fields: `runId`, `userId`, `sessionId`, `day1Stored`, `day2Stored`, `memoriesFound` (the number of memory entries returned by the day-3 search), and `summaryPath`.
+- Use a sensible exit code: `0` on success, non-zero on any failure (missing env vars, API errors after retries, model output that does not mention both required substrings, etc.).
+
+## Implementation Hints
+- Install dependencies with `npm install @alchemystai/sdk ai @ai-sdk/openai` and run TypeScript via `tsx`, `ts-node`, or by compiling with `tsc` and executing the output with `node`.
+- The Alchemyst client is constructed as `new AlchemystAI({ apiKey: process.env.ALCHEMYST_AI_API_KEY })` (default import from `@alchemystai/sdk`). The memory API lives under `client.v1.context.memory`.
+- Memory add accepts `{ sessionId, contents: [{ content: "..." }] }`. You may embed the `userId` inside the stored `content` so semantic search can find it, but you MUST also pass it as the structured `userId` field if the SDK exposes one.
+- For the day-3 LLM call, use the Vercel AI SDK pattern documented by Alchemyst: import `generateText` from `ai`, import `openai` from `@ai-sdk/openai`, and pass the recalled memories as part of the prompt or message history. You do **not** have to use `withAlchemyst` / `alchemystTools` for this task; manually retrieving memory and feeding it into `generateText` is acceptable and easier to control.
+- Indexing is not instantaneous; consider polling the memory search a few times before giving up.
+- Keep the LLM temperature low so the response stays grounded in the retrieved context.
+- Use `fs/promises` (or `node:fs/promises`) to write `/workspace/summary.txt` and `/workspace/run.log`.
+
+## Acceptance Criteria
+- Project path: `/workspace`
+- Output files:
+  - `/workspace/summary.txt` - the day-3 LLM reply. UTF-8 plain text. MUST contain both `12345` and `shipping carrier` (case-sensitive) as substrings.
+  - `/workspace/run.log` - JSON object containing at least the fields `runId`, `userId`, `sessionId`, `day1Stored`, `day2Stored`, `memoriesFound`, and `summaryPath`. `userId` and `sessionId` MUST contain the value of `ZEALT_RUN_ID`, and `sessionId` MUST start with `ticket-`.
+- The script must successfully complete the day-1 add, day-2 add, day-3 search, and day-3 LLM summarization against the real Alchemyst AI API and the real OpenAI API (no mocking).
+- Verification will independently query the Alchemyst platform with the `sessionId` written to `run.log` and expect to find at least one stored memory whose content mentions `order #12345` and at least one stored memory whose content mentions `shipping carrier delay`.
+
+16:T120f,# SyllabAI-Style Syllabus Q&A with Alchemyst AI (Python SDK)
+
+## Background
+You are building a script inspired by [SyllabAI](https://getalchemystai.com/docs/example-projects/team/syllabai) that turns a course syllabus into an interactive study assistant. Using the Alchemyst AI Python SDK (`alchemystai`), you will ingest several excerpts from a Math 101 syllabus as separate documents into the Alchemyst context engine, then issue three different questions **in parallel** to retrieve the most relevant snippet for each question. The top retrieved snippet per question must be written to a structured JSON answer file.
+
+## Requirements
+- Use the Alchemyst AI Python SDK (`alchemystai`) authenticated via the `ALCHEMYST_AI_API_KEY` environment variable.
+- Read the `ZEALT_RUN_ID` environment variable and use it to isolate this trial's documents from concurrent runs. Append `${ZEALT_RUN_ID}` as a third element of the `group_name` array so that ingestion and searches stay scoped to this run.
+- Ingest **5 separate syllabus excerpt documents** (one document per `client.v1.context.add` document entry) covering at least: the **midterm exam date**, the **required textbook**, the **grading policy**, the **office hours**, and the **course description**. Each document must include a metadata dict with:
+    - A **unique `file_name`** generated with `uuid.uuid4()` (e.g., `syllabus-<uuid4>.md`).
+    - `group_name = ["syllabus", "math101", "${ZEALT_RUN_ID}"]` (the literal strings `syllabus` and `math101`, plus the run-id read from the environment).
+- Issue the following three questions **in parallel** (e.g., with a thread pool or `asyncio`) against the Alchemyst context engine, filtered to the run-scoped group via `metadata={"group_name": [..., "${ZEALT_RUN_ID}"]}`:
+    1. `When is the midterm?`
+    2. `What textbook is required?`
+    3. `What is the grading policy?`
+- For each question, take the **top (highest-ranked) snippet** returned by `client.v1.context.search` and record it.
+- Write the structured answers to `/workspace/syllabus_answers.json` using the schema described in Acceptance Criteria.
+
+## Implementation Hints
+- Initialize the SDK with `AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- Use `client.v1.context.add(...)` with `context_type="resource"`, `source="syllabus"`, `scope="internal"` to ingest the excerpts. All 5 documents may be sent in a single `add` call (one entry per document) or one at a time — what matters is that they each carry distinct content and a unique `file_name`.
+- After ingestion, allow a short delay (a few seconds) for indexing before searching.
+- For the parallel search step, you can use `concurrent.futures.ThreadPoolExecutor` and submit one `client.v1.context.search(...)` call per question, or use `asyncio.to_thread` + `asyncio.gather`.
+- Use `similarity_threshold=0.5` (or lower) to ensure each question retrieves at least one snippet. Always pass the run-scoped `group_name` filter.
+- The Python SDK returns search results where each context has a `.content` attribute (or `content` key). Pick the first (top) item from `result.contexts`.
+- The output JSON file path is `/workspace/syllabus_answers.json`. Make sure `/workspace` exists.
+
+## Acceptance Criteria
+- Project path: /workspace
+- Output file: /workspace/syllabus_answers.json
+- The script must be invoked exactly via: `python3 /workspace/syllabus_qa.py`
+- Read `ZEALT_RUN_ID` from the environment and use it inside `group_name` for both ingestion and search.
+- 5 documents are added to the Alchemyst context engine within the group `["syllabus", "math101", "${ZEALT_RUN_ID}"]`, each with a unique `file_name` metadata value.
+- `/workspace/syllabus_answers.json` exists after the run, is valid JSON, and matches this schema:
+
+    ```json
+    {
+      "run_id": "<value of ZEALT_RUN_ID>",
+      "answers": [
+        {"question": "When is the midterm?", "snippet": "<top retrieved snippet text>"},
+        {"question": "What textbook is required?", "snippet": "<top retrieved snippet text>"},
+        {"question": "What is the grading policy?", "snippet": "<top retrieved snippet text>"}
+      ]
+    }
+    ```
+
+- The `answers` list must contain exactly the three questions above, in any order. Each snippet must be a non-empty string drawn from the documents you ingested.
+- The snippet for `When is the midterm?` must contain the substring `October 15` (case-insensitive).
+- The snippet for `What textbook is required?` must contain the substring `Stewart` (case-insensitive).
+- The snippet for `What is the grading policy?` must contain the substring `Homework 30%` (case-insensitive).
+
+17:T10a7,# Cross-Session Memory with Vercel AI SDK + Alchemyst Middleware (TypeScript)
+
+## Background
+Alchemyst AI provides a `withAlchemyst` middleware for the Vercel AI SDK that transparently wires automatic cross-session memory into calls such as `generateText`. By calling the wrapped function with `userId` and `sessionId`, the middleware retrieves prior memories for that user, augments the LLM prompt, and stores new exchanges so future sessions can recall them.
+
+In this task you will build a small Node.js/TypeScript program that uses `withAlchemyst` together with `generateText` from the `ai` package to demonstrate cross-session memory: a fact is stated by the user in one session, and a different session (different `sessionId`, same `userId`) is then able to recall that fact.
+
+## Requirements
+- Project must be written in TypeScript and runnable on Node.js 20+.
+- Wrap the Vercel AI SDK `generateText` function with `withAlchemyst` from the `@alchemystai/aisdk` package, using `process.env.ALCHEMYST_AI_API_KEY` for authentication.
+- Use an OpenAI chat model via the Vercel AI SDK (`@ai-sdk/openai`); authenticate with `process.env.OPENAI_API_KEY`.
+- Read the `run-id` from the `ZEALT_RUN_ID` environment variable and use it to scope user/session identifiers so concurrent runs do not collide.
+- The program must perform two calls to the wrapped `generateText`:
+  1. **Session A (write)**: With `userId = harbor-user-${run-id}` and `sessionId = session-a-${run-id}`, send a prompt that tells the assistant the user's favorite web framework is **Svelte** (for example, "Please remember that my favorite web framework is Svelte."). This call must succeed and its result must be stored as memory by the middleware.
+  2. **Session B (read)**: With the same `userId = harbor-user-${run-id}` but a **different** `sessionId = session-b-${run-id}`, send a prompt asking what the user's favorite web framework is (for example, "Based on what you remember about me, what is my favorite web framework? Answer in one sentence."). The assistant response (`response.text`) must mention `Svelte`.
+- After Session B returns, write the Session B response text (the value of `response.text`) to `/workspace/answer.txt` (UTF-8, no extra wrapping or JSON encoding).
+- Both calls must run sequentially in the same process invocation (Session A first, then Session B), so the memory written by Session A is available to Session B.
+
+## Implementation Hints
+- The Alchemyst AI SDK documentation shows the wrapper pattern:
+  ```ts
+  import { generateText } from 'ai';
+  import { withAlchemyst } from '@alchemystai/aisdk';
+  const generateTextWithMemory = withAlchemyst(generateText, { apiKey: process.env.ALCHEMYST_AI_API_KEY });
+  ```
+- Pass `userId` and `sessionId` directly to the wrapped function alongside `model` and `prompt`.
+- For the OpenAI model, you can use the `@ai-sdk/openai` provider (e.g., `openai('gpt-4o-mini')`). The `OPENAI_API_KEY` environment variable is picked up automatically.
+- Make sure the second call uses a different `sessionId` than the first to demonstrate cross-session recall (same `userId`).
+- Mention Svelte explicitly and unambiguously in the Session A prompt so that the memory can be retrieved reliably.
+- Use the `run-id` from `ZEALT_RUN_ID` in both `userId` and `sessionId` so the test data is isolated per run.
+- Be sure to install dependencies (`ai`, `@ai-sdk/openai`, `@alchemystai/aisdk`) and configure TypeScript to compile/execute (e.g., via `tsx` or `ts-node`).
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Output file: /workspace/answer.txt
+- The program must be runnable from the project directory with a single command (for example, `npm start` or `npx tsx index.ts`).
+- The program must read `ZEALT_RUN_ID`, `ALCHEMYST_AI_API_KEY`, and `OPENAI_API_KEY` from environment variables.
+- The program must use the wrapped `generateText` (via `withAlchemyst`) for both Session A and Session B.
+- After execution:
+  - The file `/workspace/answer.txt` must exist.
+  - The file content must be the textual response from Session B (i.e., `response.text` of the second wrapped call).
+  - The content must contain the substring `svelte` (case-insensitive), demonstrating that memory from Session A was recalled in Session B.
+
+0:{"buildId":"u3M5CrVWeDnjFBFl0bBr8","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-background text-foreground font-sans selection:bg-primary/20","children":[["$","div",null,{"className":"fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#2a2a2a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 dark:opacity-40"}],["$","$2",null,{"fallback":["$","div",null,{"className":"container mx-auto py-8 text-center","children":"Loading tasks..."}],"children":["$","$L3",null,{"tasksData":[{"taskName":"basic_rag_search_py","instruction":"$4","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"basic_rag_search_py__wqUQrcv","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":649.202,"latency_breakdown":{"env_setup":11.87,"agent_setup":12.764,"agent_exec":600.111,"verifier":1.478},"taskName":"basic_rag_search_py","jobId":"wqUQrcv","exec_duration":600.111}]},{"taskName":"basic_rag_search_ts","instruction":"$5","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"basic_rag_search_ts__urKCMFy","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":290.042,"latency_breakdown":{"env_setup":11.708,"agent_setup":15.72,"agent_exec":247.78,"verifier":1.311},"taskName":"basic_rag_search_ts","jobId":"urKCMFy","exec_duration":247.78}]},{"taskName":"batch_document_upload_py","instruction":"$6","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"batch_document_upload_py__iUYymMd","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":668.943,"latency_breakdown":{"env_setup":22.519,"agent_setup":12.856,"agent_exec":600.134,"verifier":20.821},"taskName":"batch_document_upload_py","jobId":"iUYymMd","exec_duration":600.134}]},{"taskName":"cli_chatbot_context_py","instruction":"$7","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"cli_chatbot_context_py__eXF3YKc","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":313.317,"latency_breakdown":{"env_setup":3.776,"agent_setup":12.927,"agent_exec":273.902,"verifier":8.797},"taskName":"cli_chatbot_context_py","jobId":"eXF3YKc","exec_duration":273.902}]},{"taskName":"conflict_409_handling_py","instruction":"$8","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"conflict_409_handling_py__svryFL9","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":45.091,"latency_breakdown":{"env_setup":11.717,"agent_setup":15.492,"agent_exec":2.067,"verifier":null},"taskName":"conflict_409_handling_py","jobId":"svryFL9","exec_duration":2.067}]},{"taskName":"context_intersection_groups_py","instruction":"$9","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"context_intersection_groups_py__nmgVFLL","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":278.354,"latency_breakdown":{"env_setup":11.647,"agent_setup":21.996,"agent_exec":229.944,"verifier":0.88},"taskName":"context_intersection_groups_py","jobId":"nmgVFLL","exec_duration":229.944}]},{"taskName":"delete_memory_by_user_py","instruction":"$a","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"delete_memory_by_user_py__3x9Jckg","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":627.921,"latency_breakdown":{"env_setup":3.492,"agent_setup":11.177,"agent_exec":600.106,"verifier":0.584},"taskName":"delete_memory_by_user_py","jobId":"3x9Jckg","exec_duration":600.106}]},{"taskName":"document_update_cycle_py","instruction":"$b","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"document_update_cycle_py__87KUBMo","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":44.689,"latency_breakdown":{"env_setup":4.25,"agent_setup":16.174,"agent_exec":4.66,"verifier":null},"taskName":"document_update_cycle_py","jobId":"87KUBMo","exec_duration":4.66}]},{"taskName":"document_update_cycle_ts","instruction":"$c","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"document_update_cycle_ts__sHzCJbq","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":46.279,"latency_breakdown":{"env_setup":11.62,"agent_setup":13.392,"agent_exec":5.418,"verifier":null},"taskName":"document_update_cycle_ts","jobId":"sHzCJbq","exec_duration":5.418}]},{"taskName":"list_memory_items_py","instruction":"$d","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"list_memory_items_py__6Wuympf","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":303.599,"latency_breakdown":{"env_setup":4.073,"agent_setup":11.829,"agent_exec":274.203,"verifier":0.596},"taskName":"list_memory_items_py","jobId":"6Wuympf","exec_duration":274.203}]},{"taskName":"metadata_group_filter_search_ts","instruction":"$e","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"metadata_group_filter_search_ts__u3k8fCt","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":215.696,"latency_breakdown":{"env_setup":13.003,"agent_setup":13.396,"agent_exec":169.911,"verifier":6.488},"taskName":"metadata_group_filter_search_ts","jobId":"u3k8fCt","exec_duration":169.911}]},{"taskName":"multi_session_memory_py","instruction":"$f","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"multi_session_memory_py__qeP7sXR","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":null,"error":true,"latency_sec":25.089,"latency_breakdown":{"env_setup":3.863,"agent_setup":8.255,"agent_exec":null,"verifier":null},"taskName":"multi_session_memory_py","jobId":"qeP7sXR","exec_duration":25.089}]},{"taskName":"multi_session_memory_ts","instruction":"$10","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"multi_session_memory_ts__fj7LUuh","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":116.168,"latency_breakdown":{"env_setup":7.766,"agent_setup":14.248,"agent_exec":79.954,"verifier":1.277},"taskName":"multi_session_memory_ts","jobId":"fj7LUuh","exec_duration":79.954}]},{"taskName":"rate_limit_backoff_py","instruction":"$11","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"rate_limit_backoff_py__AZ9is7J","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":199.633,"latency_breakdown":{"env_setup":22.839,"agent_setup":12.199,"agent_exec":150.588,"verifier":1.466},"taskName":"rate_limit_backoff_py","jobId":"AZ9is7J","exec_duration":150.588}]},{"taskName":"scope_filtered_search_py","instruction":"$12","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"scope_filtered_search_py__Wk6RKVx","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":253.995,"latency_breakdown":{"env_setup":11.836,"agent_setup":12.056,"agent_exec":214.912,"verifier":0.849},"taskName":"scope_filtered_search_py","jobId":"Wk6RKVx","exec_duration":214.912}]},{"taskName":"shared_team_session_ts","instruction":"$13","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"shared_team_session_ts__m9XGTMc","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":630.106,"latency_breakdown":{"env_setup":3.983,"agent_setup":12.242,"agent_exec":600.102,"verifier":0.618},"taskName":"shared_team_session_ts","jobId":"m9XGTMc","exec_duration":600.102}]},{"taskName":"similarity_threshold_recall_py","instruction":"$14","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"similarity_threshold_recall_py__Fdpte2w","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":630.734,"latency_breakdown":{"env_setup":3.776,"agent_setup":13.086,"agent_exec":600.108,"verifier":0.758},"taskName":"similarity_threshold_recall_py","jobId":"Fdpte2w","exec_duration":600.108}]},{"taskName":"support_ticket_memory_ts","instruction":"$15","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"support_ticket_memory_ts__JxMh36N","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":113.283,"latency_breakdown":{"env_setup":3.838,"agent_setup":13.098,"agent_exec":83.173,"verifier":0.583},"taskName":"support_ticket_memory_ts","jobId":"JxMh36N","exec_duration":83.173}]},{"taskName":"syllabus_qa_py","instruction":"$16","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"syllabus_qa_py__gndDMG5","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":false,"latency_sec":259.779,"latency_breakdown":{"env_setup":3.99,"agent_setup":18.633,"agent_exec":208.936,"verifier":15.755},"taskName":"syllabus_qa_py","jobId":"gndDMG5","exec_duration":208.936}]},{"taskName":"vercel_ai_sdk_with_memory_ts","instruction":"$17","trials":[{"job_name":"2026-05-27__23-50-32","trial_name":"vercel_ai_sdk_with_memory_ts__oz6MFhy","model":"gemini-3-flash","rawModel":"google/gemini-3-flash","agent":"Pochi","passed":false,"reward":0,"error":true,"latency_sec":679.956,"latency_breakdown":{"env_setup":4.22,"agent_setup":57.038,"agent_exec":600.127,"verifier":0.467},"taskName":"vercel_ai_sdk_with_memory_ts","jobId":"oz6MFhy","exec_duration":600.127}]}]}]}]]}],["$L18","$L19"],"$L1a"]}],"loading":null,"isPartial":false}
+18:["$","script","script-0",{"src":"/alchemyst-benchmark/_next/static/chunks/bcaa16b1898f8e4b.js","async":true}]
+19:["$","script","script-1",{"src":"/alchemyst-benchmark/_next/static/chunks/f9f579c42c486944.js","async":true}]
+1a:["$","$L1b",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@1c"}]}]
+1c:null
