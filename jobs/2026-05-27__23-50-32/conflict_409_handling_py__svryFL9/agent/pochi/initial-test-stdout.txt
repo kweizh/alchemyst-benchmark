@@ -1,0 +1,615 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /bootstrap
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 4 items
+
+bootstrap/test_initial_state.py::test_alchemyst_sdk_importable 
+-------------------------------- live log setup --------------------------------
+DEBUG    alchemyst_ai._base_client:_base_client.py:483 Request options: {'method': 'post', 'url': '/api/v1/context/add', 'files': None, 'idempotency_key': 'stainless-python-retry-a17adcfe-f14e-4532-a2f4-c2444bd6c44a', 'content': None, 'json_data': {'context_type': 'resource', 'documents': [{'content': 'Refund policy version 1 for file policy-zr-svryfl9.md: customers may request a refund within 30 days of purchase. Free standard shipping is included. Run id: zr-svryfl9. POLICY_V1_MARKER.', 'metadata': {'file_name': 'policy-zr-svryfl9.md', 'file_type': 'text/markdown', 'group_name': ['conflict-eval-zr-svryfl9']}}], 'scope': 'internal', 'source': 'conflict409-zr-svryfl9', 'metadata': {'fileName': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}}
+DEBUG    alchemyst_ai._base_client:_base_client.py:996 Sending HTTP Request: POST https://platform-backend.getalchemystai.com/api/v1/context/add
+DEBUG    httpcore.connection:_trace.py:47 connect_tcp.started host='platform-backend.getalchemystai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG    httpcore.connection:_trace.py:47 connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7974e4738380>
+DEBUG    httpcore.connection:_trace.py:47 start_tls.started ssl_context=<ssl.SSLContext object at 0x7974e484f6d0> server_hostname='platform-backend.getalchemystai.com' timeout=5.0
+DEBUG    httpcore.connection:_trace.py:47 start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7974e499fbc0>
+DEBUG    httpcore.http11:_trace.py:47 send_request_headers.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 send_request_headers.complete
+DEBUG    httpcore.http11:_trace.py:47 send_request_body.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 send_request_body.complete
+DEBUG    httpcore.http11:_trace.py:47 receive_response_headers.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 receive_response_headers.complete return_value=(b'HTTP/1.1', 400, b'Bad Request', [(b'Date', b'Wed, 27 May 2026 15:51:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'537'), (b'Connection', b'keep-alive'), (b'Vary', b'Origin, Accept-Encoding'), (b'Access-Control-Allow-Credentials', b'true'), (b'Content-Security-Policy', b"default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"), (b'Cross-Origin-Opener-Policy', b'same-origin'), (b'Cross-Origin-Resource-Policy', b'same-origin'), (b'Origin-Agent-Cluster', b'?1'), (b'Referrer-Policy', b'no-referrer'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'X-Content-Type-Options', b'nosniff'), (b'X-DNS-Prefetch-Control', b'off'), (b'X-Download-Options', b'noopen'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Permitted-Cross-Domain-Policies', b'none'), (b'X-XSS-Protection', b'0'), (b'ETag', b'W/"219-JMsCB+ryq+kkE+DOznE8tElTzR8"')])
+INFO     httpx:_client.py:1025 HTTP Request: POST https://platform-backend.getalchemystai.com/api/v1/context/add "HTTP/1.1 400 Bad Request"
+DEBUG    httpcore.http11:_trace.py:47 receive_response_body.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 receive_response_body.complete
+DEBUG    httpcore.http11:_trace.py:47 response_closed.started
+DEBUG    httpcore.http11:_trace.py:47 response_closed.complete
+DEBUG    alchemyst_ai._base_client:_base_client.py:1034 HTTP Response: POST https://platform-backend.getalchemystai.com/api/v1/context/add "400 Bad Request" Headers({'date': 'Wed, 27 May 2026 15:51:05 GMT', 'content-type': 'application/json; charset=utf-8', 'content-length': '537', 'connection': 'keep-alive', 'vary': 'Origin, Accept-Encoding', 'access-control-allow-credentials': 'true', 'content-security-policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests", 'cross-origin-opener-policy': 'same-origin', 'cross-origin-resource-policy': 'same-origin', 'origin-agent-cluster': '?1', 'referrer-policy': 'no-referrer', 'strict-transport-security': 'max-age=31536000; includeSubDomains', 'x-content-type-options': 'nosniff', 'x-dns-prefetch-control': 'off', 'x-download-options': 'noopen', 'x-frame-options': 'SAMEORIGIN', 'x-permitted-cross-domain-policies': 'none', 'x-xss-protection': '0', 'etag': 'W/"219-JMsCB+ryq+kkE+DOznE8tElTzR8"'})
+DEBUG    alchemyst_ai._base_client:_base_client.py:1046 Encountered httpx.HTTPStatusError
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py", line 1044, in request
+    response.raise_for_status()
+  File "/usr/local/lib/python3.12/dist-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '400 Bad Request' for url 'https://platform-backend.getalchemystai.com/api/v1/context/add'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+DEBUG    alchemyst_ai._base_client:_base_client.py:1063 Re-raising status error
+ERROR
+bootstrap/test_initial_state.py::test_project_directory_exists ERROR
+bootstrap/test_initial_state.py::test_required_env_vars_present ERROR
+bootstrap/test_initial_state.py::test_pre_seeded_v1_document_is_indexed ERROR
+
+==================================== ERRORS ====================================
+_______________ ERROR at setup of test_alchemyst_sdk_importable ________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def _seed_initial_state():
+        if importlib.util.find_spec("alchemyst_ai") is None:
+            pytest.fail("alchemyst_ai SDK is not installed; cannot seed initial state.")
+        if not os.environ.get("ALCHEMYST_AI_API_KEY"):
+            pytest.fail("ALCHEMYST_AI_API_KEY must be set to seed the initial state.")
+        if not os.environ.get("ZEALT_RUN_ID"):
+            pytest.fail("ZEALT_RUN_ID must be set to seed the initial state.")
+>       _seed_v1_document()
+
+bootstrap/test_initial_state.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bootstrap/test_initial_state.py:75: in _seed_v1_document
+    client.with_options(max_retries=0).v1.context.add(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py:192: in add
+    return self._post(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1277: in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <alchemyst_ai.AlchemystAI object at 0x7974e49dc080>
+cast_to = <class 'alchemyst_ai.types.v1.context_add_response.ContextAddResponse'>
+options = FinalRequestOptions(method='post', url='/api/v1/context/add', params={}, headers=NOT_GIVEN, max_retries=NOT_GIVEN, tim...me': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}, extra_json=None)
+
+    def request(
+        self,
+        cast_to: Type[ResponseT],
+        options: FinalRequestOptions,
+        *,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        cast_to = self._maybe_override_cast_to(cast_to, options)
+    
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+        if input_options.idempotency_key is None and input_options.method.lower() != "get":
+            # ensure the idempotency key is reused between requests
+            input_options.idempotency_key = self._idempotency_key()
+    
+        response: httpx.Response | None = None
+        max_retries = input_options.get_max_retries(self.max_retries)
+    
+        retries_taken = 0
+        for retries_taken in range(max_retries + 1):
+            options = model_copy(input_options)
+            options = self._prepare_options(options)
+    
+            remaining_retries = max_retries - retries_taken
+            request = self._build_request(options, retries_taken=retries_taken)
+            self._prepare_request(request)
+    
+            kwargs: HttpxSendArgs = {}
+            if self.custom_auth is not None:
+                kwargs["auth"] = self.custom_auth
+    
+            if options.follow_redirects is not None:
+                kwargs["follow_redirects"] = options.follow_redirects
+    
+            log.debug("Sending HTTP Request: %s %s", request.method, request.url)
+    
+            response = None
+            try:
+                response = self._client.send(
+                    request,
+                    stream=stream or self._should_stream_response_body(request=request),
+                    **kwargs,
+                )
+            except httpx.TimeoutException as err:
+                log.debug("Encountered httpx.TimeoutException", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising timeout error")
+                raise APITimeoutError(request=request) from err
+            except Exception as err:
+                log.debug("Encountered Exception", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising connection error")
+                raise APIConnectionError(request=request) from err
+    
+            log.debug(
+                'HTTP Response: %s %s "%i %s" %s',
+                request.method,
+                request.url,
+                response.status_code,
+                response.reason_phrase,
+                response.headers,
+            )
+    
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as err:  # thrown on 4xx and 5xx status code
+                log.debug("Encountered httpx.HTTPStatusError", exc_info=True)
+    
+                if remaining_retries > 0 and self._should_retry(err.response):
+                    err.response.close()
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=response,
+                    )
+                    continue
+    
+                # If the response is streamed then we need to explicitly read the response
+                # to completion before attempting to access the response text.
+                if not err.response.is_closed:
+                    err.response.read()
+    
+                log.debug("Re-raising status error")
+>               raise self._make_status_error_from_response(err.response) from None
+E               alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]', 'status': 400}
+
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1064: BadRequestError
+------------------------------ Captured log setup ------------------------------
+DEBUG    alchemyst_ai._base_client:_base_client.py:483 Request options: {'method': 'post', 'url': '/api/v1/context/add', 'files': None, 'idempotency_key': 'stainless-python-retry-a17adcfe-f14e-4532-a2f4-c2444bd6c44a', 'content': None, 'json_data': {'context_type': 'resource', 'documents': [{'content': 'Refund policy version 1 for file policy-zr-svryfl9.md: customers may request a refund within 30 days of purchase. Free standard shipping is included. Run id: zr-svryfl9. POLICY_V1_MARKER.', 'metadata': {'file_name': 'policy-zr-svryfl9.md', 'file_type': 'text/markdown', 'group_name': ['conflict-eval-zr-svryfl9']}}], 'scope': 'internal', 'source': 'conflict409-zr-svryfl9', 'metadata': {'fileName': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}}
+DEBUG    alchemyst_ai._base_client:_base_client.py:996 Sending HTTP Request: POST https://platform-backend.getalchemystai.com/api/v1/context/add
+DEBUG    httpcore.connection:_trace.py:47 connect_tcp.started host='platform-backend.getalchemystai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG    httpcore.connection:_trace.py:47 connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7974e4738380>
+DEBUG    httpcore.connection:_trace.py:47 start_tls.started ssl_context=<ssl.SSLContext object at 0x7974e484f6d0> server_hostname='platform-backend.getalchemystai.com' timeout=5.0
+DEBUG    httpcore.connection:_trace.py:47 start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7974e499fbc0>
+DEBUG    httpcore.http11:_trace.py:47 send_request_headers.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 send_request_headers.complete
+DEBUG    httpcore.http11:_trace.py:47 send_request_body.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 send_request_body.complete
+DEBUG    httpcore.http11:_trace.py:47 receive_response_headers.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 receive_response_headers.complete return_value=(b'HTTP/1.1', 400, b'Bad Request', [(b'Date', b'Wed, 27 May 2026 15:51:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'537'), (b'Connection', b'keep-alive'), (b'Vary', b'Origin, Accept-Encoding'), (b'Access-Control-Allow-Credentials', b'true'), (b'Content-Security-Policy', b"default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"), (b'Cross-Origin-Opener-Policy', b'same-origin'), (b'Cross-Origin-Resource-Policy', b'same-origin'), (b'Origin-Agent-Cluster', b'?1'), (b'Referrer-Policy', b'no-referrer'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'X-Content-Type-Options', b'nosniff'), (b'X-DNS-Prefetch-Control', b'off'), (b'X-Download-Options', b'noopen'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Permitted-Cross-Domain-Policies', b'none'), (b'X-XSS-Protection', b'0'), (b'ETag', b'W/"219-JMsCB+ryq+kkE+DOznE8tElTzR8"')])
+INFO     httpx:_client.py:1025 HTTP Request: POST https://platform-backend.getalchemystai.com/api/v1/context/add "HTTP/1.1 400 Bad Request"
+DEBUG    httpcore.http11:_trace.py:47 receive_response_body.started request=<Request [b'POST']>
+DEBUG    httpcore.http11:_trace.py:47 receive_response_body.complete
+DEBUG    httpcore.http11:_trace.py:47 response_closed.started
+DEBUG    httpcore.http11:_trace.py:47 response_closed.complete
+DEBUG    alchemyst_ai._base_client:_base_client.py:1034 HTTP Response: POST https://platform-backend.getalchemystai.com/api/v1/context/add "400 Bad Request" Headers({'date': 'Wed, 27 May 2026 15:51:05 GMT', 'content-type': 'application/json; charset=utf-8', 'content-length': '537', 'connection': 'keep-alive', 'vary': 'Origin, Accept-Encoding', 'access-control-allow-credentials': 'true', 'content-security-policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests", 'cross-origin-opener-policy': 'same-origin', 'cross-origin-resource-policy': 'same-origin', 'origin-agent-cluster': '?1', 'referrer-policy': 'no-referrer', 'strict-transport-security': 'max-age=31536000; includeSubDomains', 'x-content-type-options': 'nosniff', 'x-dns-prefetch-control': 'off', 'x-download-options': 'noopen', 'x-frame-options': 'SAMEORIGIN', 'x-permitted-cross-domain-policies': 'none', 'x-xss-protection': '0', 'etag': 'W/"219-JMsCB+ryq+kkE+DOznE8tElTzR8"'})
+DEBUG    alchemyst_ai._base_client:_base_client.py:1046 Encountered httpx.HTTPStatusError
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py", line 1044, in request
+    response.raise_for_status()
+  File "/usr/local/lib/python3.12/dist-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '400 Bad Request' for url 'https://platform-backend.getalchemystai.com/api/v1/context/add'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+DEBUG    alchemyst_ai._base_client:_base_client.py:1063 Re-raising status error
+_______________ ERROR at setup of test_project_directory_exists ________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def _seed_initial_state():
+        if importlib.util.find_spec("alchemyst_ai") is None:
+            pytest.fail("alchemyst_ai SDK is not installed; cannot seed initial state.")
+        if not os.environ.get("ALCHEMYST_AI_API_KEY"):
+            pytest.fail("ALCHEMYST_AI_API_KEY must be set to seed the initial state.")
+        if not os.environ.get("ZEALT_RUN_ID"):
+            pytest.fail("ZEALT_RUN_ID must be set to seed the initial state.")
+>       _seed_v1_document()
+
+bootstrap/test_initial_state.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bootstrap/test_initial_state.py:75: in _seed_v1_document
+    client.with_options(max_retries=0).v1.context.add(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py:192: in add
+    return self._post(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1277: in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <alchemyst_ai.AlchemystAI object at 0x7974e49dc080>
+cast_to = <class 'alchemyst_ai.types.v1.context_add_response.ContextAddResponse'>
+options = FinalRequestOptions(method='post', url='/api/v1/context/add', params={}, headers=NOT_GIVEN, max_retries=NOT_GIVEN, tim...me': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}, extra_json=None)
+
+    def request(
+        self,
+        cast_to: Type[ResponseT],
+        options: FinalRequestOptions,
+        *,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        cast_to = self._maybe_override_cast_to(cast_to, options)
+    
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+        if input_options.idempotency_key is None and input_options.method.lower() != "get":
+            # ensure the idempotency key is reused between requests
+            input_options.idempotency_key = self._idempotency_key()
+    
+        response: httpx.Response | None = None
+        max_retries = input_options.get_max_retries(self.max_retries)
+    
+        retries_taken = 0
+        for retries_taken in range(max_retries + 1):
+            options = model_copy(input_options)
+            options = self._prepare_options(options)
+    
+            remaining_retries = max_retries - retries_taken
+            request = self._build_request(options, retries_taken=retries_taken)
+            self._prepare_request(request)
+    
+            kwargs: HttpxSendArgs = {}
+            if self.custom_auth is not None:
+                kwargs["auth"] = self.custom_auth
+    
+            if options.follow_redirects is not None:
+                kwargs["follow_redirects"] = options.follow_redirects
+    
+            log.debug("Sending HTTP Request: %s %s", request.method, request.url)
+    
+            response = None
+            try:
+                response = self._client.send(
+                    request,
+                    stream=stream or self._should_stream_response_body(request=request),
+                    **kwargs,
+                )
+            except httpx.TimeoutException as err:
+                log.debug("Encountered httpx.TimeoutException", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising timeout error")
+                raise APITimeoutError(request=request) from err
+            except Exception as err:
+                log.debug("Encountered Exception", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising connection error")
+                raise APIConnectionError(request=request) from err
+    
+            log.debug(
+                'HTTP Response: %s %s "%i %s" %s',
+                request.method,
+                request.url,
+                response.status_code,
+                response.reason_phrase,
+                response.headers,
+            )
+    
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as err:  # thrown on 4xx and 5xx status code
+                log.debug("Encountered httpx.HTTPStatusError", exc_info=True)
+    
+                if remaining_retries > 0 and self._should_retry(err.response):
+                    err.response.close()
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=response,
+                    )
+                    continue
+    
+                # If the response is streamed then we need to explicitly read the response
+                # to completion before attempting to access the response text.
+                if not err.response.is_closed:
+                    err.response.read()
+    
+                log.debug("Re-raising status error")
+>               raise self._make_status_error_from_response(err.response) from None
+E               alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]', 'status': 400}
+
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1064: BadRequestError
+_______________ ERROR at setup of test_required_env_vars_present _______________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def _seed_initial_state():
+        if importlib.util.find_spec("alchemyst_ai") is None:
+            pytest.fail("alchemyst_ai SDK is not installed; cannot seed initial state.")
+        if not os.environ.get("ALCHEMYST_AI_API_KEY"):
+            pytest.fail("ALCHEMYST_AI_API_KEY must be set to seed the initial state.")
+        if not os.environ.get("ZEALT_RUN_ID"):
+            pytest.fail("ZEALT_RUN_ID must be set to seed the initial state.")
+>       _seed_v1_document()
+
+bootstrap/test_initial_state.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bootstrap/test_initial_state.py:75: in _seed_v1_document
+    client.with_options(max_retries=0).v1.context.add(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py:192: in add
+    return self._post(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1277: in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <alchemyst_ai.AlchemystAI object at 0x7974e49dc080>
+cast_to = <class 'alchemyst_ai.types.v1.context_add_response.ContextAddResponse'>
+options = FinalRequestOptions(method='post', url='/api/v1/context/add', params={}, headers=NOT_GIVEN, max_retries=NOT_GIVEN, tim...me': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}, extra_json=None)
+
+    def request(
+        self,
+        cast_to: Type[ResponseT],
+        options: FinalRequestOptions,
+        *,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        cast_to = self._maybe_override_cast_to(cast_to, options)
+    
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+        if input_options.idempotency_key is None and input_options.method.lower() != "get":
+            # ensure the idempotency key is reused between requests
+            input_options.idempotency_key = self._idempotency_key()
+    
+        response: httpx.Response | None = None
+        max_retries = input_options.get_max_retries(self.max_retries)
+    
+        retries_taken = 0
+        for retries_taken in range(max_retries + 1):
+            options = model_copy(input_options)
+            options = self._prepare_options(options)
+    
+            remaining_retries = max_retries - retries_taken
+            request = self._build_request(options, retries_taken=retries_taken)
+            self._prepare_request(request)
+    
+            kwargs: HttpxSendArgs = {}
+            if self.custom_auth is not None:
+                kwargs["auth"] = self.custom_auth
+    
+            if options.follow_redirects is not None:
+                kwargs["follow_redirects"] = options.follow_redirects
+    
+            log.debug("Sending HTTP Request: %s %s", request.method, request.url)
+    
+            response = None
+            try:
+                response = self._client.send(
+                    request,
+                    stream=stream or self._should_stream_response_body(request=request),
+                    **kwargs,
+                )
+            except httpx.TimeoutException as err:
+                log.debug("Encountered httpx.TimeoutException", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising timeout error")
+                raise APITimeoutError(request=request) from err
+            except Exception as err:
+                log.debug("Encountered Exception", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising connection error")
+                raise APIConnectionError(request=request) from err
+    
+            log.debug(
+                'HTTP Response: %s %s "%i %s" %s',
+                request.method,
+                request.url,
+                response.status_code,
+                response.reason_phrase,
+                response.headers,
+            )
+    
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as err:  # thrown on 4xx and 5xx status code
+                log.debug("Encountered httpx.HTTPStatusError", exc_info=True)
+    
+                if remaining_retries > 0 and self._should_retry(err.response):
+                    err.response.close()
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=response,
+                    )
+                    continue
+    
+                # If the response is streamed then we need to explicitly read the response
+                # to completion before attempting to access the response text.
+                if not err.response.is_closed:
+                    err.response.read()
+    
+                log.debug("Re-raising status error")
+>               raise self._make_status_error_from_response(err.response) from None
+E               alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]', 'status': 400}
+
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1064: BadRequestError
+___________ ERROR at setup of test_pre_seeded_v1_document_is_indexed ___________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def _seed_initial_state():
+        if importlib.util.find_spec("alchemyst_ai") is None:
+            pytest.fail("alchemyst_ai SDK is not installed; cannot seed initial state.")
+        if not os.environ.get("ALCHEMYST_AI_API_KEY"):
+            pytest.fail("ALCHEMYST_AI_API_KEY must be set to seed the initial state.")
+        if not os.environ.get("ZEALT_RUN_ID"):
+            pytest.fail("ZEALT_RUN_ID must be set to seed the initial state.")
+>       _seed_v1_document()
+
+bootstrap/test_initial_state.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bootstrap/test_initial_state.py:75: in _seed_v1_document
+    client.with_options(max_retries=0).v1.context.add(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py:192: in add
+    return self._post(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1277: in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <alchemyst_ai.AlchemystAI object at 0x7974e49dc080>
+cast_to = <class 'alchemyst_ai.types.v1.context_add_response.ContextAddResponse'>
+options = FinalRequestOptions(method='post', url='/api/v1/context/add', params={}, headers=NOT_GIVEN, max_retries=NOT_GIVEN, tim...me': 'policy-zr-svryfl9.md', 'fileType': 'text/markdown', 'groupName': ['conflict-eval-zr-svryfl9']}}, extra_json=None)
+
+    def request(
+        self,
+        cast_to: Type[ResponseT],
+        options: FinalRequestOptions,
+        *,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        cast_to = self._maybe_override_cast_to(cast_to, options)
+    
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+        if input_options.idempotency_key is None and input_options.method.lower() != "get":
+            # ensure the idempotency key is reused between requests
+            input_options.idempotency_key = self._idempotency_key()
+    
+        response: httpx.Response | None = None
+        max_retries = input_options.get_max_retries(self.max_retries)
+    
+        retries_taken = 0
+        for retries_taken in range(max_retries + 1):
+            options = model_copy(input_options)
+            options = self._prepare_options(options)
+    
+            remaining_retries = max_retries - retries_taken
+            request = self._build_request(options, retries_taken=retries_taken)
+            self._prepare_request(request)
+    
+            kwargs: HttpxSendArgs = {}
+            if self.custom_auth is not None:
+                kwargs["auth"] = self.custom_auth
+    
+            if options.follow_redirects is not None:
+                kwargs["follow_redirects"] = options.follow_redirects
+    
+            log.debug("Sending HTTP Request: %s %s", request.method, request.url)
+    
+            response = None
+            try:
+                response = self._client.send(
+                    request,
+                    stream=stream or self._should_stream_response_body(request=request),
+                    **kwargs,
+                )
+            except httpx.TimeoutException as err:
+                log.debug("Encountered httpx.TimeoutException", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising timeout error")
+                raise APITimeoutError(request=request) from err
+            except Exception as err:
+                log.debug("Encountered Exception", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising connection error")
+                raise APIConnectionError(request=request) from err
+    
+            log.debug(
+                'HTTP Response: %s %s "%i %s" %s',
+                request.method,
+                request.url,
+                response.status_code,
+                response.reason_phrase,
+                response.headers,
+            )
+    
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as err:  # thrown on 4xx and 5xx status code
+                log.debug("Encountered httpx.HTTPStatusError", exc_info=True)
+    
+                if remaining_retries > 0 and self._should_retry(err.response):
+                    err.response.close()
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=response,
+                    )
+                    continue
+    
+                # If the response is streamed then we need to explicitly read the response
+                # to completion before attempting to access the response text.
+                if not err.response.is_closed:
+                    err.response.read()
+    
+                log.debug("Re-raising status error")
+>               raise self._make_status_error_from_response(err.response) from None
+E               alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]', 'status': 400}
+
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1064: BadRequestError
+=========================== short test summary info ============================
+ERROR bootstrap/test_initial_state.py::test_alchemyst_sdk_importable - alchem...
+ERROR bootstrap/test_initial_state.py::test_project_directory_exists - alchem...
+ERROR bootstrap/test_initial_state.py::test_required_env_vars_present - alche...
+ERROR bootstrap/test_initial_state.py::test_pre_seeded_v1_document_is_indexed
+============================== 4 errors in 1.12s ===============================

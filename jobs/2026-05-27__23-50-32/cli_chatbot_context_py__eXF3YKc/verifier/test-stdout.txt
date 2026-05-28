@@ -1,0 +1,34 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 4 items
+
+tests/test_final_state.py ...F                                           [100%]
+
+=================================== FAILURES ===================================
+____________________ test_reply_file_contains_company_name _____________________
+
+    def test_reply_file_contains_company_name():
+        assert os.path.isfile(REPLY_FILE), (
+            f"Expected reply file at {REPLY_FILE} to exist before checking its content."
+        )
+        with open(REPLY_FILE, "r", encoding="utf-8") as f:
+            content = f.read()
+>       assert "zenith robotics" in content.lower(), (
+            "Expected the CLI's recall answer (saved at /workspace/cli_reply.txt) to "
+            f"mention 'Zenith Robotics'. Got: {content!r}"
+        )
+E       AssertionError: Expected the CLI's recall answer (saved at /workspace/cli_reply.txt) to mention 'Zenith Robotics'. Got: "I'm sorry, but I don't have access to personal data about individuals or specific companies unless it has been shared with me in this conversation. If you provide me with more context or details about your company, I'll do my best to assist you!\n"
+E       assert 'zenith robotics' in "i'm sorry, but i don't have access to personal data about individuals or specific companies unless it has been shared...this conversation. if you provide me with more context or details about your company, i'll do my best to assist you!\n"
+E        +  where "i'm sorry, but i don't have access to personal data about individuals or specific companies unless it has been shared...this conversation. if you provide me with more context or details about your company, i'll do my best to assist you!\n" = <built-in method lower of str object at 0x7ac52eb81230>()
+E        +    where <built-in method lower of str object at 0x7ac52eb81230> = "I'm sorry, but I don't have access to personal data about individuals or specific companies unless it has been shared...this conversation. If you provide me with more context or details about your company, I'll do my best to assist you!\n".lower
+
+tests/test_final_state.py:67: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_chat_script_exists
+PASSED tests/test_final_state.py::test_first_invocation_ingest_fact
+PASSED tests/test_final_state.py::test_second_invocation_recalls_fact
+FAILED tests/test_final_state.py::test_reply_file_contains_company_name - Ass...
+========================= 1 failed, 3 passed in 8.22s ==========================

@@ -1,0 +1,181 @@
+[37m2026-05-27 15:55:45.612[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37mnative:1[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	pochi v0.6.8
+[37m2026-05-27 15:55:45.860[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:519633[39m[0m[0m[1m[37m	loadAgents[39m[22m[0m[0m	Loaded 6 custom agents (6 valid, 0 invalid)
+[37m2026-05-27 15:55:45.865[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:519634[39m[0m[0m[1m[37m	loadSkills[39m[22m[0m[0m	Loaded 2 skills (2 valid, 0 invalid)
+[37m2026-05-27 15:55:45.952[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:444677[39m[0m[0m[1m[37m	PochiVendor[39m[22m[0m[0m	JWT is expiring or missing, fetching a new one
+[37m2026-05-27 15:55:49.238[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:416517[39m[0m[0m[1m[37m	MCPHub[39m[22m[0m[0m	MCP servers configuration changed via signal:
+[37m2026-05-27 15:55:49.239[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:416629[39m[0m[0m[1m[37m	MCPHub[39m[22m[0m[0m	Build MCPHub Status
+[37m2026-05-27 15:55:49.340[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37mnative:7[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	Starting task runner...
+[37m2026-05-27 15:55:49.410[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:507614[39m[0m[0m[1m[37m	generateTaskTitle[39m[22m[0m[0m	Generating task title, old: null, new: # Context-Aware CLI Chatbot with Alchemyst AI Memory (Python)
+[37m2026-05-27 15:56:05.208[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:507614[39m[0m[0m[1m[37m	generateTaskTitle[39m[22m[0m[0m	Generating task title, old: # Context-Aware CLI Chatbot with Alchemyst AI Memory (Python), new: Build a context-aware CLI chatbot using Alchemyst AI and OpenAI
+[37m2026-05-27 15:56:29.082[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:463047[39m[0m[0m[1m[37m	listFiles[39m[22m[0m[0m	handling listFile with dirPath /home/user/cli-chatbot and recursive [90mundefined[39m
+[37m2026-05-27 15:57:04.623[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:04.623[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:04.625[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" mtime=1779858674000 contentLen=23751
+[37m2026-05-27 15:57:08.982[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:08.982[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:08.983[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" mtime=1779858674000 contentLen=15279
+[37m2026-05-27 15:57:17.578[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_add_params.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_add_params.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:17.579[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:17.580[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_add_params.py" mtime=1779858674000 contentLen=1657
+[37m2026-05-27 15:57:26.038[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_response.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_response.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:26.039[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:26.041[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_response.py" mtime=1779858674000 contentLen=718
+[37m2026-05-27 15:57:34.633[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_params.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_params.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:34.633[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:34.635[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_params.py" mtime=1779858674000 contentLen=1716
+[37m2026-05-27 15:57:39.089[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_params.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_params.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:39.089[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:39.091[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context_search_params.py" mtime=1779858674000 contentLen=1298
+[37m2026-05-27 15:57:43.298[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/view.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/view.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:43.298[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:43.300[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/view.py" mtime=1779858674000 contentLen=10101
+[37m2026-05-27 15:57:48.637[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_client.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_client.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:48.638[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:48.643[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_client.py" mtime=1779858674000 contentLen=16618
+[37m2026-05-27 15:57:54.885[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/v1.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/v1.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:57:54.885[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:57:54.887[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/v1.py" mtime=1779858674000 contentLen=4498
+[37m2026-05-27 15:58:00.918[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:58:00.918[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState={startLine=undefined, endLine=undefined, timestamp=1779858674000}
+[37m2026-05-27 15:58:00.920[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: range match, currentMtime=1779858674000 cachedMtime=1779858674000 match=true
+[37m2026-05-27 15:58:00.920[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: DEDUPLICATED for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py"
+[37m2026-05-27 15:58:07.894[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:462742[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	searchFiles /usr/local/lib/python3.12/dist-packages/alchemyst_ai userId|sessionId [90mundefined[39m
+[37m2026-05-27 15:58:07.895[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:462742[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	command "/usr/bin/rg" --json --case-sensitive --binary --sortr modified 'userId|sessionId' '/usr/local/lib/python3.12/dist-packages/alchemyst_ai'
+[37m2026-05-27 15:58:07.916[39m[0m[0m	[31m[1mERROR[22m[39m[0m[0m	[37m$bunfs/root/pochi:518769[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	Failed to parse rg JSON output line: {"type":"match","data":{"path":{"text":"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/__pycache__/memory_add_params.cpython-312.pyc"},"lines":{"bytes":"ehtSZXF1aXJlZFtJdGVyYWJsZVtDb250ZW50XV3aCGNvbnRlbnRzejlSZXF1aXJlZFtBbm5vdGF0ZWRbc3RyLCBQcm9wZXJ0eUluZm8oYWxpYXM9J3Nlc3Npb25JZCcpXV3aCg=="},"line_number":151,"absolute_offset":575,"submatches":[{"match":{"text":"sessionId"},"start":85,"end":94}]}}
+
+[97m[101m[1m TypeError [22m[49m[39m[0m[0m undefined is not an object (evaluating 'matchData.lines.text.replace'), 462770, 42, 462770, 42, /$bunfs/root/pochi[0m[0m
+error stack:
+  • [33mpochi[39m[0m[0m	searchFilesWithRipgrep[0m[0m
+	[37m$bunfs/root/pochi:462770[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async <anonymous>[0m[0m
+	[37m$bunfs/root/pochi:518769[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async executeToolCall2[0m[0m
+	[37m$bunfs/root/pochi:518887[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async processToolCalls[0m[0m
+	[37m$bunfs/root/pochi:519249[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async process[0m[0m
+	[37m$bunfs/root/pochi:519190[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async step[0m[0m
+	[37m$bunfs/root/pochi:519136[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async run[0m[0m
+	[37m$bunfs/root/pochi:519052[39m[0m[0m
+  • [33m[39m[0m[0m	[0m[0m
+	[37m[39m[0m[0m
+  • [33mnative[39m[0m[0m	processTicksAndRejections[0m[0m
+	[37mnative:7[39m[0m[0m[0m[0m
+[37m2026-05-27 15:58:07.917[39m[0m[0m	[31m[1mERROR[22m[39m[0m[0m	[37m$bunfs/root/pochi:518769[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	Failed to parse rg JSON output line: {"type":"match","data":{"path":{"text":"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/__pycache__/memory_update_params.cpython-312.pyc"},"lines":{"bytes":"ehtSZXF1aXJlZFtJdGVyYWJsZVtDb250ZW50XV3aCGNvbnRlbnRzejlSZXF1aXJlZFtBbm5vdGF0ZWRbc3RyLCBQcm9wZXJ0eUluZm8oYWxpYXM9J3Nlc3Npb25JZCcpXV3aCg=="},"line_number":102,"absolute_offset":359,"submatches":[{"match":{"text":"sessionId"},"start":85,"end":94}]}}
+
+[97m[101m[1m TypeError [22m[49m[39m[0m[0m undefined is not an object (evaluating 'matchData.lines.text.replace'), 462770, 42, 462770, 42, /$bunfs/root/pochi[0m[0m
+error stack:
+  • [33mpochi[39m[0m[0m	searchFilesWithRipgrep[0m[0m
+	[37m$bunfs/root/pochi:462770[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async <anonymous>[0m[0m
+	[37m$bunfs/root/pochi:518769[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async executeToolCall2[0m[0m
+	[37m$bunfs/root/pochi:518887[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async processToolCalls[0m[0m
+	[37m$bunfs/root/pochi:519249[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async process[0m[0m
+	[37m$bunfs/root/pochi:519190[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async step[0m[0m
+	[37m$bunfs/root/pochi:519136[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async run[0m[0m
+	[37m$bunfs/root/pochi:519052[39m[0m[0m
+  • [33m[39m[0m[0m	[0m[0m
+	[37m[39m[0m[0m
+  • [33mnative[39m[0m[0m	processTicksAndRejections[0m[0m
+	[37mnative:7[39m[0m[0m[0m[0m
+[37m2026-05-27 15:58:07.917[39m[0m[0m	[31m[1mERROR[22m[39m[0m[0m	[37m$bunfs/root/pochi:518769[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	Failed to parse rg JSON output line: {"type":"match","data":{"path":{"text":"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/__pycache__/trace_delete_response.cpython-312.pyc"},"lines":{"bytes":"dXBkYXRlZF9hdNoGdXNlcklk2gd1c2VyX2lkKRFyEwo="},"line_number":286,"absolute_offset":1114,"submatches":[{"match":{"text":"userId"},"start":12,"end":18}]}}
+
+[97m[101m[1m TypeError [22m[49m[39m[0m[0m undefined is not an object (evaluating 'matchData.lines.text.replace'), 462770, 42, 462770, 42, /$bunfs/root/pochi[0m[0m
+error stack:
+  • [33mpochi[39m[0m[0m	searchFilesWithRipgrep[0m[0m
+	[37m$bunfs/root/pochi:462770[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async <anonymous>[0m[0m
+	[37m$bunfs/root/pochi:518769[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async executeToolCall2[0m[0m
+	[37m$bunfs/root/pochi:518887[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async processToolCalls[0m[0m
+	[37m$bunfs/root/pochi:519249[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async process[0m[0m
+	[37m$bunfs/root/pochi:519190[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async step[0m[0m
+	[37m$bunfs/root/pochi:519136[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async run[0m[0m
+	[37m$bunfs/root/pochi:519052[39m[0m[0m
+  • [33m[39m[0m[0m	[0m[0m
+	[37m[39m[0m[0m
+  • [33mnative[39m[0m[0m	processTicksAndRejections[0m[0m
+	[37mnative:7[39m[0m[0m[0m[0m
+[37m2026-05-27 15:58:07.918[39m[0m[0m	[31m[1mERROR[22m[39m[0m[0m	[37m$bunfs/root/pochi:518769[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	Failed to parse rg JSON output line: {"type":"match","data":{"path":{"text":"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/__pycache__/trace_list_response.cpython-312.pyc"},"lines":{"bytes":"dXBkYXRlZF9hdNoGdXNlcklk2gd1c2VyX2lkTikNchcK"},"line_number":276,"absolute_offset":1124,"submatches":[{"match":{"text":"userId"},"start":12,"end":18}]}}
+
+[97m[101m[1m TypeError [22m[49m[39m[0m[0m undefined is not an object (evaluating 'matchData.lines.text.replace'), 462770, 42, 462770, 42, /$bunfs/root/pochi[0m[0m
+error stack:
+  • [33mpochi[39m[0m[0m	searchFilesWithRipgrep[0m[0m
+	[37m$bunfs/root/pochi:462770[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async <anonymous>[0m[0m
+	[37m$bunfs/root/pochi:518769[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async executeToolCall2[0m[0m
+	[37m$bunfs/root/pochi:518887[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async processToolCalls[0m[0m
+	[37m$bunfs/root/pochi:519249[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async process[0m[0m
+	[37m$bunfs/root/pochi:519190[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async step[0m[0m
+	[37m$bunfs/root/pochi:519136[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async run[0m[0m
+	[37m$bunfs/root/pochi:519052[39m[0m[0m
+  • [33m[39m[0m[0m	[0m[0m
+	[37m[39m[0m[0m
+  • [33mnative[39m[0m[0m	processTicksAndRejections[0m[0m
+	[37mnative:7[39m[0m[0m[0m[0m
+[37m2026-05-27 15:58:07.918[39m[0m[0m	[31m[1mERROR[22m[39m[0m[0m	[37m$bunfs/root/pochi:518769[39m[0m[0m[1m[37m	RipgrepUtils[39m[22m[0m[0m	Failed to parse rg JSON output line: {"type":"match","data":{"path":{"text":"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/org/__pycache__/context_view_params.cpython-312.pyc"},"lines":{"bytes":"ekdSZXF1aXJlZFtBbm5vdGF0ZWRbU2VxdWVuY2VOb3RTdHJbc3RyXSwgUHJvcGVydHlJbmZvKGFsaWFzPSd1c2VySWRzJyldXdoIdXNlcl9pZHNOKQTaCF9fbmFtZV9f2go="},"line_number":87,"absolute_offset":305,"submatches":[{"match":{"text":"userId"},"start":62,"end":68}]}}
+
+[97m[101m[1m TypeError [22m[49m[39m[0m[0m undefined is not an object (evaluating 'matchData.lines.text.replace'), 462770, 42, 462770, 42, /$bunfs/root/pochi[0m[0m
+error stack:
+  • [33mpochi[39m[0m[0m	searchFilesWithRipgrep[0m[0m
+	[37m$bunfs/root/pochi:462770[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async <anonymous>[0m[0m
+	[37m$bunfs/root/pochi:518769[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async executeToolCall2[0m[0m
+	[37m$bunfs/root/pochi:518887[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async processToolCalls[0m[0m
+	[37m$bunfs/root/pochi:519249[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async process[0m[0m
+	[37m$bunfs/root/pochi:519190[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async step[0m[0m
+	[37m$bunfs/root/pochi:519136[39m[0m[0m
+  • [33mpochi[39m[0m[0m	async run[0m[0m
+	[37m$bunfs/root/pochi:519052[39m[0m[0m
+  • [33m[39m[0m[0m	[0m[0m
+	[37m[39m[0m[0m
+  • [33mnative[39m[0m[0m	processTicksAndRejections[0m[0m
+	[37mnative:7[39m[0m[0m[0m[0m
+[37m2026-05-27 15:58:15.436[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:58:15.436[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState={startLine=undefined, endLine=undefined, timestamp=1779858674000}
+[37m2026-05-27 15:58:15.438[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: range match, currentMtime=1779858674000 cachedMtime=1779858674000 match=true
+[37m2026-05-27 15:58:15.438[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: DEDUPLICATED for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py"
+[37m2026-05-27 15:58:23.819[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/traces.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/traces.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:58:23.819[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:58:23.822[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/traces.py" mtime=1779858674000 contentLen=9846
+[37m2026-05-27 15:58:33.792[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:58:33.793[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:58:33.796[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py" mtime=1779858674000 contentLen=73415
+[37m2026-05-27 15:58:46.832[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:58:46.832[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState={startLine=undefined, endLine=undefined, timestamp=1779858674000}
+[37m2026-05-27 15:58:46.835[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: range match, currentMtime=1779858674000 cachedMtime=1779858674000 match=true
+[37m2026-05-27 15:58:46.835[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: DEDUPLICATED for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py"
+[37m2026-05-27 15:59:04.045[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/__init__.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/__init__.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:59:04.046[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:59:04.049[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/__init__.py" mtime=1779858674000 contentLen=2713
+[37m2026-05-27 15:59:28.475[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:59:28.475[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState={startLine=undefined, endLine=undefined, timestamp=1779858674000}
+[37m2026-05-27 15:59:28.478[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: range match, currentMtime=1779858674000 cachedMtime=1779858674000 match=true
+[37m2026-05-27 15:59:28.478[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: DEDUPLICATED for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/memory.py"
+[37m2026-05-27 15:59:32.980[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: path="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_response.py" resolvedPath="/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_response.py" isVirtual=false cacheExists=true shouldCache=true startLine=undefined endLine=undefined
+[37m2026-05-27 15:59:32.980[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:474589[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: existingState=undefined
+[37m2026-05-27 15:59:32.985[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m$bunfs/root/pochi:518725[39m[0m[0m[1m[37m	FileStateCache[39m[22m[0m[0m	withReadFileCache: populating cache for "/usr/local/lib/python3.12/dist-packages/alchemyst_ai/types/v1/context/memory_add_response.py" mtime=1779858674000 contentLen=309
+[37m2026-05-27 16:00:16.741[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37mnative:7[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	Task runner finished successfully.
+[37m2026-05-27 16:00:16.742[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37mnative:7[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	Shutting down...
+[37m2026-05-27 16:00:16.763[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37mnative:7[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	Shutdown completed. Process will exit.
+[37m2026-05-27 16:00:16.763[39m[0m[0m	[32m[1mDEBUG[22m[39m[0m[0m	[37m[39m[0m[0m[1m[37m	Pochi[39m[22m[0m[0m	Process exiting with code 0

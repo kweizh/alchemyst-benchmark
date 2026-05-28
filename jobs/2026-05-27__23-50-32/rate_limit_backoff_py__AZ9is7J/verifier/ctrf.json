@@ -1,0 +1,92 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 5,
+            "failed": 1,
+            "skipped": 1,
+            "pending": 0,
+            "other": 0,
+            "start": 1779897545780,
+            "stop": 1779897546715
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_report_top_level_is_object",
+                "status": "passed",
+                "duration": 0,
+                "start": 1779897545802,
+                "stop": 1779897545802,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_report_has_exactly_required_keys",
+                "status": "passed",
+                "duration": 0,
+                "start": 1779897545803,
+                "stop": 1779897545803,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_total_requests_is_twenty",
+                "status": "passed",
+                "duration": 1,
+                "start": 1779897545803,
+                "stop": 1779897545804,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_successful_requests_equals_total",
+                "status": "passed",
+                "duration": 1,
+                "start": 1779897545804,
+                "stop": 1779897545805,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_encountered_429_is_non_negative_int",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15,
+                "start": 1779897545805,
+                "stop": 1779897545820,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "report = {'encountered_429': 40, 'max_backoff_delay_seconds': 2.0993797736466613, 'successful_requests': 20, 'total_requests': 20}\n\n    def test_encountered_429_is_non_negative_int(report):\n        value = report[\"encountered_429\"]\n        assert isinstance(value, int) and not isinstance(value, bool), (\n            f\"encountered_429 must be an integer (got {type(value).__name__}: {value!r}).\"\n        )\n        assert value >= 0, f\"encountered_429 must be >= 0 (got {value}).\"\n>       assert value <= report[\"total_requests\"], (\n            f\"encountered_429 ({value}) cannot exceed total_requests ({report['total_requests']}).\"\n        )\nE       AssertionError: encountered_429 (40) cannot exceed total_requests (20).\nE       assert 40 <= 20\n\ntests/test_final_state.py:67: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_max_backoff_delay_is_non_negative_number",
+                "status": "passed",
+                "duration": 0,
+                "start": 1779897545820,
+                "stop": 1779897545820,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_documents_ingested_for_run_id",
+                "status": "skipped",
+                "duration": 894,
+                "start": 1779897545821,
+                "stop": 1779897546715,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "('/tests/test_final_state.py', 105, \"Skipped: Live SDK search raised APIStatusError: Error code: 402 - {'statusText': 'PAYMENT_REQUIRED'}; skipping live SDK check.\")"
+            }
+        ]
+    }
+}

@@ -1,0 +1,101 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 0,
+            "failed": 7,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1779897300976,
+            "stop": 1779897301291
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_result_file_has_expected_top_level_fields",
+                "status": "failed",
+                "duration": 17,
+                "start": 1779897301000,
+                "stop": 1779897301017,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def result_payload():\n>       assert os.path.isfile(RESULT_FILE), f\"Expected result file {RESULT_FILE} to exist.\"\nE       AssertionError: Expected result file /workspace/result.json to exist.\nE       assert False\nE        +  where False = <function isfile at 0x7b1bfb088220>('/workspace/result.json')\nE        +    where <function isfile at 0x7b1bfb088220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:34: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_results_field_is_non_empty_list",
+                "status": "failed",
+                "duration": 4,
+                "start": 1779897301018,
+                "stop": 1779897301022,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def result_payload():\n>       assert os.path.isfile(RESULT_FILE), f\"Expected result file {RESULT_FILE} to exist.\"\nE       AssertionError: Expected result file /workspace/result.json to exist.\nE       assert False\nE        +  where False = <function isfile at 0x7b1bfb088220>('/workspace/result.json')\nE        +    where <function isfile at 0x7b1bfb088220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:34: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_each_result_has_id_and_content",
+                "status": "failed",
+                "duration": 4,
+                "start": 1779897301022,
+                "stop": 1779897301026,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def result_payload():\n>       assert os.path.isfile(RESULT_FILE), f\"Expected result file {RESULT_FILE} to exist.\"\nE       AssertionError: Expected result file /workspace/result.json to exist.\nE       assert False\nE        +  where False = <function isfile at 0x7b1bfb088220>('/workspace/result.json')\nE        +    where <function isfile at 0x7b1bfb088220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:34: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_results_only_contain_intersection_marker",
+                "status": "failed",
+                "duration": 4,
+                "start": 1779897301027,
+                "stop": 1779897301031,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def result_payload():\n>       assert os.path.isfile(RESULT_FILE), f\"Expected result file {RESULT_FILE} to exist.\"\nE       AssertionError: Expected result file /workspace/result.json to exist.\nE       assert False\nE        +  where False = <function isfile at 0x7b1bfb088220>('/workspace/result.json')\nE        +    where <function isfile at 0x7b1bfb088220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:34: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_backend_has_eng_v2_document",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 249,
+                "start": 1779897301031,
+                "stop": 1779897301280,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "alchemyst_client = <alchemyst_ai.AlchemystAI object at 0x7b1bf9d9c410>\nrun_id = 'zr-nmgvfll'\n\n    def test_backend_has_eng_v2_document(alchemyst_client, run_id):\n>       response = alchemyst_client.v1.context.search(\n            query=\"What does the v2 engineering service do?\",\n            scope=\"internal\",\n            similarity_threshold=0.3,\n            metadata={\"group_name\": [\"eng\", \"v2\"]},\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:123: TypeError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_final_state.py::test_backend_has_docs_v1_document",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 5,
+                "start": 1779897301280,
+                "stop": 1779897301285,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "alchemyst_client = <alchemyst_ai.AlchemystAI object at 0x7b1bf9d9c410>\nrun_id = 'zr-nmgvfll'\n\n    def test_backend_has_docs_v1_document(alchemyst_client, run_id):\n>       response = alchemyst_client.v1.context.search(\n            query=\"documentation release notes v1\",\n            scope=\"internal\",\n            similarity_threshold=0.3,\n            metadata={\"group_name\": [\"docs\", \"v1\"]},\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:143: TypeError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_final_state.py::test_backend_intersection_search_returns_only_eng_v1",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 4,
+                "start": 1779897301286,
+                "stop": 1779897301290,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "alchemyst_client = <alchemyst_ai.AlchemystAI object at 0x7b1bf9d9c410>\nrun_id = 'zr-nmgvfll'\n\n    def test_backend_intersection_search_returns_only_eng_v1(alchemyst_client, run_id):\n>       response = alchemyst_client.v1.context.search(\n            query=EXPECTED_QUERY,\n            scope=\"internal\",\n            similarity_threshold=0.3,\n            metadata={\"group_name\": [\"eng\", \"v1\"]},\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:163: TypeError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

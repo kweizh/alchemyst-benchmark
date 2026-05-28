@@ -1,0 +1,67 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 2,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1779898351180,
+            "stop": 1779898366403
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_top_level_schema",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15,
+                "start": 1779898351199,
+                "stop": 1779898351214,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "answer_payload = {'answers': [{'question': 'When is the midterm?', 'snippet': 'The midterm exam will take place on October 15 during re... 'snippet': 'The grading policy is as follows: Homework 30%, Midterm 30%, Final Exam 40%.'}], 'run_id': 'test_run_123'}\nrun_id = 'zr-gnddmg5'\n\n    def test_top_level_schema(answer_payload, run_id):\n        assert isinstance(answer_payload, dict), (\n            f\"Top-level JSON in {ANSWER_FILE} must be an object, got {type(answer_payload).__name__}.\"\n        )\n        assert \"run_id\" in answer_payload, (\n            f\"Top-level JSON in {ANSWER_FILE} must contain a 'run_id' key.\"\n        )\n        assert \"answers\" in answer_payload, (\n            f\"Top-level JSON in {ANSWER_FILE} must contain an 'answers' key.\"\n        )\n>       assert answer_payload[\"run_id\"] == run_id, (\n            f\"Expected 'run_id' field to equal ZEALT_RUN_ID ({run_id}), \"\n            f\"got {answer_payload['run_id']!r}.\"\n        )\nE       AssertionError: Expected 'run_id' field to equal ZEALT_RUN_ID (zr-gnddmg5), got 'test_run_123'.\nE       assert 'test_run_123' == 'zr-gnddmg5'\nE         - zr-gnddmg5\nE         + test_run_123\n\ntests/test_final_state.py:55: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_answers_list_shape",
+                "status": "passed",
+                "duration": 1,
+                "start": 1779898351214,
+                "stop": 1779898351215,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_snippet_keywords",
+                "status": "passed",
+                "duration": 1,
+                "start": 1779898351215,
+                "stop": 1779898351216,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_documents_present_in_alchemyst",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15187,
+                "start": 1779898351216,
+                "stop": 1779898366403,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "run_id = 'zr-gnddmg5'\n\n    def test_documents_present_in_alchemyst(run_id):\n        \"\"\"Verify the ingestion side-effect actually reached the Alchemyst context engine.\"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set during verification.\"\n    \n        from alchemyst_ai import AlchemystAI\n    \n        client = AlchemystAI(api_key=api_key)\n    \n        # Allow a brief settle period for any final indexing.\n        last_error = None\n        contexts = []\n        for _ in range(5):\n            try:\n                result = client.v1.context.search(\n                    query=\"Math 101 syllabus\",\n                    similarity_threshold=0.3,\n                    scope=\"internal\",\n                    metadata={\"group_name\": [\"syllabus\", \"math101\", run_id]},\n                )\n                contexts = getattr(result, \"contexts\", None) or []\n                if len(contexts) >= 3:\n                    break\n            except Exception as exc:  # noqa: BLE001\n                last_error = exc\n            time.sleep(3)\n    \n        if last_error and not contexts:\n>           raise AssertionError(\n                f\"Failed to query Alchemyst context engine: {last_error!r}\"\n            )\nE           AssertionError: Failed to query Alchemyst context engine: TypeError(\"ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\")\n\ntests/test_final_state.py:125: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

@@ -1,0 +1,56 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.0
+collected 4 items
+
+tests/test_final_state.py FFFF                                           [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_answer_file_exists ____________________________
+
+    def test_answer_file_exists():
+>       assert os.path.isfile(ANSWER_FILE), (
+            f"Expected output file {ANSWER_FILE} does not exist after running the task."
+        )
+E       AssertionError: Expected output file /workspace/answer.txt does not exist after running the task.
+E       assert False
+E        +  where False = <function isfile at 0x71a3aa7fc220>('/workspace/answer.txt')
+E        +    where <function isfile at 0x71a3aa7fc220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:7: AssertionError
+__________________________ test_answer_file_non_empty __________________________
+
+    def test_answer_file_non_empty():
+>       size = os.path.getsize(ANSWER_FILE)
+
+tests/test_final_state.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = '/workspace/answer.txt'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/answer.txt'
+
+<frozen genericpath>:62: FileNotFoundError
+_______________________ test_answer_file_contains_svelte _______________________
+
+    def test_answer_file_contains_svelte():
+>       with open(ANSWER_FILE, "r", encoding="utf-8") as f:
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/answer.txt'
+
+tests/test_final_state.py:18: FileNotFoundError
+_______________________ test_answer_file_is_non_trivial ________________________
+
+    def test_answer_file_is_non_trivial():
+>       with open(ANSWER_FILE, "r", encoding="utf-8") as f:
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/answer.txt'
+
+tests/test_final_state.py:29: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_answer_file_exists - AssertionError: E...
+FAILED tests/test_final_state.py::test_answer_file_non_empty - FileNotFoundEr...
+FAILED tests/test_final_state.py::test_answer_file_contains_svelte - FileNotF...
+FAILED tests/test_final_state.py::test_answer_file_is_non_trivial - FileNotFo...
+============================== 4 failed in 0.03s ===============================

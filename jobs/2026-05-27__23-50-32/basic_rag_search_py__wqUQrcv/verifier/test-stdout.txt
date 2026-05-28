@@ -1,0 +1,172 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 3 items
+
+tests/test_final_state.py FFF                                            [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_log_file_exists _____________________________
+
+    def test_log_file_exists():
+>       assert os.path.isfile(LOG_FILE), (
+            f"Expected the agent's script to write the top-match log to {LOG_FILE}, "
+            "but the file does not exist."
+        )
+E       AssertionError: Expected the agent's script to write the top-match log to /home/user/myproject/output.log, but the file does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x7b9695b38220>('/home/user/myproject/output.log')
+E        +    where <function isfile at 0x7b9695b38220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:32: AssertionError
+____________ test_log_file_contains_top_match_with_expected_excerpt ____________
+
+    def test_log_file_contains_top_match_with_expected_excerpt():
+>       with open(LOG_FILE, "r", encoding="utf-8") as fh:
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/user/myproject/output.log'
+
+tests/test_final_state.py:39: FileNotFoundError
+_________________ test_document_retrievable_via_context_search _________________
+
+    def test_document_retrievable_via_context_search():
+        run_id = _get_run_id()
+        api_key = _get_api_key()
+        expected_file_name = f"refund-policy-{run_id}.md"
+    
+        client = AlchemystAI(api_key=api_key)
+>       result = client.v1.context.search(
+            query=SEARCH_QUERY,
+            similarity_threshold=0.7,
+            minimum_similarity_threshold=0.5,
+            scope="internal",
+            metadata=True,
+        )
+
+tests/test_final_state.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py:267: in search
+    return self._post(
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1277: in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <alchemyst_ai.AlchemystAI object at 0x7b9693db2ed0>
+cast_to = <class 'alchemyst_ai.types.v1.context_search_response.ContextSearchResponse'>
+options = FinalRequestOptions(method='post', url='/api/v1/context/search', params={'metadata': True}, headers=NOT_GIVEN, max_ret...shold': 0.5, 'query': 'What is the refund policy?', 'similarity_threshold': 0.7, 'scope': 'internal'}, extra_json=None)
+
+    def request(
+        self,
+        cast_to: Type[ResponseT],
+        options: FinalRequestOptions,
+        *,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        cast_to = self._maybe_override_cast_to(cast_to, options)
+    
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+        if input_options.idempotency_key is None and input_options.method.lower() != "get":
+            # ensure the idempotency key is reused between requests
+            input_options.idempotency_key = self._idempotency_key()
+    
+        response: httpx.Response | None = None
+        max_retries = input_options.get_max_retries(self.max_retries)
+    
+        retries_taken = 0
+        for retries_taken in range(max_retries + 1):
+            options = model_copy(input_options)
+            options = self._prepare_options(options)
+    
+            remaining_retries = max_retries - retries_taken
+            request = self._build_request(options, retries_taken=retries_taken)
+            self._prepare_request(request)
+    
+            kwargs: HttpxSendArgs = {}
+            if self.custom_auth is not None:
+                kwargs["auth"] = self.custom_auth
+    
+            if options.follow_redirects is not None:
+                kwargs["follow_redirects"] = options.follow_redirects
+    
+            log.debug("Sending HTTP Request: %s %s", request.method, request.url)
+    
+            response = None
+            try:
+                response = self._client.send(
+                    request,
+                    stream=stream or self._should_stream_response_body(request=request),
+                    **kwargs,
+                )
+            except httpx.TimeoutException as err:
+                log.debug("Encountered httpx.TimeoutException", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising timeout error")
+                raise APITimeoutError(request=request) from err
+            except Exception as err:
+                log.debug("Encountered Exception", exc_info=True)
+    
+                if remaining_retries > 0:
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=None,
+                    )
+                    continue
+    
+                log.debug("Raising connection error")
+                raise APIConnectionError(request=request) from err
+    
+            log.debug(
+                'HTTP Response: %s %s "%i %s" %s',
+                request.method,
+                request.url,
+                response.status_code,
+                response.reason_phrase,
+                response.headers,
+            )
+    
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as err:  # thrown on 4xx and 5xx status code
+                log.debug("Encountered httpx.HTTPStatusError", exc_info=True)
+    
+                if remaining_retries > 0 and self._should_retry(err.response):
+                    err.response.close()
+                    self._sleep_for_retry(
+                        retries_taken=retries_taken,
+                        max_retries=max_retries,
+                        options=input_options,
+                        response=response,
+                    )
+                    continue
+    
+                # If the response is streamed then we need to explicitly read the response
+                # to completion before attempting to access the response text.
+                if not err.response.is_closed:
+                    err.response.read()
+    
+                log.debug("Re-raising status error")
+>               raise self._make_status_error_from_response(err.response) from None
+E               alchemyst_ai.APIStatusError: Error code: 402 - {'statusText': 'PAYMENT_REQUIRED'}
+
+usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py:1064: APIStatusError
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_log_file_exists - AssertionError: Expe...
+FAILED tests/test_final_state.py::test_log_file_contains_top_match_with_expected_excerpt
+FAILED tests/test_final_state.py::test_document_retrievable_via_context_search
+============================== 3 failed in 0.87s ===============================

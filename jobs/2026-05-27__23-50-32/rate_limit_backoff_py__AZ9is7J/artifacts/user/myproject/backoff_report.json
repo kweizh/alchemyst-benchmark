@@ -1,0 +1,6 @@
+{
+  "total_requests": 20,
+  "successful_requests": 20,
+  "encountered_429": 40,
+  "max_backoff_delay_seconds": 2.0993797736466613
+}

@@ -1,0 +1,741 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /bootstrap
+plugins: json-ctrf-0.5.0
+collected 10 items
+
+bootstrap/test_initial_state.py::test_node_binary_available 
+-------------------------------- live log setup --------------------------------
+DEBUG    urllib3.connectionpool:connectionpool.py:1062 Starting new HTTPS connection (1): platform-backend.getalchemystai.com:443
+DEBUG    urllib3.connectionpool:connectionpool.py:544 https://platform-backend.getalchemystai.com:443 "POST /api/v1/context/delete HTTP/1.1" 200 28
+DEBUG    urllib3.connectionpool:connectionpool.py:1062 Starting new HTTPS connection (1): platform-backend.getalchemystai.com:443
+DEBUG    urllib3.connectionpool:connectionpool.py:544 https://platform-backend.getalchemystai.com:443 "POST /api/v1/context/add HTTP/1.1" 400 491
+ERROR
+bootstrap/test_initial_state.py::test_node_version_is_20_or_higher ERROR
+bootstrap/test_initial_state.py::test_npm_binary_available ERROR
+bootstrap/test_initial_state.py::test_npx_binary_available ERROR
+bootstrap/test_initial_state.py::test_project_dir_exists ERROR
+bootstrap/test_initial_state.py::test_alchemyst_sdk_installed ERROR
+bootstrap/test_initial_state.py::test_tsx_available ERROR
+bootstrap/test_initial_state.py::test_alchemyst_api_key_env_var_set ERROR
+bootstrap/test_initial_state.py::test_zealt_run_id_env_var_set ERROR
+bootstrap/test_initial_state.py::test_original_document_indexed ERROR
+
+==================================== ERRORS ====================================
+_________________ ERROR at setup of test_node_binary_available _________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+------------------------------ Captured log setup ------------------------------
+DEBUG    urllib3.connectionpool:connectionpool.py:1062 Starting new HTTPS connection (1): platform-backend.getalchemystai.com:443
+DEBUG    urllib3.connectionpool:connectionpool.py:544 https://platform-backend.getalchemystai.com:443 "POST /api/v1/context/delete HTTP/1.1" 200 28
+DEBUG    urllib3.connectionpool:connectionpool.py:1062 Starting new HTTPS connection (1): platform-backend.getalchemystai.com:443
+DEBUG    urllib3.connectionpool:connectionpool.py:544 https://platform-backend.getalchemystai.com:443 "POST /api/v1/context/add HTTP/1.1" 400 491
+_____________ ERROR at setup of test_node_version_is_20_or_higher ______________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_________________ ERROR at setup of test_npm_binary_available __________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_________________ ERROR at setup of test_npx_binary_available __________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+__________________ ERROR at setup of test_project_dir_exists ___________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+________________ ERROR at setup of test_alchemyst_sdk_installed ________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_____________________ ERROR at setup of test_tsx_available _____________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_____________ ERROR at setup of test_alchemyst_api_key_env_var_set _____________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_______________ ERROR at setup of test_zealt_run_id_env_var_set ________________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+_______________ ERROR at setup of test_original_document_indexed _______________
+
+    @pytest.fixture(scope="session", autouse=True)
+    def preload_initial_document():
+        """Pre-load the original (v1) onboarding policy document into Alchemyst AI.
+    
+        This fixture runs before any test in this module. It removes any
+        pre-existing document under the run-scoped ``source`` (for retry
+        safety), then ingests the original onboarding content. The content is
+        intentionally distinct from the updated (v2) content that the agent
+        is expected to ingest, so the final-state test can tell them apart.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        if not api_key:
+            # Without an API key we cannot pre-load. Let the env-var test fail
+            # with a clear message instead of crashing here.
+            yield
+            return
+    
+        run_id = _run_id()
+        file_name = _file_name()
+        source = _source()
+    
+        # Best-effort cleanup of any prior state for this run-id, so the
+        # initial-state setup is idempotent across retries.
+        try:
+            requests.post(
+                f"{ALCHEMYST_BASE_URL}/api/v1/context/delete",
+                json={
+                    "source": source,
+                    "by_doc": True,
+                    "by_id": False,
+                    "organization_id": "",
+                },
+                headers=_headers(),
+                timeout=60,
+            )
+        except Exception:
+            pass
+        time.sleep(2)
+    
+        # Ingest the original v1 document via the real Alchemyst REST API.
+        add_response = requests.post(
+            f"{ALCHEMYST_BASE_URL}/api/v1/context/add",
+            json={
+                "documents": [
+                    {
+                        "content": ORIGINAL_CONTENT,
+                        "metadata": {
+                            "file_name": file_name,
+                            "group_name": [run_id],
+                        },
+                    }
+                ],
+                "source": source,
+                "context_type": "resource",
+                "scope": "internal",
+            },
+            headers=_headers(),
+            timeout=120,
+        )
+>       assert add_response.status_code in (200, 201), (
+            f"Pre-loading the original onboarding document failed with status "
+            f"{add_response.status_code}: {add_response.text}"
+        )
+E       AssertionError: Pre-loading the original onboarding document failed with status 400: {"statusText":"BAD_REQUEST","success":false,"message":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"object\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected object, received undefined\"\n  },\n  {\n    \"expected\": \"record\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"metadata\"\n    ],\n    \"message\": \"Invalid input: expected record, received undefined\"\n  }\n]","status":400}
+E       assert 400 in (200, 201)
+E        +  where 400 = <Response [400]>.status_code
+
+bootstrap/test_initial_state.py:97: AssertionError
+=========================== short test summary info ============================
+ERROR bootstrap/test_initial_state.py::test_node_binary_available - Assertion...
+ERROR bootstrap/test_initial_state.py::test_node_version_is_20_or_higher - As...
+ERROR bootstrap/test_initial_state.py::test_npm_binary_available - AssertionE...
+ERROR bootstrap/test_initial_state.py::test_npx_binary_available - AssertionE...
+ERROR bootstrap/test_initial_state.py::test_project_dir_exists - AssertionErr...
+ERROR bootstrap/test_initial_state.py::test_alchemyst_sdk_installed - Asserti...
+ERROR bootstrap/test_initial_state.py::test_tsx_available - AssertionError: P...
+ERROR bootstrap/test_initial_state.py::test_alchemyst_api_key_env_var_set - A...
+ERROR bootstrap/test_initial_state.py::test_zealt_run_id_env_var_set - Assert...
+ERROR bootstrap/test_initial_state.py::test_original_document_indexed - Asser...
+============================== 10 errors in 4.32s ==============================

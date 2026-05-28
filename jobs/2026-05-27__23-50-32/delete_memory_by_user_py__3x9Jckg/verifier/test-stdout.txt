@@ -1,0 +1,108 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.0.3, pluggy-1.6.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 6 items
+
+tests/test_final_state.py FFFFFF                                         [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_log_file_exists _____________________________
+
+    def test_log_file_exists():
+>       assert os.path.isfile(LOG_FILE), f"Log file {LOG_FILE} does not exist."
+E       AssertionError: Log file /home/user/myproject/output.log does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x7c2b4decbd80>('/home/user/myproject/output.log')
+E        +    where <function isfile at 0x7c2b4decbd80> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:19: AssertionError
+_______________________ test_log_contains_status_success _______________________
+
+    def test_log_contains_status_success():
+>       content = _read_log()
+                  ^^^^^^^^^^^
+
+tests/test_final_state.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _read_log():
+>       assert os.path.isfile(LOG_FILE), f"Log file {LOG_FILE} does not exist."
+E       AssertionError: Log file /home/user/myproject/output.log does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x7c2b4decbd80>('/home/user/myproject/output.log')
+E        +    where <function isfile at 0x7c2b4decbd80> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:13: AssertionError
+_______________ test_log_contains_run_id_scoped_user_and_session _______________
+
+    def test_log_contains_run_id_scoped_user_and_session():
+>       content = _read_log()
+                  ^^^^^^^^^^^
+
+tests/test_final_state.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _read_log():
+>       assert os.path.isfile(LOG_FILE), f"Log file {LOG_FILE} does not exist."
+E       AssertionError: Log file /home/user/myproject/output.log does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x7c2b4decbd80>('/home/user/myproject/output.log')
+E        +    where <function isfile at 0x7c2b4decbd80> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:13: AssertionError
+____________ test_post_delete_search_json_exists_and_is_valid_json _____________
+
+    def test_post_delete_search_json_exists_and_is_valid_json():
+>       assert os.path.isfile(POST_DELETE_SEARCH_JSON), (
+            f"{POST_DELETE_SEARCH_JSON} does not exist; the task must write the post-deletion "
+            f"search result there."
+        )
+E       AssertionError: /workspace/post_delete_search.json does not exist; the task must write the post-deletion search result there.
+E       assert False
+E        +  where False = <function isfile at 0x7c2b4decbd80>('/workspace/post_delete_search.json')
+E        +    where <function isfile at 0x7c2b4decbd80> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:53: AssertionError
+_____________ test_post_delete_search_json_does_not_mention_bumble _____________
+
+    def test_post_delete_search_json_does_not_mention_bumble():
+>       with open(POST_DELETE_SEARCH_JSON, "r", encoding="utf-8") as f:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/post_delete_search.json'
+
+tests/test_final_state.py:63: FileNotFoundError
+__________________ test_live_search_no_longer_returns_bumble ___________________
+
+    def test_live_search_no_longer_returns_bumble():
+        """Re-run a search against the live Alchemyst AI platform to confirm deletion propagated."""
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        assert api_key, "ALCHEMYST_AI_API_KEY must be set in the verifier environment."
+    
+>       content = _read_log()
+                  ^^^^^^^^^^^
+
+tests/test_final_state.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _read_log():
+>       assert os.path.isfile(LOG_FILE), f"Log file {LOG_FILE} does not exist."
+E       AssertionError: Log file /home/user/myproject/output.log does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x7c2b4decbd80>('/home/user/myproject/output.log')
+E        +    where <function isfile at 0x7c2b4decbd80> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_log_file_exists - AssertionError: Log ...
+FAILED tests/test_final_state.py::test_log_contains_status_success - Assertio...
+FAILED tests/test_final_state.py::test_log_contains_run_id_scoped_user_and_session
+FAILED tests/test_final_state.py::test_post_delete_search_json_exists_and_is_valid_json
+FAILED tests/test_final_state.py::test_post_delete_search_json_does_not_mention_bumble
+FAILED tests/test_final_state.py::test_live_search_no_longer_returns_bumble
+============================== 6 failed in 0.05s ===============================

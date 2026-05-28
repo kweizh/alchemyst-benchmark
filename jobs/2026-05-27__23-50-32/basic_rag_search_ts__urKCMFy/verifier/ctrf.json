@@ -1,0 +1,67 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 0,
+            "failed": 4,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1779897312449,
+            "stop": 1779897313190
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_log_file_contains_stored_file_name",
+                "status": "failed",
+                "duration": 21,
+                "start": 1779897312549,
+                "stop": 1779897312570,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def log_contents():\n>       assert os.path.isfile(LOG_FILE), f\"Expected log file at {LOG_FILE}, but it does not exist.\"\nE       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.\nE       assert False\nE        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')\nE        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:28: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_contains_search_matches",
+                "status": "failed",
+                "duration": 3,
+                "start": 1779897312570,
+                "stop": 1779897312573,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def log_contents():\n>       assert os.path.isfile(LOG_FILE), f\"Expected log file at {LOG_FILE}, but it does not exist.\"\nE       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.\nE       assert False\nE        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')\nE        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:28: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_log_file_contains_top_snippet",
+                "status": "failed",
+                "duration": 3,
+                "start": 1779897312573,
+                "stop": 1779897312576,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"module\")\n    def log_contents():\n>       assert os.path.isfile(LOG_FILE), f\"Expected log file at {LOG_FILE}, but it does not exist.\"\nE       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.\nE       assert False\nE        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')\nE        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:28: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_document_persisted_in_alchemyst",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 614,
+                "start": 1779897312576,
+                "stop": 1779897313190,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "run_id = 'zr-urkcmfy', api_key = 'REDACTED'\n\n    def test_document_persisted_in_alchemyst(run_id, api_key):\n        \"\"\"\n        Use the real Alchemyst API to verify the document is searchable in the\n        context store within the run-id-scoped group. This confirms that the\n        agent did NOT mock the SDK and actually ingested the document.\n        \"\"\"\n        url = f\"{ALCHEMYST_BASE_URL}/api/v1/context/search\"\n        payload = {\n            \"query\": \"refund policy\",\n            \"similarity_threshold\": 0.3,\n            \"scope\": \"internal\",\n            \"metadata\": {\"groupName\": [run_id]},\n        }\n        headers = {\n            \"Authorization\": f\"Bearer {api_key}\",\n            \"Content-Type\": \"application/json\",\n        }\n        response = requests.post(url, json=payload, headers=headers, timeout=60)\n>       assert response.status_code == 200, (\n            f\"Alchemyst search API returned status {response.status_code}: \"\n            f\"{response.text}\"\n        )\nE       AssertionError: Alchemyst search API returned status 400: {\"statusText\":\"BAD_REQUEST\",\"response\":\"Fields missing. Detailed error: [\\n  {\\n    \\\"expected\\\": \\\"number\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"minimum_similarity_threshold\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input: expected number, received undefined\\\"\\n  }\\n]\"}\nE       assert 400 == 200\nE        +  where 400 = <Response [400]>.status_code\n\ntests/test_final_state.py:92: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

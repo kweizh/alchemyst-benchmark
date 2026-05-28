@@ -1,0 +1,83 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.0
+collected 4 items
+
+tests/test_final_state.py EEEF                                           [100%]
+
+==================================== ERRORS ====================================
+__________ ERROR at setup of test_log_file_contains_stored_file_name ___________
+
+    @pytest.fixture(scope="module")
+    def log_contents():
+>       assert os.path.isfile(LOG_FILE), f"Expected log file at {LOG_FILE}, but it does not exist."
+E       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')
+E        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:28: AssertionError
+___________ ERROR at setup of test_log_file_contains_search_matches ____________
+
+    @pytest.fixture(scope="module")
+    def log_contents():
+>       assert os.path.isfile(LOG_FILE), f"Expected log file at {LOG_FILE}, but it does not exist."
+E       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')
+E        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:28: AssertionError
+_____________ ERROR at setup of test_log_file_contains_top_snippet _____________
+
+    @pytest.fixture(scope="module")
+    def log_contents():
+>       assert os.path.isfile(LOG_FILE), f"Expected log file at {LOG_FILE}, but it does not exist."
+E       AssertionError: Expected log file at /home/user/rag_task/output.log, but it does not exist.
+E       assert False
+E        +  where False = <function isfile at 0x71844224c220>('/home/user/rag_task/output.log')
+E        +    where <function isfile at 0x71844224c220> = <module 'posixpath' (frozen)>.isfile
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+tests/test_final_state.py:28: AssertionError
+=================================== FAILURES ===================================
+_____________________ test_document_persisted_in_alchemyst _____________________
+
+run_id = 'zr-urkcmfy', api_key = 'REDACTED'
+
+    def test_document_persisted_in_alchemyst(run_id, api_key):
+        """
+        Use the real Alchemyst API to verify the document is searchable in the
+        context store within the run-id-scoped group. This confirms that the
+        agent did NOT mock the SDK and actually ingested the document.
+        """
+        url = f"{ALCHEMYST_BASE_URL}/api/v1/context/search"
+        payload = {
+            "query": "refund policy",
+            "similarity_threshold": 0.3,
+            "scope": "internal",
+            "metadata": {"groupName": [run_id]},
+        }
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        }
+        response = requests.post(url, json=payload, headers=headers, timeout=60)
+>       assert response.status_code == 200, (
+            f"Alchemyst search API returned status {response.status_code}: "
+            f"{response.text}"
+        )
+E       AssertionError: Alchemyst search API returned status 400: {"statusText":"BAD_REQUEST","response":"Fields missing. Detailed error: [\n  {\n    \"expected\": \"number\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"minimum_similarity_threshold\"\n    ],\n    \"message\": \"Invalid input: expected number, received undefined\"\n  }\n]"}
+E       assert 400 == 200
+E        +  where 400 = <Response [400]>.status_code
+
+tests/test_final_state.py:92: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_final_state.py::test_log_file_contains_stored_file_name - As...
+ERROR tests/test_final_state.py::test_log_file_contains_search_matches - Asse...
+ERROR tests/test_final_state.py::test_log_file_contains_top_snippet - Asserti...
+FAILED tests/test_final_state.py::test_document_persisted_in_alchemyst - Asse...
+========================= 1 failed, 3 errors in 0.74s ==========================
