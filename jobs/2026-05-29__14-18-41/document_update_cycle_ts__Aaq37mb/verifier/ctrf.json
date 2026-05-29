@@ -1,0 +1,46 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 2,
+            "passed": 1,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780064890931,
+            "stop": 1780064890989
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_output_log_exists",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780064890963,
+                "stop": 1780064890964,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_alchemyst_context_updated",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 24,
+                "start": 1780064890965,
+                "stop": 1780064890989,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_alchemyst_context_updated():\n        run_id = os.environ.get(\"ZEALT_RUN_ID\")\n        assert run_id is not None, \"ZEALT_RUN_ID environment variable is not set.\"\n    \n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key is not None, \"ALCHEMYST_AI_API_KEY environment variable is not set.\"\n    \n        try:\n>           from alchemystai import Alchemyst\nE           ModuleNotFoundError: No module named 'alchemystai'\n\ntests/test_final_state.py:25: ModuleNotFoundError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_alchemyst_context_updated():\n        run_id = os.environ.get(\"ZEALT_RUN_ID\")\n        assert run_id is not None, \"ZEALT_RUN_ID environment variable is not set.\"\n    \n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key is not None, \"ALCHEMYST_AI_API_KEY environment variable is not set.\"\n    \n        try:\n            from alchemystai import Alchemyst\n        except ImportError:\n>           pytest.fail(\"alchemystai Python SDK is not installed in the verification environment.\")\nE           Failed: alchemystai Python SDK is not installed in the verification environment.\n\ntests/test_final_state.py:27: Failed",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}
