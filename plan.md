@@ -9,7 +9,7 @@
     *   **Configuration**: Requires an `ALCHEMYST_AI_API_KEY` from the [Alchemyst Platform](https://platform.getalchemystai.com/).
 ### 2. Core Primitives & APIs
 *   **Context Addition (`v1.context.add`)**: Ingests documents into the context engine.
-    *   **Snippet (TS)**: 
+    *   **Snippet (TS)**:
         ```typescript
         await client.v1.context.add({
           documents: [{ content: "Policy: 30-day refunds", metadata: { file_name: "refunds.md", group_name: ["support"] } }],
@@ -34,7 +34,7 @@
         const { text } = await generateTextWithMemory({ model: "openai:gpt-4", prompt: "I'm vegan", userId: "user_1", sessionId: "session_A" });
         ```
 *   **Key Documentation Links**:
-    *   [API Reference](https://getalchemystai.com/docs/api-reference)
+    *   [OpenAPI Reference](https://platform-backend.getalchemystai.com/api/openapi.json)
     *   [Contextual AI Quickstart](https://getalchemystai.com/docs/getting-started/quickstart)
     *   [Memory Agent Quickstart](https://getalchemystai.com/docs/getting-started/quickstart-memory)
 ### 3. Real-World Use Cases & Templates
