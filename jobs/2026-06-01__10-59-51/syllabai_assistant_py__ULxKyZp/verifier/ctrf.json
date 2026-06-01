@@ -1,0 +1,94 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 1,
+            "failed": 5,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780313237178,
+            "stop": 1780313242994
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_main_py_exists",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780313237208,
+                "stop": 1780313237209,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_command_succeeds",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2199,
+                "start": 1780313237210,
+                "stop": 1780313239409,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ingest_command_succeeds():\n        course_id = _course_id()\n        result = _run_main([\"ingest\", \"syllabus.md\", \"--course-id\", course_id])\n>       assert result.returncode == 0, (\n            \"Expected `python3 main.py ingest ...` to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\nE       AssertionError: Expected `python3 main.py ingest ...` to exit 0, but got returncode=1.\nE         stdout:\nE         Error ingesting syllabus: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"object\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected object, received undefined\"\\n  },\\n  {\\n    \"expected\": \"record\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected record, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE         stderr:\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ingest', 'syllabus.md', '--course-id', 'course-zr-ul...  ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n', stderr='').returncode\n\ntests/test_final_state.py:97: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_alchemyst_context_contains_syllabus_chunk",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 293,
+                "start": 1780313239410,
+                "stop": 1780313239703,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_alchemyst_context_contains_syllabus_chunk():\n        \"\"\"Use the Alchemyst Python SDK to verify the syllabus is retrievable\n        when filtered by the course-scoped group_name.\"\"\"\n        try:\n            from alchemyst_ai import AlchemystAI\n        except Exception as exc:  # pragma: no cover - diagnostic\n            pytest.fail(f\"Failed to import alchemyst_ai SDK: {exc!r}\")\n    \n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for verification.\"\n    \n        client = AlchemystAI(api_key=api_key)\n        course_id = _course_id()\n    \n>       result = client.v1.context.search(\n            query=\"When is the midterm exam?\",\n            similarity_threshold=0.3,\n            scope=\"internal\",\n            metadata={\"group_name\": [\"syllabus\", course_id]},\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:123: TypeError",
+                "message": "The test failed in the call phase due to an exception"
+            },
+            {
+                "name": "test_final_state.py::test_ask_midterm_question",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1101,
+                "start": 1780313239703,
+                "stop": 1780313240804,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ask_midterm_question():\n        course_id = _course_id()\n        result = _run_main(\n            [\"ask\", \"When is the midterm exam and where will it be held?\", \"--course-id\", course_id]\n        )\n>       assert result.returncode == 0, (\n            \"Expected `python3 main.py ask ...` (midterm) to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\nE       AssertionError: Expected `python3 main.py ask ...` (midterm) to exit 0, but got returncode=1.\nE         stdout:\nE         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\nE         \nE         stderr:\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'When is the midterm exam and where will it be...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\\n\", stderr='').returncode\n\ntests/test_final_state.py:156: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ask_late_policy_question",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1095,
+                "start": 1780313240804,
+                "stop": 1780313241899,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ask_late_policy_question():\n        course_id = _course_id()\n        result = _run_main(\n            [\"ask\", \"What is the late policy for homework?\", \"--course-id\", course_id]\n        )\n>       assert result.returncode == 0, (\n            \"Expected `python3 main.py ask ...` (late policy) to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\nE       AssertionError: Expected `python3 main.py ask ...` (late policy) to exit 0, but got returncode=1.\nE         stdout:\nE         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\nE         \nE         stderr:\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'What is the late policy for homework?', '--co...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\\n\", stderr='').returncode\n\ntests/test_final_state.py:175: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ask_isolated_course_does_not_leak_midterm",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1094,
+                "start": 1780313241900,
+                "stop": 1780313242994,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ask_isolated_course_does_not_leak_midterm():\n        \"\"\"Context Arithmetic: a different course_id must not retrieve this course's syllabus.\"\"\"\n        other_course = _unrelated_course_id()\n        result = _run_main(\n            [\"ask\", \"When is the midterm exam?\", \"--course-id\", other_course]\n        )\n>       assert result.returncode == 0, (\n            \"Expected `python3 main.py ask ...` (unrelated course) to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\nE       AssertionError: Expected `python3 main.py ask ...` (unrelated course) to exit 0, but got returncode=1.\nE         stdout:\nE         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\nE         \nE         stderr:\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'When is the midterm exam?', '--course-id', 'u...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\\n\", stderr='').returncode\n\ntests/test_final_state.py:195: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

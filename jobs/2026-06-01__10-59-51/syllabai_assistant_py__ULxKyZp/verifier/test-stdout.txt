@@ -1,0 +1,126 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 6 items
+
+tests/test_final_state.py .FFFFF                                         [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_ingest_command_succeeds _________________________
+
+    def test_ingest_command_succeeds():
+        course_id = _course_id()
+        result = _run_main(["ingest", "syllabus.md", "--course-id", course_id])
+>       assert result.returncode == 0, (
+            "Expected `python3 main.py ingest ...` to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+E       AssertionError: Expected `python3 main.py ingest ...` to exit 0, but got returncode=1.
+E         stdout:
+E         Error ingesting syllabus: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "object",\n    "code": "invalid_type",\n    "path": [\n      "metadata"\n    ],\n    "message": "Invalid input: expected object, received undefined"\n  },\n  {\n    "expected": "record",\n    "code": "invalid_type",\n    "path": [\n      "metadata"\n    ],\n    "message": "Invalid input: expected record, received undefined"\n  }\n]', 'status': 400}
+E         
+E         stderr:
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ingest', 'syllabus.md', '--course-id', 'course-zr-ul...  ],\\n    "message": "Invalid input: expected record, received undefined"\\n  }\\n]\', \'status\': 400}\n', stderr='').returncode
+
+tests/test_final_state.py:97: AssertionError
+________________ test_alchemyst_context_contains_syllabus_chunk ________________
+
+    def test_alchemyst_context_contains_syllabus_chunk():
+        """Use the Alchemyst Python SDK to verify the syllabus is retrievable
+        when filtered by the course-scoped group_name."""
+        try:
+            from alchemyst_ai import AlchemystAI
+        except Exception as exc:  # pragma: no cover - diagnostic
+            pytest.fail(f"Failed to import alchemyst_ai SDK: {exc!r}")
+    
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        assert api_key, "ALCHEMYST_AI_API_KEY must be set for verification."
+    
+        client = AlchemystAI(api_key=api_key)
+        course_id = _course_id()
+    
+>       result = client.v1.context.search(
+            query="When is the midterm exam?",
+            similarity_threshold=0.3,
+            scope="internal",
+            metadata={"group_name": ["syllabus", course_id]},
+        )
+E       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+
+tests/test_final_state.py:123: TypeError
+__________________________ test_ask_midterm_question ___________________________
+
+    def test_ask_midterm_question():
+        course_id = _course_id()
+        result = _run_main(
+            ["ask", "When is the midterm exam and where will it be held?", "--course-id", course_id]
+        )
+>       assert result.returncode == 0, (
+            "Expected `python3 main.py ask ...` (midterm) to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+E       AssertionError: Expected `python3 main.py ask ...` (midterm) to exit 0, but got returncode=1.
+E         stdout:
+E         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+E         
+E         stderr:
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'When is the midterm exam and where will it be...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n", stderr='').returncode
+
+tests/test_final_state.py:156: AssertionError
+________________________ test_ask_late_policy_question _________________________
+
+    def test_ask_late_policy_question():
+        course_id = _course_id()
+        result = _run_main(
+            ["ask", "What is the late policy for homework?", "--course-id", course_id]
+        )
+>       assert result.returncode == 0, (
+            "Expected `python3 main.py ask ...` (late policy) to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+E       AssertionError: Expected `python3 main.py ask ...` (late policy) to exit 0, but got returncode=1.
+E         stdout:
+E         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+E         
+E         stderr:
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'What is the late policy for homework?', '--co...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n", stderr='').returncode
+
+tests/test_final_state.py:175: AssertionError
+________________ test_ask_isolated_course_does_not_leak_midterm ________________
+
+    def test_ask_isolated_course_does_not_leak_midterm():
+        """Context Arithmetic: a different course_id must not retrieve this course's syllabus."""
+        other_course = _unrelated_course_id()
+        result = _run_main(
+            ["ask", "When is the midterm exam?", "--course-id", other_course]
+        )
+>       assert result.returncode == 0, (
+            "Expected `python3 main.py ask ...` (unrelated course) to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+E       AssertionError: Expected `python3 main.py ask ...` (unrelated course) to exit 0, but got returncode=1.
+E         stdout:
+E         Error searching context: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+E         
+E         stderr:
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ask', 'When is the midterm exam?', '--course-id', 'u...ntext: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n", stderr='').returncode
+
+tests/test_final_state.py:195: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_main_py_exists
+FAILED tests/test_final_state.py::test_ingest_command_succeeds - AssertionErr...
+FAILED tests/test_final_state.py::test_alchemyst_context_contains_syllabus_chunk
+FAILED tests/test_final_state.py::test_ask_midterm_question - AssertionError:...
+FAILED tests/test_final_state.py::test_ask_late_policy_question - AssertionEr...
+FAILED tests/test_final_state.py::test_ask_isolated_course_does_not_leak_midterm
+========================= 5 failed, 1 passed in 5.81s ==========================
