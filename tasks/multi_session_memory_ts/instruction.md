@@ -1,0 +1,45 @@
+# Multi-Session Memory Recall with Alchemyst AI (TypeScript)
+
+## Background
+Alchemyst AI provides a Context Engine with built-in memory management that lets AI agents remember user preferences across sessions. Memory entries are scoped by a `userId` (who is talking) and a `sessionId` (which conversation thread). The same `userId` can carry preferences from one session into a completely different session by retrieving them via `client.v1.context.memory.search`.
+
+Your job is to build a small Node.js + TypeScript CLI that uses the official `@alchemystai/sdk` to:
+1. Store a user preference under one session (`session_A`).
+2. Retrieve and recall that preference under a different session (`session_B`) for the same user.
+
+This demonstrates Alchemyst's cross-session memory capability.
+
+## Requirements
+- Implement a Node.js TypeScript CLI program at `/home/user/myproject` that:
+  - Reads the `ALCHEMYST_AI_API_KEY` from the environment.
+  - Reads `ZEALT_RUN_ID` from the environment and uses it to build a unique `userId` (e.g., `user-${ZEALT_RUN_ID}`) so concurrent trials do not collide.
+  - Uses two distinct session identifiers derived from `ZEALT_RUN_ID`: `session_A-${ZEALT_RUN_ID}` for storing the preference and `session_B-${ZEALT_RUN_ID}` for recalling it.
+  - On the first invocation, stores the user preference text (an explicit statement that the user is vegan and allergic to peanuts) into memory under `session_A` using `client.v1.context.memory.add`.
+  - On every invocation (including reruns), accepts a `--query` argument, searches memory across the user's history using `client.v1.context.memory.search` under `session_B`, and prints the recalled preference content to stdout.
+- The program must be installable and runnable from a compiled `dist/` directory produced by `tsc`.
+- The CLI must be idempotent and rerunnable: repeated runs must continue to recall the preference. The store step should only happen if memory for `session_A` is empty (so the program is safe to rerun).
+
+## Implementation Hints
+- Install dependencies with `npm install @alchemystai/sdk` and configure TypeScript with `tsc --init` (or a hand-written `tsconfig.json`) targeting a modern Node.js (Node 24).
+- Construct the client with `new AlchemystAI({ apiKey: process.env.ALCHEMYST_AI_API_KEY })`.
+- **Critical**: Both `userId` and `sessionId` are strictly required on every memory call. Omitting either one raises a `MISSING_PARAMETERS` error from the API.
+- Memory search returns an object with a `memories` array; iterate over `memories[i].content` to extract the stored text.
+- Use the cross-session pattern: write under `session_A-${runId}`, search under `session_B-${runId}`. The same `userId` is what enables recall across sessions.
+- Refer to the Alchemyst Memory Quickstart for TypeScript: https://getalchemystai.com/docs/getting-started/quickstart-memory.md and the TypeScript SDK tutorial: https://getalchemystai.com/docs/tutorials/typescript-agent.md
+- Do not mock the API. The verifier requires real interactions with the Alchemyst service.
+- Use the `ALCHEMYST_AI_API_KEY` directly from the environment; do not hardcode any key in source.
+
+## Acceptance Criteria
+- Project path: /home/user/myproject
+- Command: `node dist/main.js --query "<query text>"`
+- The CLI accepts a `--query <text>` argument.
+- The CLI must compile from TypeScript sources. The compiled entry point must be `dist/main.js`.
+- Behavior:
+  - The CLI reads `ALCHEMYST_AI_API_KEY` and `ZEALT_RUN_ID` from the environment.
+  - The CLI must use `userId = user-${ZEALT_RUN_ID}` (or otherwise embed `ZEALT_RUN_ID` in the userId).
+  - The CLI must use two different session IDs `session_A-${ZEALT_RUN_ID}` and `session_B-${ZEALT_RUN_ID}`; the preference must be stored under `session_A` and retrieved while operating under `session_B`.
+  - On the first run, it stores a preference that explicitly mentions both `vegan` and `peanut` (e.g., `User is vegan and allergic to peanuts`) into memory under `session_A`.
+  - On every run, given a `--query` describing a meal/recipe question, stdout must contain text that includes both the substring `vegan` and the substring `peanut` (case-insensitive), proving the preference was recalled from a different session.
+  - The CLI must exit with status code 0 on success.
+- Idempotency: Running the command multiple times in a row must continue to succeed and continue to print the recalled preference.
+
