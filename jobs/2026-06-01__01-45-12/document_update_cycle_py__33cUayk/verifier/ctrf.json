@@ -1,0 +1,70 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 1,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780278521823,
+            "stop": 1780278556771
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_script_present",
+                "status": "passed",
+                "duration": 732,
+                "start": 1780278521880,
+                "stop": 1780278522612,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_add_initial_document",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1996,
+                "start": 1780278522614,
+                "stop": 1780278524610,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7fd99f87f8f0>, 'file_name': 'refunds-zr-33cuayk.md', 'run_id': 'zr-33cuayk'}\n\n    def test_cli_add_initial_document(env_ready):\n        result = _run_cli(\"add\", \"--content\", INITIAL_CONTENT)\n>       assert result.returncode == 0, (\n            f\"`doc_tool.py add` failed (exit {result.returncode}).\\n\"\n            f\"stdout={result.stdout!r}\\nstderr={result.stderr!r}\"\n        )\nE       AssertionError: `doc_tool.py add` failed (exit 1).\nE         stdout=''\nE         stderr='Traceback (most recent call last):\\n  File \"/home/user/alchemyst-doc-update/doc_tool.py\", line 83, in <module>\\n    main()\\n  File \"/home/user/alchemyst-doc-update/doc_tool.py\", line 36, in main\\n    client.v1.context.add(\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\\n    return self._post(\\n           ^^^^^^^^^^^\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\\n    raise self._make_status_error_from_response(err.response) from None\\nalchemyst_ai.BadRequestError: Error code: 400 - {\\'statusText\\': \\'BAD_REQUEST\\', \\'success\\': False, \\'message\\': \\'Fields missing. Detailed error: [\\\\n  {\\\\n    \"expected\": \"object\",\\\\n    \"code\": \"invalid_type\",\\\\n    \"path\": [\\\\n      \"metadata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected object, received undefined\"\\\\n  },\\\\n  {\\\\n    \"expected\": \"record\",\\\\n    \"code\": \"invalid_type\",\\\\n    \"path\": [\\\\n      \"metadata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n'\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'doc_tool.py', 'add', '--content', 'Refund policy: 30 days.'], returncode=1, stdout=...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:74: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_cli_update_document",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 4334,
+                "start": 1780278524611,
+                "stop": 1780278528945,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7fd99f87f8f0>, 'file_name': 'refunds-zr-33cuayk.md', 'run_id': 'zr-33cuayk'}\n\n    def test_cli_update_document(env_ready):\n        result = _run_cli(\"update\", \"--content\", UPDATED_CONTENT)\n>       assert result.returncode == 0, (\n            f\"`doc_tool.py update` failed (exit {result.returncode}).\\n\"\n            f\"stdout={result.stdout!r}\\nstderr={result.stderr!r}\"\n        )\nE       AssertionError: `doc_tool.py update` failed (exit 1).\nE         stdout=''\nE         stderr='Traceback (most recent call last):\\n  File \"/home/user/alchemyst-doc-update/doc_tool.py\", line 83, in <module>\\n    main()\\n  File \"/home/user/alchemyst-doc-update/doc_tool.py\", line 61, in main\\n    client.v1.context.add(\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\\n    return self._post(\\n           ^^^^^^^^^^^\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\\n    raise self._make_status_error_from_response(err.response) from None\\nalchemyst_ai.BadRequestError: Error code: 400 - {\\'statusText\\': \\'BAD_REQUEST\\', \\'success\\': False, \\'message\\': \\'Fields missing. Detailed error: [\\\\n  {\\\\n    \"expected\": \"object\",\\\\n    \"code\": \"invalid_type\",\\\\n    \"path\": [\\\\n      \"metadata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected object, received undefined\"\\\\n  },\\\\n  {\\\\n    \"expected\": \"record\",\\\\n    \"code\": \"invalid_type\",\\\\n    \"path\": [\\\\n      \"metadata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n'\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'doc_tool.py', 'update', '--content', 'Refund policy: 60 days.'], returncode=1, stdo...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:82: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_cli_search_returns_only_new_content",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 27825,
+                "start": 1780278528946,
+                "stop": 1780278556771,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7fd99f87f8f0>, 'file_name': 'refunds-zr-33cuayk.md', 'run_id': 'zr-33cuayk'}\n\n    def test_cli_search_returns_only_new_content(env_ready):\n        # Retry a few times since the backend is eventually consistent.\n        last = None\n        for _ in range(5):\n            last = _run_cli(\"search\", \"--query\", SEARCH_QUERY)\n            if last.returncode == 0 and \"60 days\" in last.stdout and \"30 days\" not in last.stdout:\n                return\n            time.sleep(3)\n        assert last is not None, \"search never ran\"\n        assert last.returncode == 0, (\n            f\"`doc_tool.py search` failed (exit {last.returncode}).\\n\"\n            f\"stdout={last.stdout!r}\\nstderr={last.stderr!r}\"\n        )\n>       assert \"60 days\" in last.stdout, (\n            f\"Expected updated content '60 days' in search stdout, got: {last.stdout!r}\"\n        )\nE       AssertionError: Expected updated content '60 days' in search stdout, got: 'Updated refund policy: 60-day refunds.\\n'\nE       assert '60 days' in 'Updated refund policy: 60-day refunds.\\n'\nE        +  where 'Updated refund policy: 60-day refunds.\\n' = CompletedProcess(args=['python3', 'doc_tool.py', 'search', '--query', 'What is the refund policy?'], returncode=0, stdout='Updated refund policy: 60-day refunds.\\n', stderr='').stdout\n\ntests/test_final_state.py:102: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

@@ -1,0 +1,180 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 6 items
+
+tests/test_final_state.py .FFFF.                                         [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_add_memory_for_user_a __________________________
+
+env_ready = {'run_id': 'zr-swxeasp', 'session': 'team-zr-swxeasp', 'user_a': 'user-a-zr-swxeasp', 'user_b': 'user-b-zr-swxeasp'}
+
+    def test_add_memory_for_user_a(env_ready):
+>       _run([
+            "add",
+            "--user", env_ready["user_a"],
+            "--session", env_ready["session"],
+            "--content", ATLAS_CONTENT,
+        ])
+
+tests/test_final_state.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ['add', '--user', 'user-a-zr-swxeasp', '--session', 'team-zr-swxeasp', '--content', ...]
+check_zero = True, timeout = 120
+
+    def _run(args, check_zero=True, timeout=120):
+        result = subprocess.run(
+            ["python3", CLI, *args],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=timeout,
+            env={**os.environ},
+        )
+        if check_zero:
+>           assert result.returncode == 0, (
+                f"`python3 {CLI} {' '.join(args)}` exited {result.returncode}.\n"
+                f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+            )
+E           AssertionError: `python3 team_memory.py add --user user-a-zr-swxeasp --session team-zr-swxeasp --content Project Atlas is in the design phase` exited 1.
+E             stdout:
+E             
+E             stderr:
+E             Error: MemoryResource.add() takes 1 positional argument but 2 were given
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['python3', 'team_memory.py', 'add', '--user', 'user-a-zr-swxeasp', '--session', 'team-zr-swxeas... phase'], returncode=1, stdout='', stderr='Error: MemoryResource.add() takes 1 positional argument but 2 were given\n').returncode
+
+tests/test_final_state.py:38: AssertionError
+__________________________ test_add_memory_for_user_b __________________________
+
+env_ready = {'run_id': 'zr-swxeasp', 'session': 'team-zr-swxeasp', 'user_a': 'user-a-zr-swxeasp', 'user_b': 'user-b-zr-swxeasp'}
+
+    def test_add_memory_for_user_b(env_ready):
+>       _run([
+            "add",
+            "--user", env_ready["user_b"],
+            "--session", env_ready["session"],
+            "--content", MILESTONE_CONTENT,
+        ])
+
+tests/test_final_state.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ['add', '--user', 'user-b-zr-swxeasp', '--session', 'team-zr-swxeasp', '--content', ...]
+check_zero = True, timeout = 120
+
+    def _run(args, check_zero=True, timeout=120):
+        result = subprocess.run(
+            ["python3", CLI, *args],
+            capture_output=True,
+            text=True,
+            cwd=PROJECT_DIR,
+            timeout=timeout,
+            env={**os.environ},
+        )
+        if check_zero:
+>           assert result.returncode == 0, (
+                f"`python3 {CLI} {' '.join(args)}` exited {result.returncode}.\n"
+                f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+            )
+E           AssertionError: `python3 team_memory.py add --user user-b-zr-swxeasp --session team-zr-swxeasp --content The next milestone is API freeze on Friday` exited 1.
+E             stdout:
+E             
+E             stderr:
+E             Error: MemoryResource.add() takes 1 positional argument but 2 were given
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['python3', 'team_memory.py', 'add', '--user', 'user-b-zr-swxeasp', '--session', 'team-zr-swxeas...Friday'], returncode=1, stdout='', stderr='Error: MemoryResource.add() takes 1 positional argument but 2 were given\n').returncode
+
+tests/test_final_state.py:38: AssertionError
+_______________ test_user_b_sees_user_a_memory_in_shared_session _______________
+
+env_ready = {'run_id': 'zr-swxeasp', 'session': 'team-zr-swxeasp', 'user_a': 'user-a-zr-swxeasp', 'user_b': 'user-b-zr-swxeasp'}
+
+    def test_user_b_sees_user_a_memory_in_shared_session(env_ready):
+>       _search_until_contains(
+            [
+                "search",
+                "--user", env_ready["user_b"],
+                "--session", env_ready["session"],
+                "--query", "Atlas",
+            ],
+            needle=ATLAS_CONTENT,
+        )
+
+tests/test_final_state.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ['search', '--user', 'user-b-zr-swxeasp', '--session', 'team-zr-swxeasp', '--query', ...]
+needle = 'Project Atlas is in the design phase', attempts = 6, delay = 5
+
+    def _search_until_contains(args, needle, attempts=6, delay=5):
+        last = None
+        for _ in range(attempts):
+            last = _run(args, check_zero=False)
+            if last.returncode == 0 and needle in last.stdout:
+                return last
+            time.sleep(delay)
+>       raise AssertionError(
+            f"Expected substring {needle!r} in stdout of `python3 {CLI} {' '.join(args)}`.\n"
+            f"Last stdout:\n{last.stdout if last else ''}\nLast stderr:\n{last.stderr if last else ''}"
+        )
+E       AssertionError: Expected substring 'Project Atlas is in the design phase' in stdout of `python3 team_memory.py search --user user-b-zr-swxeasp --session team-zr-swxeasp --query Atlas`.
+E       Last stdout:
+E       
+E       Last stderr:
+E       Error: 'MemoryResource' object has no attribute 'search'
+
+tests/test_final_state.py:81: AssertionError
+_______________ test_user_a_sees_user_b_memory_in_shared_session _______________
+
+env_ready = {'run_id': 'zr-swxeasp', 'session': 'team-zr-swxeasp', 'user_a': 'user-a-zr-swxeasp', 'user_b': 'user-b-zr-swxeasp'}
+
+    def test_user_a_sees_user_b_memory_in_shared_session(env_ready):
+>       _search_until_contains(
+            [
+                "search",
+                "--user", env_ready["user_a"],
+                "--session", env_ready["session"],
+                "--query", "milestone",
+            ],
+            needle=MILESTONE_CONTENT,
+        )
+
+tests/test_final_state.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ['search', '--user', 'user-a-zr-swxeasp', '--session', 'team-zr-swxeasp', '--query', ...]
+needle = 'The next milestone is API freeze on Friday', attempts = 6, delay = 5
+
+    def _search_until_contains(args, needle, attempts=6, delay=5):
+        last = None
+        for _ in range(attempts):
+            last = _run(args, check_zero=False)
+            if last.returncode == 0 and needle in last.stdout:
+                return last
+            time.sleep(delay)
+>       raise AssertionError(
+            f"Expected substring {needle!r} in stdout of `python3 {CLI} {' '.join(args)}`.\n"
+            f"Last stdout:\n{last.stdout if last else ''}\nLast stderr:\n{last.stderr if last else ''}"
+        )
+E       AssertionError: Expected substring 'The next milestone is API freeze on Friday' in stdout of `python3 team_memory.py search --user user-a-zr-swxeasp --session team-zr-swxeasp --query milestone`.
+E       Last stdout:
+E       
+E       Last stderr:
+E       Error: 'MemoryResource' object has no attribute 'search'
+
+tests/test_final_state.py:81: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_cli_script_present
+PASSED tests/test_final_state.py::test_missing_session_param_fails
+FAILED tests/test_final_state.py::test_add_memory_for_user_a - AssertionError...
+FAILED tests/test_final_state.py::test_add_memory_for_user_b - AssertionError...
+FAILED tests/test_final_state.py::test_user_b_sees_user_a_memory_in_shared_session
+FAILED tests/test_final_state.py::test_user_a_sees_user_b_memory_in_shared_session
+==================== 4 failed, 2 passed in 69.94s (0:01:09) ====================

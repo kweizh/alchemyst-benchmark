@@ -1,0 +1,257 @@
+Skipping image OS validation for hb__document_update_cycle_py: docker inspect returned 1
+Skipping image OS validation for hb__shared_team_memory_py: docker inspect returned 1
+Running command: apt-get update && apt-get install -y curl ripgrep
+Running command: apt-get update && apt-get install -y curl ripgrep
+Command outputs captured
+Running command: set -euo pipefail; curl -fsSL https://getpochi.com/install.sh | bash -x -s -- pochi-v0.6.12 && mkdir -p /logs/agent/pochi && ~/.pochi/bin/pochi --version
+Command outputs captured
+Running command: set -euo pipefail; curl -fsSL https://getpochi.com/install.sh | bash -x -s -- pochi-v0.6.12 && mkdir -p /logs/agent/pochi && ~/.pochi/bin/pochi --version
+Command outputs captured
+Running command: ln -sf ~/.pochi/bin/pochi /usr/local/bin/pochi
+Command outputs captured
+Running command: ln -sf ~/.pochi/bin/pochi /usr/local/bin/pochi
+Command outputs captured
+Command outputs captured
+Running command: echo zr-swxeasp > /logs/artifacts/run-id && echo shared_team_memory_py__sWxEasP > /logs/artifacts/trial_id
+Running command: echo zr-33cuayk > /logs/artifacts/run-id && echo document_update_cycle_py__33cUayk > /logs/artifacts/trial_id
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: if [ -f /bootstrap/test_initial_state.py ]; then pytest -s --log-cli-level=DEBUG /bootstrap/test_initial_state.py > >(tee /logs/agent/pochi/initial-test-stdout.txt) 2> >(tee /logs/agent/pochi/initial-test-stderr.txt >&2); fi
+Command outputs captured
+Running command: if [ -f /bootstrap/test_initial_state.py ]; then pytest -s --log-cli-level=DEBUG /bootstrap/test_initial_state.py > >(tee /logs/agent/pochi/initial-test-stdout.txt) 2> >(tee /logs/agent/pochi/initial-test-stderr.txt >&2); fi
+Command outputs captured
+Running command: pochi --model google/gemini-3-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Alchemyst AI — Document Update Cycle (Python SDK)
+
+## Background
+Alchemyst AI is a context engine that ingests documents (chunking + embeddings) and exposes a search API for retrieval. When a document is re-added with the same `file_name` metadata, the platform rejects it with a `409 Conflict` (deduplication is by `metadata.file_name`). The supported pattern for keeping context fresh is **Delete-Then-Add**: first delete the previous version by `file_name`, then add the new content under the same `file_name`. See https://getalchemystai.com/docs/advanced/troubleshooting.
+
+You will build a small Python 3 CLI that exercises this update cycle end-to-end against the real Alchemyst AI service using the official Python SDK (`alchemystai` — imported as `from alchemyst_ai import AlchemystAI`).
+
+## Requirements
+- Implement a Python 3 CLI at `/home/user/alchemyst-doc-update/doc_tool.py` with three subcommands:
+  - `add --content <text>`: ingest a single document.
+  - `update --content <text>`: replace the previously stored document by first deleting the old version, then adding the new content under the same `file_name`.
+  - `search --query <text>`: search the context engine, filter results to this run's `file_name`, and print the retrieved chunk(s) to stdout (one chunk per line).
+- All operations MUST use a run-scoped `file_name` to avoid collisions across concurrent CI runs:
+  - `file_name = "refunds-${ZEALT_RUN_ID}.md"` (read `ZEALT_RUN_ID` from the environment).
+- The CLI must call the real Alchemyst AI service. Read `ALCHEMYST_AI_API_KEY` from the environment. Do NOT mock the SDK and do NOT hardcode credentials.
+
+## Implementation Hints
+- The SDK is installed in the image: `from alchemyst_ai import AlchemystAI; client = AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- For ingestion (both `add` and the add half of `update`), use `client.v1.context.add(documents=[{"content": ..., "metadata": {"file_name": <file_name>}}], context_type="resource", source="docs", scope="internal")`.
+- For the delete half of `update`, use `client.v1.context.delete(...)` and target the document by `file_name`. Inspect the SDK signature; the Python SDK is expected to accept `metadata={"file_name": <file_name>}` or an equivalent keyword argument. If a `409 Conflict` is raised on the re-add, the agent's `update` is missing the delete step.
+- For search, use `client.v1.context.search(query=<text>, similarity_threshold=0.5, scope="internal", metadata={"file_name": <file_name>})`. Iterate `result.contexts` and print each `ctx.content` on its own line.
+- After a delete, allow a small propagation delay (sleep ~2s) before re-adding to avoid races.
+- Use `python3` (the image does NOT provide a `python` binary).
+- Use `argparse` for argument parsing.
+
+## Acceptance Criteria
+- Project path: `/home/user/alchemyst-doc-update`
+- Command shape: `python3 doc_tool.py <subcommand> [options]`
+- Subcommands:
+  - `add --content <string>` — exits 0 on success.
+  - `update --content <string>` — exits 0 on success; internally deletes the old version and adds the new one with the same `file_name`.
+  - `search --query <string>` — exits 0 on success and prints retrieved chunk content to stdout (one chunk per line).
+- All resources are run-scoped: `metadata.file_name` MUST equal `refunds-${ZEALT_RUN_ID}.md` for every operation.
+- After `update`, a `search` whose query is semantically about the refund policy MUST return the NEW content and MUST NOT return the OLD content.
+- Credentials are read from `ALCHEMYST_AI_API_KEY` only.
+
+
+EOF
+Command outputs captured
+Running command: pochi --model google/gemini-3-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Alchemyst AI — Shared Team Memory (Python SDK)
+
+## Background
+Alchemyst AI's memory API stores memories scoped by `user_id` and `session_id`. According to the official memory quickstart (https://getalchemystai.com/docs/getting-started/quickstart-memory.md), "Using the same `sessionId` across different `userId` values creates a shared memory space for team conversations." In this task you build a small Python 3 CLI that exposes this behaviour for two collaborating teammates and the verifier confirms that a memory added by user A is visible to user B (and vice versa) when they share the same session.
+
+## Requirements
+- Project path: `/home/user/team-memory` (already exists in the container).
+- Implement a Python 3 CLI at `/home/user/team-memory/team_memory.py` using the official `alchemystai` SDK (`from alchemyst_ai import AlchemystAI`).
+- The CLI MUST expose two subcommands:
+  - `add --user <user_id> --session <session_id> --content <text>` — stores a single memory string.
+  - `search --user <user_id> --session <session_id> --query <text>` — searches memories scoped to that user+session and prints every retrieved memory's text content to stdout, one memory per line.
+- Both `--user` and `--session` are REQUIRED for every subcommand. Missing either one MUST cause the CLI to exit with a non-zero status code (the platform itself returns `MISSING_PARAMETERS` errors — your CLI may also validate locally with `argparse`).
+- Read the API key from the `ALCHEMYST_AI_API_KEY` environment variable. Do NOT mock the SDK and do NOT hardcode credentials.
+- Use `python3` (the image does NOT provide a `python` binary).
+
+## Implementation Hints
+- Construct the client as `client = AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- For `add`, call `client.v1.context.memory.add({"user_id": user_id, "session_id": session_id, "content": content})` (the SDK accepts a single dict argument per the official Python quickstart).
+- For `search`, call `client.v1.context.memory.search(user_id=user_id, session_id=session_id, query=query, limit=20)`. Iterate `result.memories` and, for each memory with a `content` attribute, print `mem.content` on its own line.
+- Use `argparse` with two subparsers (`add` and `search`); each subparser MUST declare `--user`, `--session` as required, plus `--content` for `add` and `--query` for `search`.
+- Memory ingestion is eventually consistent: the verifier handles retries, but your CLI does not need to.
+
+## Acceptance Criteria
+- Project path: `/home/user/team-memory`
+- Command shape: `python3 team_memory.py <subcommand> [options]`
+- Subcommands:
+  - `add --user <user_id> --session <session_id> --content <text>` — exits 0 on success.
+  - `search --user <user_id> --session <session_id> --query <text>` — exits 0 on success and prints retrieved memories to stdout, one per line.
+  - Either subcommand invoked WITHOUT `--user` or WITHOUT `--session` MUST exit non-zero.
+- All `user_id`/`session_id` values used during verification embed the current `run-id` (read from `ZEALT_RUN_ID`).
+- Two different users adding memories under the same `session_id` MUST be able to search and retrieve each other's content.
+- Credentials are read from `ALCHEMYST_AI_API_KEY` only.
+
+
+EOF
+Skipping image OS validation for hb__threshold_sensitivity_ts: docker inspect returned 1
+Running command: apt-get update && apt-get install -y curl ripgrep
+Command outputs captured
+Running command: set -euo pipefail; curl -fsSL https://getpochi.com/install.sh | bash -x -s -- pochi-v0.6.12 && mkdir -p /logs/agent/pochi && ~/.pochi/bin/pochi --version
+Command outputs captured
+Running command: ln -sf ~/.pochi/bin/pochi /usr/local/bin/pochi
+Command outputs captured
+Running command: echo zr-4dyqwit > /logs/artifacts/run-id && echo threshold_sensitivity_ts__4dYqwit > /logs/artifacts/trial_id
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: if [ -f /bootstrap/test_initial_state.py ]; then pytest -s --log-cli-level=DEBUG /bootstrap/test_initial_state.py > >(tee /logs/agent/pochi/initial-test-stdout.txt) 2> >(tee /logs/agent/pochi/initial-test-stderr.txt >&2); fi
+Command outputs captured
+Running command: pochi --model google/gemini-3-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Alchemyst AI — Similarity Threshold Sensitivity (TypeScript SDK)
+
+## Background
+Alchemyst AI's context search accepts a `similarity_threshold` parameter that controls how closely a chunk must match the query to be returned. Raising the threshold improves precision (fewer, more relevant matches) at the cost of recall; lowering it does the opposite. In this task you build a small Node.js + TypeScript CLI that demonstrates this trade-off end-to-end against the real Alchemyst AI service.
+
+## Requirements
+- Project path: `/home/user/threshold-task`. The directory already exists in the container.
+- Initialize a Node.js project with TypeScript and install `@alchemystai/sdk` (use `npx tsx` to execute TypeScript directly — no build step required).
+- Implement two CLI scripts that share a run-scoped group name `threshold-${ZEALT_RUN_ID}` so concurrent runs do not interfere:
+  1. `seed.ts` — ingests exactly three documents tagged with `group_name: ['threshold-${run-id}']`. Each document also gets a unique `file_name` suffixed with `-${run-id}`:
+     - `python-${run-id}.md` — content describing the Python programming language (strong match for the verifier's query).
+     - `js-${run-id}.md` — content describing the JavaScript programming language (loose match for the verifier's query).
+     - `cake-${run-id}.md` — content describing baking a chocolate cake (unrelated to the verifier's query).
+     `seed.ts` MUST be idempotent: before adding, best-effort delete any pre-existing document with the same `file_name`.
+  2. `search.ts` — accepts CLI flags `--query <text>` and `--threshold <number>`, performs a context search restricted to the run's group, and prints each retrieved chunk's `file_name` metadata to stdout on its own line. If a chunk has no `file_name` in its metadata, print its content instead.
+- Read `ZEALT_RUN_ID` from the environment in both scripts.
+- Read `ALCHEMYST_AI_API_KEY` from the environment. Do NOT mock the SDK and do NOT hardcode credentials.
+
+## Implementation Hints
+- Storage metadata uses `group_name` (snake_case) in metadata while TypeScript search uses `groupName` (camelCase) in the `metadata` filter. See https://getalchemystai.com/docs/getting-started/quickstart#advanced-organize-with-metadata.
+- Use `client.v1.context.add({ documents: [...], context_type: 'resource', source: 'docs', scope: 'internal' })` to ingest. Each document should include `metadata: { file_name: '<name>-${run-id}.md', group_name: ['threshold-${run-id}'] }`.
+- Use `client.v1.context.search({ query, similarity_threshold: Number(threshold), scope: 'internal', metadata: { groupName: ['threshold-${run-id}'] } })`. The search response exposes `contexts`, each with `metadata` and `content`.
+- Parse CLI args from `process.argv` (or `commander` / `yargs` — your choice). The verifier invokes the scripts via `npx tsx`.
+- For the seed pre-clean, call `client.v1.context.delete({ metadata: { fileName: '<name>-${run-id}.md' } })` inside a `try/catch` and ignore errors.
+- Use `python3` in any shell scripts you write (the image has no `python` binary).
+
+## Acceptance Criteria
+- Project path: `/home/user/threshold-task`
+- `package.json` is present and lists `@alchemystai/sdk` and `tsx` (or `typescript` + `tsx`) as dependencies.
+- `npx tsx seed.ts` exits 0 and adds the three documents under `group_name: ['threshold-${ZEALT_RUN_ID}']`.
+- `npx tsx search.ts --query "<text>" --threshold <num>` exits 0 and prints retrieved `file_name`s, one per line.
+- With a HIGH threshold (`0.85`) and the query `"What is the Python programming language?"`, the only retrieved file MUST contain the substring `python-${ZEALT_RUN_ID}.md`.
+- With a LOW threshold (`0.3`) and the same query, the retrieved files MUST include both `python-${ZEALT_RUN_ID}.md` and `js-${ZEALT_RUN_ID}.md`.
+- Credentials are read from `ALCHEMYST_AI_API_KEY` only.
+
+
+EOF
+Command outputs captured
+Running command: rm -f ~/.pochi/config.jsonc
+Command outputs captured
+The verifier.env contains an API key (often the case for LLM-based verifiers). You will incur costs associated with the API calls.
+Command outputs captured
+Running command: rm -f ~/.pochi/config.jsonc
+Command outputs captured
+The verifier.env contains an API key (often the case for LLM-based verifiers). You will incur costs associated with the API calls.
+Command outputs captured
+Running command: rm -f ~/.pochi/config.jsonc
+Command outputs captured
+The verifier.env contains an API key (often the case for LLM-based verifiers). You will incur costs associated with the API calls.

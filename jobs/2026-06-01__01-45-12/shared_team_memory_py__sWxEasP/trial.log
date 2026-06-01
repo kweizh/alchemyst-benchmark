@@ -1,0 +1,84 @@
+Skipping image OS validation for hb__shared_team_memory_py: docker inspect returned 1
+Running command: apt-get update && apt-get install -y curl ripgrep
+Command outputs captured
+Running command: set -euo pipefail; curl -fsSL https://getpochi.com/install.sh | bash -x -s -- pochi-v0.6.12 && mkdir -p /logs/agent/pochi && ~/.pochi/bin/pochi --version
+Command outputs captured
+Running command: ln -sf ~/.pochi/bin/pochi /usr/local/bin/pochi
+Command outputs captured
+Running command: echo zr-swxeasp > /logs/artifacts/run-id && echo shared_team_memory_py__sWxEasP > /logs/artifacts/trial_id
+Command outputs captured
+Running command: mkdir -p ~/.pochi && cat << 'EOF' | sed -e "s/OPENAI_API_KEY/${OPENAI_API_KEY}/g" -e "s/DEEPINFRA_API_KEY/${DEEPINFRA_API_KEY}/g" > ~/.pochi/config.jsonc
+{
+  "providers": {
+    "deepinfra": {
+      "kind": "openai",
+      "baseURL": "https://api.deepinfra.com/v1/openai",
+      "apiKey": "DEEPINFRA_API_KEY",
+      "models": {
+        "zai-org/GLM-4.7-Flash": {
+          "name": "glm-4.7-flash"
+        },
+        "moonshotai/Kimi-K2.6": {
+          "name": "kimi-K2.6"
+        },
+        "deepseek-ai/DeepSeek-V4-Pro": {
+          "name": "DeepSeek-V4-Pro"
+        }
+      }
+    },
+    "openai": {
+      "kind": "openai",
+      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "OPENAI_API_KEY",
+      "models": {
+        "gpt-5.4": {
+          "name": "gpt-5.4"
+        }
+      }
+    }
+  }
+}
+EOF
+Command outputs captured
+Running command: if [ -f /bootstrap/test_initial_state.py ]; then pytest -s --log-cli-level=DEBUG /bootstrap/test_initial_state.py > >(tee /logs/agent/pochi/initial-test-stdout.txt) 2> >(tee /logs/agent/pochi/initial-test-stderr.txt >&2); fi
+Command outputs captured
+Running command: pochi --model google/gemini-3-flash --max-steps 200 --max-retries 10 --blobs-dir /logs/agent/pochi/blobs --experimental-stream-trajectory /logs/agent/pochi/trajectory.jsonl > >(tee /logs/agent/pochi/stdout.txt) 2> >(tee /logs/agent/pochi/stderr.txt >&2) <<'EOF'
+# Alchemyst AI — Shared Team Memory (Python SDK)
+
+## Background
+Alchemyst AI's memory API stores memories scoped by `user_id` and `session_id`. According to the official memory quickstart (https://getalchemystai.com/docs/getting-started/quickstart-memory.md), "Using the same `sessionId` across different `userId` values creates a shared memory space for team conversations." In this task you build a small Python 3 CLI that exposes this behaviour for two collaborating teammates and the verifier confirms that a memory added by user A is visible to user B (and vice versa) when they share the same session.
+
+## Requirements
+- Project path: `/home/user/team-memory` (already exists in the container).
+- Implement a Python 3 CLI at `/home/user/team-memory/team_memory.py` using the official `alchemystai` SDK (`from alchemyst_ai import AlchemystAI`).
+- The CLI MUST expose two subcommands:
+  - `add --user <user_id> --session <session_id> --content <text>` — stores a single memory string.
+  - `search --user <user_id> --session <session_id> --query <text>` — searches memories scoped to that user+session and prints every retrieved memory's text content to stdout, one memory per line.
+- Both `--user` and `--session` are REQUIRED for every subcommand. Missing either one MUST cause the CLI to exit with a non-zero status code (the platform itself returns `MISSING_PARAMETERS` errors — your CLI may also validate locally with `argparse`).
+- Read the API key from the `ALCHEMYST_AI_API_KEY` environment variable. Do NOT mock the SDK and do NOT hardcode credentials.
+- Use `python3` (the image does NOT provide a `python` binary).
+
+## Implementation Hints
+- Construct the client as `client = AlchemystAI(api_key=os.environ["ALCHEMYST_AI_API_KEY"])`.
+- For `add`, call `client.v1.context.memory.add({"user_id": user_id, "session_id": session_id, "content": content})` (the SDK accepts a single dict argument per the official Python quickstart).
+- For `search`, call `client.v1.context.memory.search(user_id=user_id, session_id=session_id, query=query, limit=20)`. Iterate `result.memories` and, for each memory with a `content` attribute, print `mem.content` on its own line.
+- Use `argparse` with two subparsers (`add` and `search`); each subparser MUST declare `--user`, `--session` as required, plus `--content` for `add` and `--query` for `search`.
+- Memory ingestion is eventually consistent: the verifier handles retries, but your CLI does not need to.
+
+## Acceptance Criteria
+- Project path: `/home/user/team-memory`
+- Command shape: `python3 team_memory.py <subcommand> [options]`
+- Subcommands:
+  - `add --user <user_id> --session <session_id> --content <text>` — exits 0 on success.
+  - `search --user <user_id> --session <session_id> --query <text>` — exits 0 on success and prints retrieved memories to stdout, one per line.
+  - Either subcommand invoked WITHOUT `--user` or WITHOUT `--session` MUST exit non-zero.
+- All `user_id`/`session_id` values used during verification embed the current `run-id` (read from `ZEALT_RUN_ID`).
+- Two different users adding memories under the same `session_id` MUST be able to search and retrieve each other's content.
+- Credentials are read from `ALCHEMYST_AI_API_KEY` only.
+
+
+EOF
+Command outputs captured
+Running command: rm -f ~/.pochi/config.jsonc
+Command outputs captured
+The verifier.env contains an API key (often the case for LLM-based verifiers). You will incur costs associated with the API calls.
