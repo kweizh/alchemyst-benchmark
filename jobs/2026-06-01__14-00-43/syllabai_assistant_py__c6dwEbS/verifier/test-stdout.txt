@@ -1,0 +1,104 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 6 items
+
+tests/test_final_state.py .FFFF.                                         [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_ingest_command_succeeds _________________________
+
+    def test_ingest_command_succeeds():
+        course_id = _course_id()
+        result = _run_main(["ingest", "syllabus.md", "--course-id", course_id])
+>       assert result.returncode == 0, (
+            "Expected `python3 main.py ingest ...` to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+E       AssertionError: Expected `python3 main.py ingest ...` to exit 0, but got returncode=1.
+E         stdout:
+E         
+E         stderr:
+E         Error ingesting syllabus: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileType"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]', 'status': 400}
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ingest', 'syllabus.md', '--course-id', 'course-zr-c6...ified"\\n    ],\\n    "message": "Invalid input: expected string, received undefined"\\n  }\\n]\', \'status\': 400}\n').returncode
+
+tests/test_final_state.py:97: AssertionError
+________________ test_alchemyst_context_contains_syllabus_chunk ________________
+
+    def test_alchemyst_context_contains_syllabus_chunk():
+        """Use the Alchemyst Python SDK to verify the syllabus is retrievable
+        when filtered by the course-scoped group_name."""
+        try:
+            from alchemyst_ai import AlchemystAI
+        except Exception as exc:  # pragma: no cover - diagnostic
+            pytest.fail(f"Failed to import alchemyst_ai SDK: {exc!r}")
+    
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        assert api_key, "ALCHEMYST_AI_API_KEY must be set for verification."
+    
+        client = AlchemystAI(api_key=api_key)
+        course_id = _course_id()
+    
+>       result = client.v1.context.search(
+            query="When is the midterm exam?",
+            similarity_threshold=0.3,
+            scope="internal",
+            metadata={"group_name": ["syllabus", course_id]},
+        )
+E       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+
+tests/test_final_state.py:123: TypeError
+__________________________ test_ask_midterm_question ___________________________
+
+    def test_ask_midterm_question():
+        course_id = _course_id()
+        result = _run_main(
+            ["ask", "When is the midterm exam and where will it be held?", "--course-id", course_id]
+        )
+        assert result.returncode == 0, (
+            "Expected `python3 main.py ask ...` (midterm) to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+        answer = _extract_answer(result.stdout)
+        lower = answer.lower()
+>       assert "october 17" in lower, (
+            f"Expected midterm answer to mention 'October 17'. Got: {answer!r}"
+        )
+E       AssertionError: Expected midterm answer to mention 'October 17'. Got: "I'm sorry, but the syllabus context does not provide information about the midterm exam date or location. Please check the syllabus or ask your instructor for those details."
+E       assert 'october 17' in "i'm sorry, but the syllabus context does not provide information about the midterm exam date or location. please check the syllabus or ask your instructor for those details."
+
+tests/test_final_state.py:162: AssertionError
+________________________ test_ask_late_policy_question _________________________
+
+    def test_ask_late_policy_question():
+        course_id = _course_id()
+        result = _run_main(
+            ["ask", "What is the late policy for homework?", "--course-id", course_id]
+        )
+        assert result.returncode == 0, (
+            "Expected `python3 main.py ask ...` (late policy) to exit 0, but got "
+            f"returncode={result.returncode}.\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+        )
+        answer = _extract_answer(result.stdout)
+        # Look for the numeric facts: "10" (percentage points) and "3" (max days).
+>       assert re.search(r"\b10\b", answer), (
+            f"Expected late-policy answer to include the number 10 (percentage points per day). Got: {answer!r}"
+        )
+E       AssertionError: Expected late-policy answer to include the number 10 (percentage points per day). Got: "I'm sorry, but the provided syllabus context does not contain any information about the late policy for homework."
+E       assert None
+E        +  where None = <function search at 0x7f43c66cbba0>('\\b10\\b', "I'm sorry, but the provided syllabus context does not contain any information about the late policy for homework.")
+E        +    where <function search at 0x7f43c66cbba0> = re.search
+
+tests/test_final_state.py:181: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_main_py_exists
+PASSED tests/test_final_state.py::test_ask_isolated_course_does_not_leak_midterm
+FAILED tests/test_final_state.py::test_ingest_command_succeeds - AssertionErr...
+FAILED tests/test_final_state.py::test_alchemyst_context_contains_syllabus_chunk
+FAILED tests/test_final_state.py::test_ask_midterm_question - AssertionError:...
+FAILED tests/test_final_state.py::test_ask_late_policy_question - AssertionEr...
+========================= 4 failed, 2 passed in 16.37s =========================

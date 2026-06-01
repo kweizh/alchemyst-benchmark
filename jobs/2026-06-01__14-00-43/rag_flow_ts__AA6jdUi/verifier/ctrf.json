@@ -1,0 +1,61 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 3,
+            "passed": 0,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780323547696,
+            "stop": 1780323550722
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_exits_successfully",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2440,
+                "start": 1780323547719,
+                "stop": 1780323550159,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=1, s...tadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]\\n')\n\n    def test_cli_exits_successfully(cli_run):\n>       assert cli_run.returncode == 0, (\n            f\"CLI exited with status {cli_run.returncode}. \"\n            f\"stdout=\\n{cli_run.stdout}\\nstderr=\\n{cli_run.stderr}\"\n        )\nE       AssertionError: CLI exited with status 1. stdout=\nE         Ingesting refund policy document...\nE         \nE         stderr=\nE         Error: 400 Fields missing. Detailed error: [\nE           {\nE             \"expected\": \"number\",\nE             \"code\": \"invalid_type\",\nE             \"path\": [\nE               \"metadata\",\nE               \"fileSize\"\nE             ],\nE             \"message\": \"Invalid input: expected number, received undefined\"\nE           },\nE           {\nE             \"expected\": \"string\",\nE             \"code\": \"invalid_type\",\nE             \"path\": [\nE               \"metadata\",\nE               \"fileType\"\nE             ],\nE             \"message\": \"Invalid input: expected string, received undefined\"\nE           },\nE           {\nE             \"expected\": \"string\",\nE             \"code\": \"invalid_type\",\nE             \"path\": [\nE               \"metadata\",\nE               \"lastModified\"\nE             ],\nE             \"message\": \"Invalid input: expected string, received undefined\"\nE           }\nE         ]\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=1, s...tadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]\\n').returncode\n\ntests/test_final_state.py:50: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_cli_stdout_contains_refund_chunk",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 4,
+                "start": 1780323550160,
+                "stop": 1780323550164,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=1, s...tadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]\\n')\n\n    def test_cli_stdout_contains_refund_chunk(cli_run):\n        stdout = cli_run.stdout or \"\"\n>       assert \"30-day\" in stdout, (\n            \"Expected stdout to include the refund chunk substring '30-day' \"\n            \"(indicating that the ingested refund-policy document was retrieved \"\n            f\"via context.search). Got stdout:\\n{stdout}\"\n        )\nE       AssertionError: Expected stdout to include the refund chunk substring '30-day' (indicating that the ingested refund-policy document was retrieved via context.search). Got stdout:\nE         Ingesting refund policy document...\nE         \nE       assert '30-day' in 'Ingesting refund policy document...\\n'\n\ntests/test_final_state.py:58: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_document_ingested_with_run_id_file_name",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 556,
+                "start": 1780323550165,
+                "stop": 1780323550721,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_document_ingested_with_run_id_file_name():\n        \"\"\"\n        Use the real Alchemyst API via the Python SDK to confirm that the document\n        ingested by the CLI is present in the user's context store and that its\n        metadata.file_name uses the ZEALT_RUN_ID suffix.\n        \"\"\"\n        run_id = os.environ.get(\"ZEALT_RUN_ID\", \"\").strip()\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\", \"\").strip()\n        assert run_id, \"ZEALT_RUN_ID must be set in the verifier environment.\"\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set in the verifier environment.\"\n    \n        expected_file_name = f\"refunds-{run_id}.md\"\n    \n        from alchemyst_ai import AlchemystAI\n    \n        client = AlchemystAI(api_key=api_key)\n    \n>       result = client.v1.context.search(\n            query=\"refund policy 30-day money back guarantee\",\n            similarity_threshold=0.5,\n            scope=\"internal\",\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:82: TypeError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

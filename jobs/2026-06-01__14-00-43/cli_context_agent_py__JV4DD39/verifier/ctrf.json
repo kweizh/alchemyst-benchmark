@@ -1,0 +1,88 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 3,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780323047214,
+            "stop": 1780323052401
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_entrypoint_exists",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780323047245,
+                "stop": 1780323047246,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_then_ask_returns_grounded_answer",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2453,
+                "start": 1780323047246,
+                "stop": 1780323049699,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ingest_then_ask_returns_grounded_answer():\n        \"\"\"\n        Verification Step 1: Run `ingest` then `ask`, and confirm OpenAI's\n        answer references the 30-day refund period taken from the ingested\n        document.\n        \"\"\"\n        ingest = _run([\"ingest\", NOTES_FILE])\n>       assert ingest.returncode == 0, (\n            f\"`python3 main.py ingest {NOTES_FILE}` exited with rc={ingest.returncode}.\\n\"\n            f\"stdout:\\n{ingest.stdout}\\nstderr:\\n{ingest.stderr}\"\n        )\nE       AssertionError: `python3 main.py ingest notes/refunds.md` exited with rc=1.\nE         stdout:\nE         \nE         stderr:\nE         Error ingesting file: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py', 'ingest', 'notes/refunds.md'], returncode=1, stdout='', stderr='Error ing...ified\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected string, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:38: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_is_idempotent",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2334,
+                "start": 1780323049699,
+                "stop": 1780323052033,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ingest_is_idempotent():\n        \"\"\"\n        Verification Step 2: Re-running `ingest` on the same file must not\n        crash on a 409 Conflict. The CLI should be re-runnable.\n        \"\"\"\n        second = _run([\"ingest\", NOTES_FILE])\n>       assert second.returncode == 0, (\n            \"Second invocation of `ingest` must not crash with an uncaught 409 \"\n            \"Conflict. The CLI must be idempotent (use ZEALT_RUN_ID, \"\n            \"delete-then-add, or handle the conflict).\\n\"\n            f\"stdout:\\n{second.stdout}\\nstderr:\\n{second.stderr}\"\n        )\nE       AssertionError: Second invocation of `ingest` must not crash with an uncaught 409 Conflict. The CLI must be idempotent (use ZEALT_RUN_ID, delete-then-add, or handle the conflict).\nE         stdout:\nE         \nE         stderr:\nE         Error ingesting file: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py', 'ingest', 'notes/refunds.md'], returncode=1, stdout='', stderr='Error ing...ified\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected string, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:64: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_document_persisted_to_alchemyst_backend",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 364,
+                "start": 1780323052033,
+                "stop": 1780323052397,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_document_persisted_to_alchemyst_backend():\n        \"\"\"\n        Verification Step 3: Independently confirm via the Python SDK that the\n        document content was actually persisted to the live Alchemyst service.\n        \"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for backend verification.\"\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n        except ImportError as exc:  # noqa: BLE001\n            pytest.fail(f\"Cannot import alchemyst_ai SDK in verifier env: {exc}\")\n    \n        client = AlchemystAI(api_key=api_key)\n        try:\n>           response = client.v1.context.search(\n                query=\"refund period\",\n                scope=\"internal\",\n                similarity_threshold=0.3,\n            )\nE           TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:87: TypeError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_document_persisted_to_alchemyst_backend():\n        \"\"\"\n        Verification Step 3: Independently confirm via the Python SDK that the\n        document content was actually persisted to the live Alchemyst service.\n        \"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for backend verification.\"\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n        except ImportError as exc:  # noqa: BLE001\n            pytest.fail(f\"Cannot import alchemyst_ai SDK in verifier env: {exc}\")\n    \n        client = AlchemystAI(api_key=api_key)\n        try:\n            response = client.v1.context.search(\n                query=\"refund period\",\n                scope=\"internal\",\n                similarity_threshold=0.3,\n            )\n        except Exception as exc:  # noqa: BLE001\n>           pytest.fail(f\"client.v1.context.search raised an exception: {exc!r}\")\nE           Failed: client.v1.context.search raised an exception: TypeError(\"ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\")\n\ntests/test_final_state.py:93: Failed",
+                "message": "The test failed in the call phase due to an exception"
+            },
+            {
+                "name": "test_final_state.py::test_main_py_reads_env_vars_and_does_not_hardcode_keys",
+                "status": "passed",
+                "duration": 2,
+                "start": 1780323052397,
+                "stop": 1780323052399,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_main_py_imports_openai",
+                "status": "passed",
+                "duration": 2,
+                "start": 1780323052399,
+                "stop": 1780323052401,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

@@ -1,0 +1,91 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 2,
+            "failed": 4,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780324895926,
+            "stop": 1780324912301
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_main_py_exists",
+                "status": "passed",
+                "duration": 2,
+                "start": 1780324895957,
+                "stop": 1780324895959,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_command_succeeds",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2212,
+                "start": 1780324895959,
+                "stop": 1780324898171,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ingest_command_succeeds():\n        course_id = _course_id()\n        result = _run_main([\"ingest\", \"syllabus.md\", \"--course-id\", course_id])\n>       assert result.returncode == 0, (\n            \"Expected `python3 main.py ingest ...` to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\nE       AssertionError: Expected `python3 main.py ingest ...` to exit 0, but got returncode=1.\nE         stdout:\nE         \nE         stderr:\nE         Error ingesting syllabus: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"number\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileSize\"\\n    ],\\n    \"message\": \"Invalid input: expected number, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileType\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', '/home/user/syllabai/main.py', 'ingest', 'syllabus.md', '--course-id', 'course-zr-c6...ified\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected string, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:97: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_alchemyst_context_contains_syllabus_chunk",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 312,
+                "start": 1780324898171,
+                "stop": 1780324898483,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_alchemyst_context_contains_syllabus_chunk():\n        \"\"\"Use the Alchemyst Python SDK to verify the syllabus is retrievable\n        when filtered by the course-scoped group_name.\"\"\"\n        try:\n            from alchemyst_ai import AlchemystAI\n        except Exception as exc:  # pragma: no cover - diagnostic\n            pytest.fail(f\"Failed to import alchemyst_ai SDK: {exc!r}\")\n    \n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for verification.\"\n    \n        client = AlchemystAI(api_key=api_key)\n        course_id = _course_id()\n    \n>       result = client.v1.context.search(\n            query=\"When is the midterm exam?\",\n            similarity_threshold=0.3,\n            scope=\"internal\",\n            metadata={\"group_name\": [\"syllabus\", course_id]},\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:123: TypeError",
+                "message": "The test failed in the call phase due to an exception"
+            },
+            {
+                "name": "test_final_state.py::test_ask_midterm_question",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 5363,
+                "start": 1780324898484,
+                "stop": 1780324903847,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ask_midterm_question():\n        course_id = _course_id()\n        result = _run_main(\n            [\"ask\", \"When is the midterm exam and where will it be held?\", \"--course-id\", course_id]\n        )\n        assert result.returncode == 0, (\n            \"Expected `python3 main.py ask ...` (midterm) to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\n        answer = _extract_answer(result.stdout)\n        lower = answer.lower()\n>       assert \"october 17\" in lower, (\n            f\"Expected midterm answer to mention 'October 17'. Got: {answer!r}\"\n        )\nE       AssertionError: Expected midterm answer to mention 'October 17'. Got: \"I'm sorry, but the syllabus context does not provide information about the midterm exam date or location. Please check the syllabus or ask your instructor for those details.\"\nE       assert 'october 17' in \"i'm sorry, but the syllabus context does not provide information about the midterm exam date or location. please check the syllabus or ask your instructor for those details.\"\n\ntests/test_final_state.py:162: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ask_late_policy_question",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 4289,
+                "start": 1780324903848,
+                "stop": 1780324908137,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ask_late_policy_question():\n        course_id = _course_id()\n        result = _run_main(\n            [\"ask\", \"What is the late policy for homework?\", \"--course-id\", course_id]\n        )\n        assert result.returncode == 0, (\n            \"Expected `python3 main.py ask ...` (late policy) to exit 0, but got \"\n            f\"returncode={result.returncode}.\\nstdout:\\n{result.stdout}\\nstderr:\\n{result.stderr}\"\n        )\n        answer = _extract_answer(result.stdout)\n        # Look for the numeric facts: \"10\" (percentage points) and \"3\" (max days).\n>       assert re.search(r\"\\b10\\b\", answer), (\n            f\"Expected late-policy answer to include the number 10 (percentage points per day). Got: {answer!r}\"\n        )\nE       AssertionError: Expected late-policy answer to include the number 10 (percentage points per day). Got: \"I'm sorry, but the provided syllabus context does not contain any information about the late policy for homework.\"\nE       assert None\nE        +  where None = <function search at 0x7f43c66cbba0>('\\\\b10\\\\b', \"I'm sorry, but the provided syllabus context does not contain any information about the late policy for homework.\")\nE        +    where <function search at 0x7f43c66cbba0> = re.search\n\ntests/test_final_state.py:181: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ask_isolated_course_does_not_leak_midterm",
+                "status": "passed",
+                "duration": 4163,
+                "start": 1780324908138,
+                "stop": 1780324912301,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

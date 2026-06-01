@@ -1,0 +1,73 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 0,
+            "failed": 4,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780324568417,
+            "stop": 1780324571760
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_main_py_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 403,
+                "start": 1780324568455,
+                "stop": 1780324568858,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_main_py_exists():\n        main_py = os.path.join(PROJECT_DIR, \"main.py\")\n>       assert os.path.isfile(main_py), f\"Expected agent to create the CLI entrypoint at {main_py}.\"\nE       AssertionError: Expected agent to create the CLI entrypoint at /home/user/myproject/main.py.\nE       assert False\nE        +  where False = <function isfile at 0x7f7e51070220>('/home/user/myproject/main.py')\nE        +    where <function isfile at 0x7f7e51070220> = <module 'posixpath' (frozen)>.isfile\nE        +      where <module 'posixpath' (frozen)> = os.path\n\ntests/test_final_state.py:140: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_first_invocation_clean_add",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 32,
+                "start": 1780324568859,
+                "stop": 1780324568891,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_first_invocation_clean_add():\n        proc = _run_cli()\n>       assert proc.returncode == 0, (\n            f\"First `python3 main.py` invocation exited with rc={proc.returncode}.\\n\"\n            f\"STDOUT:\\n{proc.stdout}\\nSTDERR:\\n{proc.stderr}\"\n        )\nE       AssertionError: First `python3 main.py` invocation exited with rc=2.\nE         STDOUT:\nE         \nE         STDERR:\nE         python3: can't open file '/home/user/myproject/main.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'main.py'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/myproject/main.py': [Errno 2] No such file or directory\\n\").returncode\n\ntests/test_final_state.py:145: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_second_invocation_handles_409_cleanly",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 29,
+                "start": 1780324568892,
+                "stop": 1780324568921,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_second_invocation_handles_409_cleanly():\n        proc = _run_cli()\n>       assert proc.returncode == 0, (\n            f\"Second `python3 main.py` invocation must succeed (rc=0); got rc={proc.returncode}.\\n\"\n            f\"STDOUT:\\n{proc.stdout}\\nSTDERR:\\n{proc.stderr}\"\n        )\nE       AssertionError: Second `python3 main.py` invocation must succeed (rc=0); got rc=2.\nE         STDOUT:\nE         \nE         STDERR:\nE         python3: can't open file '/home/user/myproject/main.py': [Errno 2] No such file or directory\nE         \nE       assert 2 == 0\nE        +  where 2 = CompletedProcess(args=['python3', 'main.py'], returncode=2, stdout='', stderr=\"python3: can't open file '/home/user/myproject/main.py': [Errno 2] No such file or directory\\n\").returncode\n\ntests/test_final_state.py:161: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_document_visible_on_alchemyst_after_runs",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2838,
+                "start": 1780324568922,
+                "stop": 1780324571760,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "alchemyst_client = <alchemyst_ai.AlchemystAI object at 0x7f7e50678c20>\n\n    def test_document_visible_on_alchemyst_after_runs(alchemyst_client):\n        file_names = _list_doc_file_names(alchemyst_client)\n        expected = _file_name()\n>       assert expected in file_names, (\n            f\"Expected to find a document with file_name=={expected!r} on the Alchemyst \"\n            f\"side after both CLI runs. Observed file names: {file_names!r}\"\n        )\nE       AssertionError: Expected to find a document with file_name=='conflict-doc-zr-kmwzktf.md' on the Alchemyst side after both CLI runs. Observed file names: []\nE       assert 'conflict-doc-zr-kmwzktf.md' in []\n\ntests/test_final_state.py:179: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

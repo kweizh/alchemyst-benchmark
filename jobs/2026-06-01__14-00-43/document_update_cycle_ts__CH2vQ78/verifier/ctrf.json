@@ -1,0 +1,65 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 0,
+            "failed": 4,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780324822220,
+            "stop": 1780324822789
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_dist_main_present",
+                "status": "failed",
+                "duration": 506,
+                "start": 1780324822252,
+                "stop": 1780324822758,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"session\")\n    def env_ready():\n        assert os.path.isdir(PROJECT_DIR), (\n            f\"Expected project directory {PROJECT_DIR} to exist after the agent's work.\"\n        )\n        _ensure_node_modules()\n>       _ensure_built()\n\ntests/test_final_state.py:113: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _ensure_built():\n        if not os.path.isfile(DIST_MAIN):\n            build = subprocess.run(\n                [\"npm\", \"run\", \"build\"],\n                cwd=PROJECT_DIR,\n                capture_output=True,\n                text=True,\n                timeout=300,\n            )\n>           assert build.returncode == 0, (\n                f\"`npm run build` failed (rc={build.returncode}).\\n\"\n                f\"STDOUT:\\n{build.stdout}\\nSTDERR:\\n{build.stderr}\"\n            )\nE           AssertionError: `npm run build` failed (rc=2).\nE             STDOUT:\nE             \nE             > update-task@1.0.0 build\nE             > tsc\nE             \nE             error TS18003: No inputs were found in config file '/home/user/update-task/tsconfig.json'. Specified 'include' paths were '[\"src/**/*\"]' and 'exclude' paths were '[\"node_modules\",\"dist\"]'.\nE             \nE             STDERR:\nE             \nE           assert 2 == 0\nE            +  where 2 = CompletedProcess(args=['npm', 'run', 'build'], returncode=2, stdout='\\n> update-task@1.0.0 build\\n> tsc\\n\\nerror TS180...pecified \\'include\\' paths were \\'[\"src/**/*\"]\\' and \\'exclude\\' paths were \\'[\"node_modules\",\"dist\"]\\'.\\n', stderr='').returncode\n\ntests/test_final_state.py:80: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_cli_first_run_completes_update_cycle",
+                "status": "failed",
+                "duration": 9,
+                "start": 1780324822759,
+                "stop": 1780324822768,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"session\")\n    def env_ready():\n        assert os.path.isdir(PROJECT_DIR), (\n            f\"Expected project directory {PROJECT_DIR} to exist after the agent's work.\"\n        )\n        _ensure_node_modules()\n>       _ensure_built()\n\ntests/test_final_state.py:113: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _ensure_built():\n        if not os.path.isfile(DIST_MAIN):\n            build = subprocess.run(\n                [\"npm\", \"run\", \"build\"],\n                cwd=PROJECT_DIR,\n                capture_output=True,\n                text=True,\n                timeout=300,\n            )\n>           assert build.returncode == 0, (\n                f\"`npm run build` failed (rc={build.returncode}).\\n\"\n                f\"STDOUT:\\n{build.stdout}\\nSTDERR:\\n{build.stderr}\"\n            )\nE           AssertionError: `npm run build` failed (rc=2).\nE             STDOUT:\nE             \nE             > update-task@1.0.0 build\nE             > tsc\nE             \nE             error TS18003: No inputs were found in config file '/home/user/update-task/tsconfig.json'. Specified 'include' paths were '[\"src/**/*\"]' and 'exclude' paths were '[\"node_modules\",\"dist\"]'.\nE             \nE             STDERR:\nE             \nE           assert 2 == 0\nE            +  where 2 = CompletedProcess(args=['npm', 'run', 'build'], returncode=2, stdout='\\n> update-task@1.0.0 build\\n> tsc\\n\\nerror TS180...pecified \\'include\\' paths were \\'[\"src/**/*\"]\\' and \\'exclude\\' paths were \\'[\"node_modules\",\"dist\"]\\'.\\n', stderr='').returncode\n\ntests/test_final_state.py:80: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_cli_is_rerunnable",
+                "status": "failed",
+                "duration": 10,
+                "start": 1780324822768,
+                "stop": 1780324822778,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"session\")\n    def env_ready():\n        assert os.path.isdir(PROJECT_DIR), (\n            f\"Expected project directory {PROJECT_DIR} to exist after the agent's work.\"\n        )\n        _ensure_node_modules()\n>       _ensure_built()\n\ntests/test_final_state.py:113: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _ensure_built():\n        if not os.path.isfile(DIST_MAIN):\n            build = subprocess.run(\n                [\"npm\", \"run\", \"build\"],\n                cwd=PROJECT_DIR,\n                capture_output=True,\n                text=True,\n                timeout=300,\n            )\n>           assert build.returncode == 0, (\n                f\"`npm run build` failed (rc={build.returncode}).\\n\"\n                f\"STDOUT:\\n{build.stdout}\\nSTDERR:\\n{build.stderr}\"\n            )\nE           AssertionError: `npm run build` failed (rc=2).\nE             STDOUT:\nE             \nE             > update-task@1.0.0 build\nE             > tsc\nE             \nE             error TS18003: No inputs were found in config file '/home/user/update-task/tsconfig.json'. Specified 'include' paths were '[\"src/**/*\"]' and 'exclude' paths were '[\"node_modules\",\"dist\"]'.\nE             \nE             STDERR:\nE             \nE           assert 2 == 0\nE            +  where 2 = CompletedProcess(args=['npm', 'run', 'build'], returncode=2, stdout='\\n> update-task@1.0.0 build\\n> tsc\\n\\nerror TS180...pecified \\'include\\' paths were \\'[\"src/**/*\"]\\' and \\'exclude\\' paths were \\'[\"node_modules\",\"dist\"]\\'.\\n', stderr='').returncode\n\ntests/test_final_state.py:80: AssertionError"
+            },
+            {
+                "name": "test_final_state.py::test_v2_searchable_via_python_sdk",
+                "status": "failed",
+                "duration": 10,
+                "start": 1780324822779,
+                "stop": 1780324822789,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "@pytest.fixture(scope=\"session\")\n    def env_ready():\n        assert os.path.isdir(PROJECT_DIR), (\n            f\"Expected project directory {PROJECT_DIR} to exist after the agent's work.\"\n        )\n        _ensure_node_modules()\n>       _ensure_built()\n\ntests/test_final_state.py:113: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _ensure_built():\n        if not os.path.isfile(DIST_MAIN):\n            build = subprocess.run(\n                [\"npm\", \"run\", \"build\"],\n                cwd=PROJECT_DIR,\n                capture_output=True,\n                text=True,\n                timeout=300,\n            )\n>           assert build.returncode == 0, (\n                f\"`npm run build` failed (rc={build.returncode}).\\n\"\n                f\"STDOUT:\\n{build.stdout}\\nSTDERR:\\n{build.stderr}\"\n            )\nE           AssertionError: `npm run build` failed (rc=2).\nE             STDOUT:\nE             \nE             > update-task@1.0.0 build\nE             > tsc\nE             \nE             error TS18003: No inputs were found in config file '/home/user/update-task/tsconfig.json'. Specified 'include' paths were '[\"src/**/*\"]' and 'exclude' paths were '[\"node_modules\",\"dist\"]'.\nE             \nE             STDERR:\nE             \nE           assert 2 == 0\nE            +  where 2 = CompletedProcess(args=['npm', 'run', 'build'], returncode=2, stdout='\\n> update-task@1.0.0 build\\n> tsc\\n\\nerror TS180...pecified \\'include\\' paths were \\'[\"src/**/*\"]\\' and \\'exclude\\' paths were \\'[\"node_modules\",\"dist\"]\\'.\\n', stderr='').returncode\n\ntests/test_final_state.py:80: AssertionError"
+            }
+        ]
+    }
+}
