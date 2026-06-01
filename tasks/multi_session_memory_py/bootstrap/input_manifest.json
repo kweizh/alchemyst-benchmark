@@ -1,7 +1,0 @@
-{
-  "library_name": "Alchemyst AI",
-  "task_name": "multi_session_memory_py",
-  "complexity_level": "multi-step sequential command set",
-  "research_plan_path": "plan.md",
-  "output_dir": "scratchpad/pending-tasks"
-}
