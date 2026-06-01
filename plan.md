@@ -11,28 +11,121 @@
 *   **Context Addition (`v1.context.add`)**: Ingests documents into the context engine.
     *   **Snippet (TS)**:
         ```typescript
+        import AlchemystAI from '@alchemystai/sdk';
+
+        const client = new AlchemystAI({
+        apiKey: process.env.ALCHEMYST_AI_API_KEY,
+        });
         await client.v1.context.add({
           documents: [{ content: "Policy: 30-day refunds", metadata: { file_name: "refunds.md", group_name: ["support"] } }],
           context_type: 'resource',
           source: 'docs',
           scope: 'internal'
         });
+        const userQuestion = "What's your refund policy?";
+
+        const { contexts } = await client.v1.context.search({
+        query: userQuestion,
+        similarity_threshold: 0.7,
+        scope: 'internal'
+        });
+
+        console.log(`Found ${contexts?.length || 0} relevant chunks`);
+        // Output: Found 1 relevant chunks
         ```
 *   **Context Search (`v1.context.search`)**: Retrieves relevant chunks based on a query and "Context Arithmetic" (filters).
     *   **Snippet (Python)**:
         ```python
+        import os
+        from alchemyst_ai import AlchemystAI
+
+        client = AlchemystAI(
+        api_key=os.environ.get("ALCHEMYST_AI_API_KEY")
+        )
+        result = client.v1.context.add(
+        documents=[{
+            "content": "Our refund policy: We offer a 30-day money back guarantee. Contact support@example.com to request a refund."
+        }],
+        context_type="resource",
+        source="documentation",
+        scope="internal"
+        )
+
+        print(f"✅ Stored {len(result.get('documents', []))} documents")
         result = client.v1.context.search(
             query="What is the refund policy?",
             similarity_threshold=0.7,
+            scope="internal",
             metadata={"group_name": ["support"]}
         )
+        contexts = result.contexts or []
+        print(f"Found {len(contexts)} relevant chunks")
+        # Output: Found 1 relevant chunks
         ```
 *   **Memory Management (`v1.context.memory.add/search`)**: Manages conversation history and user preferences across sessions using `userId` and `sessionId`.
     *   **Snippet (TS - AI SDK Middleware)**:
         ```typescript
+        import { generateText } from 'ai';
+        import { withAlchemyst } from '@alchemystai/aisdk';
         const generateTextWithMemory = withAlchemyst(generateText, { apiKey: process.env.ALCHEMYST_AI_API_KEY });
         const { text } = await generateTextWithMemory({ model: "openai:gpt-4", prompt: "I'm vegan", userId: "user_1", sessionId: "session_A" });
         ```
+
+    * **Snippet (Python)**:
+        ```python
+        alchemyst = AlchemystAI(api_key=os.environ.get("ALCHEMYST_AI_API_KEY"))
+        alchemyst.v1.context.memory.add({
+            "user_id": "alice",
+            "session_id": "preferences",
+            "content": "User said: I'm vegan and allergic to peanuts"
+        })
+        result = alchemyst.v1.context.memory.search(
+            user_id="alice",
+            session_id="preferences"
+        )
+        ```
+
+    * **Chat With LLM**:
+    ```python
+    def chat_with_memory(prompt: str, user_id: str, session_id: str):
+        """Chat function that remembers past conversations"""
+
+        # 1. Get past conversations
+        memory = alchemyst.v1.context.memory.search(
+            user_id=user_id,
+            session_id=session_id,
+            limit=10
+        )
+
+        # 2. Build message history
+        messages = [{"role": "system", "content": "You are a helpful assistant."}]
+
+        # Add past memories to context
+        if memory and hasattr(memory, 'memories'):
+            for mem in memory.memories:
+                if hasattr(mem, 'content'):
+                    messages.append({"role": "assistant", "content": mem.content})
+
+        # Add current prompt
+        messages.append({"role": "user", "content": prompt})
+
+        # 3. Generate response with full context
+        response = openai_client.chat.completions.create(
+            model="gpt-4",
+            messages=messages
+        )
+
+        assistant_message = response.choices[0].message.content
+
+        # 4. Store this conversation for next time
+        alchemyst.v1.context.memory.add({
+            "user_id": user_id,
+            "session_id": session_id,
+            "content": f"User: {prompt}\nAssistant: {assistant_message}"
+        })
+
+        return assistant_message
+    ```
 *   **Key Documentation Links**:
     *   [OpenAPI Reference](https://platform-backend.getalchemystai.com/api/openapi.json)
     *   [Contextual AI Quickstart](https://getalchemystai.com/docs/getting-started/quickstart)
@@ -48,6 +141,7 @@
 *   **Parameter Inconsistency**: In the TypeScript SDK, storage uses `group_name` (snake_case) but search uses `groupName` (camelCase). Python uses `group_name` consistently. [Quickstart Link](https://getalchemystai.com/docs/getting-started/quickstart#advanced-organize-with-metadata)
 *   **Memory Prerequisites**: Both `userId` and `sessionId` are strictly required for memory operations; omitting one results in a `MISSING_PARAMETERS` error. [Memory Troubleshooting](https://getalchemystai.com/docs/getting-started/quickstart-memory#troubleshooting)
 *   **Metadata Limitations**: Metadata values must be `string` or `number` only; nested objects or arrays (other than `group_name`) may fail or be ignored.
+*   **SDK Guidance**: There are guidance pages for Alchemyst in [LLMs.txt](https://getalchemystai.com/docs/llms.txt), expcially for [Python SDK](https://getalchemystai.com/docs/tutorials/python-agent.md) and [TypeScript SDK](https://getalchemystai.com/docs/tutorials/typescript-agent.md), Please add these as reference to let agents know when they are using the SDKs.
 ### 5. Evaluation Ideas
 1.  **Basic RAG Flow**: Store a specific policy document and verify the agent can retrieve it to answer a related question.
 2.  **Multi-Session Memory**: Have a user state a preference in Session A and verify the agent remembers it in Session B.
