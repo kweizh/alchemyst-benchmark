@@ -1,0 +1,46 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: json-ctrf-0.5.0
+collected 1 item
+
+tests/test_final_state.py F                                              [100%]
+
+=================================== FAILURES ===================================
+________________________________ test_rag_flow _________________________________
+
+setup_environment = None
+
+    def test_rag_flow(setup_environment):
+        # 1. Add Document
+        add_result = subprocess.run(
+            ["npx", "tsx", "rag.ts", "add", "policy.txt"],
+            cwd=PROJECT_DIR,
+            capture_output=True,
+            text=True
+        )
+        assert add_result.returncode == 0, f"'add' command failed: {add_result.stderr}\n{add_result.stdout}"
+    
+        # 2. Search Document
+        search_result = subprocess.run(
+            ["npx", "tsx", "rag.ts", "search", "How many days of PTO are allowed?", "policy.txt"],
+            cwd=PROJECT_DIR,
+            capture_output=True,
+            text=True
+        )
+        assert search_result.returncode == 0, f"'search' command failed: {search_result.stderr}\n{search_result.stdout}"
+>       assert "The company policy requires all employees to take at least 20 days of paid time off per year" in search_result.stdout, \
+            f"Expected policy content in search output, got: {search_result.stdout}"
+E       AssertionError: Expected policy content in search output, got: 
+E       assert 'The company policy requires all employees to take at least 20 days of paid time off per year' in ''
+E        +  where '' = CompletedProcess(args=['npx', 'tsx', 'rag.ts', 'search', 'How many days of PTO are allowed?', 'policy.txt'], returncode=0, stdout='', stderr='').stdout
+
+tests/test_final_state.py:41: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+
+up to date, audited 8 packages in 500ms
+
+found 0 vulnerabilities
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_rag_flow - AssertionError: Expected po...
+============================== 1 failed in 4.26s ===============================

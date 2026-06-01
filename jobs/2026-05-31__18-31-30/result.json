@@ -1,0 +1,47 @@
+{
+    "id": "b4294323-1050-4c75-8c9d-2fbf33de1f10",
+    "started_at": "2026-05-31T18:31:34.875563",
+    "updated_at": "2026-05-31T18:42:12.603805",
+    "finished_at": "2026-05-31T18:42:12.603805",
+    "n_total_trials": 3,
+    "stats": {
+        "n_completed_trials": 3,
+        "n_errored_trials": 1,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "pochi__gemini-3-flash__tasks": {
+                "n_trials": 3,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.3333333333333333
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rag_flow_ts__G9xFJfq",
+                            "multi_session_memory_py__m4SM8HH"
+                        ],
+                        "1.0": [
+                            "context_arithmetic_ts__ZZK9wo6"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "context_arithmetic_ts__ZZK9wo6"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 0,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 43459,
+        "cost_usd": null
+    }
+}
