@@ -79,53 +79,14 @@
             "session_id": "preferences",
             "content": "User said: I'm vegan and allergic to peanuts"
         })
-        result = alchemyst.v1.context.memory.search(
-            user_id="alice",
-            session_id="preferences"
-        )
         ```
 
-    * **Chat With LLM**:
-    ```python
-    def chat_with_memory(prompt: str, user_id: str, session_id: str):
-        """Chat function that remembers past conversations"""
+VERY IMPORTANT!
 
-        # 1. Get past conversations
-        memory = alchemyst.v1.context.memory.search(
-            user_id=user_id,
-            session_id=session_id,
-            limit=10
-        )
+In Alchemyst Python SDK v0.10.0, there is not alchemyst.v1.context.memory.search API, this is conflict with the TypeScript SDK and official Doc,
+MUST read the [Python API Reference](https://raw.githubusercontent.com/Alchemyst-ai/alchemyst-sdk-python/refs/tags/v0.10.0/api.md)
+before generating any Python related tasks and tests, SHOULD also remain the agent to check the API Reference in tasks description.
 
-        # 2. Build message history
-        messages = [{"role": "system", "content": "You are a helpful assistant."}]
-
-        # Add past memories to context
-        if memory and hasattr(memory, 'memories'):
-            for mem in memory.memories:
-                if hasattr(mem, 'content'):
-                    messages.append({"role": "assistant", "content": mem.content})
-
-        # Add current prompt
-        messages.append({"role": "user", "content": prompt})
-
-        # 3. Generate response with full context
-        response = openai_client.chat.completions.create(
-            model="gpt-4",
-            messages=messages
-        )
-
-        assistant_message = response.choices[0].message.content
-
-        # 4. Store this conversation for next time
-        alchemyst.v1.context.memory.add({
-            "user_id": user_id,
-            "session_id": session_id,
-            "content": f"User: {prompt}\nAssistant: {assistant_message}"
-        })
-
-        return assistant_message
-    ```
 *   **Key Documentation Links**:
     *   [OpenAPI Reference](https://platform-backend.getalchemystai.com/api/openapi.json)
     *   [Contextual AI Quickstart](https://getalchemystai.com/docs/getting-started/quickstart)
