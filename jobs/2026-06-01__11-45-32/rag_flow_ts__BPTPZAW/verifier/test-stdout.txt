@@ -1,0 +1,75 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 3 items
+
+tests/test_final_state.py FFF                                            [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_cli_exits_successfully __________________________
+
+cli_run = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=127, stdout='', stderr='sh: 1: tsc: not found\n')
+
+    def test_cli_exits_successfully(cli_run):
+>       assert cli_run.returncode == 0, (
+            f"CLI exited with status {cli_run.returncode}. "
+            f"stdout=\n{cli_run.stdout}\nstderr=\n{cli_run.stderr}"
+        )
+E       AssertionError: CLI exited with status 127. stdout=
+E         
+E         stderr=
+E         sh: 1: tsc: not found
+E         
+E       assert 127 == 0
+E        +  where 127 = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=127, stdout='', stderr='sh: 1: tsc: not found\n').returncode
+
+tests/test_final_state.py:50: AssertionError
+____________________ test_cli_stdout_contains_refund_chunk _____________________
+
+cli_run = CompletedProcess(args=['npm', 'start', '--silent', '--', '--question', 'What is your refund policy?'], returncode=127, stdout='', stderr='sh: 1: tsc: not found\n')
+
+    def test_cli_stdout_contains_refund_chunk(cli_run):
+        stdout = cli_run.stdout or ""
+>       assert "30-day" in stdout, (
+            "Expected stdout to include the refund chunk substring '30-day' "
+            "(indicating that the ingested refund-policy document was retrieved "
+            f"via context.search). Got stdout:\n{stdout}"
+        )
+E       AssertionError: Expected stdout to include the refund chunk substring '30-day' (indicating that the ingested refund-policy document was retrieved via context.search). Got stdout:
+E         
+E       assert '30-day' in ''
+
+tests/test_final_state.py:58: AssertionError
+_________________ test_document_ingested_with_run_id_file_name _________________
+
+    def test_document_ingested_with_run_id_file_name():
+        """
+        Use the real Alchemyst API via the Python SDK to confirm that the document
+        ingested by the CLI is present in the user's context store and that its
+        metadata.file_name uses the ZEALT_RUN_ID suffix.
+        """
+        run_id = os.environ.get("ZEALT_RUN_ID", "").strip()
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY", "").strip()
+        assert run_id, "ZEALT_RUN_ID must be set in the verifier environment."
+        assert api_key, "ALCHEMYST_AI_API_KEY must be set in the verifier environment."
+    
+        expected_file_name = f"refunds-{run_id}.md"
+    
+        from alchemyst_ai import AlchemystAI
+    
+        client = AlchemystAI(api_key=api_key)
+    
+>       result = client.v1.context.search(
+            query="refund policy 30-day money back guarantee",
+            similarity_threshold=0.5,
+            scope="internal",
+        )
+E       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+
+tests/test_final_state.py:82: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_final_state.py::test_cli_exits_successfully - AssertionErro...
+FAILED tests/test_final_state.py::test_cli_stdout_contains_refund_chunk - Ass...
+FAILED tests/test_final_state.py::test_document_ingested_with_run_id_file_name
+============================== 3 failed in 1.90s ===============================

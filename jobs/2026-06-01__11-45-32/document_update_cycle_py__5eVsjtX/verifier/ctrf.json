@@ -1,0 +1,145 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 10,
+            "passed": 0,
+            "failed": 10,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780314591873,
+            "stop": 1780314600267
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_exits_zero",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 5292,
+                "start": 1780314591907,
+                "stop": 1780314597199,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_cli_exits_zero(cli_run):\n>       assert cli_run.returncode == 0, (\n            f\"`python3 main.py` exited with code {cli_run.returncode}.\\n\"\n            f\"STDOUT:\\n{cli_run.stdout}\\nSTDERR:\\n{cli_run.stderr}\"\n        )\nE       AssertionError: `python3 main.py` exited with code 1.\nE         STDOUT:\nE         \nE         STDERR:\nE         Traceback (most recent call last):\nE           File \"/home/user/myproject/main.py\", line 142, in <module>\nE             main()\nE           File \"/home/user/myproject/main.py\", line 86, in main\nE             client.v1.context.add(\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\nE             return self._post(\nE                    ^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\nE             return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\nE                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\nE             raise self._make_status_error_from_response(err.response) from None\nE         alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"object\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected object, received undefined\"\\n  },\\n  {\\n    \"expected\": \"record\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected record, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:75: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_added_v1",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 9,
+                "start": 1780314597200,
+                "stop": 1780314597209,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_contains_added_v1(cli_run):\n>       assert \"Added v1\" in cli_run.stdout, (\n            f\"Expected stdout to contain 'Added v1'. Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain 'Added v1'. Stdout was:\nE         \nE       assert 'Added v1' in ''\nE        +  where '' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').stdout\n\ntests/test_final_state.py:82: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_409",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 11,
+                "start": 1780314597210,
+                "stop": 1780314597221,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_contains_409(cli_run):\n>       assert \"409\" in cli_run.stdout, (\n            f\"Expected stdout to contain '409' (Conflict observed). Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain '409' (Conflict observed). Stdout was:\nE         \nE       assert '409' in ''\nE        +  where '' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').stdout\n\ntests/test_final_state.py:88: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_deleted",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 47,
+                "start": 1780314597221,
+                "stop": 1780314597268,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_contains_deleted(cli_run):\n>       assert \"Deleted\" in cli_run.stdout, (\n            f\"Expected stdout to contain 'Deleted'. Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain 'Deleted'. Stdout was:\nE         \nE       assert 'Deleted' in ''\nE        +  where '' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').stdout\n\ntests/test_final_state.py:94: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_added_v2",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 11,
+                "start": 1780314597268,
+                "stop": 1780314597279,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_contains_added_v2(cli_run):\n>       assert \"Added v2\" in cli_run.stdout, (\n            f\"Expected stdout to contain 'Added v2'. Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain 'Added v2'. Stdout was:\nE         \nE       assert 'Added v2' in ''\nE        +  where '' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').stdout\n\ntests/test_final_state.py:100: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_v2_keyword",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 11,
+                "start": 1780314597279,
+                "stop": 1780314597290,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_contains_v2_keyword(cli_run):\n>       assert \"60-day\" in cli_run.stdout, (\n            f\"Expected stdout to contain '60-day' (v2 content). Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain '60-day' (v2 content). Stdout was:\nE         \nE       assert '60-day' in ''\nE        +  where '' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').stdout\n\ntests/test_final_state.py:106: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_marker_ordering",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 9,
+                "start": 1780314597290,
+                "stop": 1780314597299,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_marker_ordering(cli_run):\n        \"\"\"The required substrings must appear in the documented order.\"\"\"\n        stdout = cli_run.stdout\n        markers = [\"Added v1\", \"409\", \"Deleted\", \"Added v2\", \"60-day\"]\n        positions = []\n        for m in markers:\n            idx = stdout.find(m)\n>           assert idx != -1, (\n                f\"Marker '{m}' not found in stdout. Stdout was:\\n{stdout}\"\n            )\nE           AssertionError: Marker 'Added v1' not found in stdout. Stdout was:\nE             \nE           assert -1 != -1\n\ntests/test_final_state.py:118: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_no_stale_v1_content",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 8,
+                "start": 1780314597300,
+                "stop": 1780314597308,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_stdout_no_stale_v1_content(cli_run):\n        \"\"\"The final search step output must not surface the old 30-day v1 policy.\"\"\"\n        stdout = cli_run.stdout\n        added_v2_idx = stdout.find(\"Added v2\")\n>       assert added_v2_idx != -1, \"Marker 'Added v2' not found in stdout.\"\nE       AssertionError: Marker 'Added v2' not found in stdout.\nE       assert -1 != -1\n\ntests/test_final_state.py:132: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_live_service_search_returns_v2",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 55,
+                "start": 1780314597309,
+                "stop": 1780314597364,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n')\n\n    def test_live_service_search_returns_v2(cli_run):\n        \"\"\"After the CLI runs, the live service must return the v2 content for a refund query.\"\"\"\n        client = _make_client()\n        file_name = _file_name(_run_id())\n    \n        # Poll because indexing may be near-real-time but not synchronous.\n        deadline = time.time() + 60\n        last_contexts = []\n        while time.time() < deadline:\n>           result = client.v1.context.search(\n                query=\"What is the refund policy?\",\n                similarity_threshold=0.5,\n                scope=\"internal\",\n            )\nE           TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:149: TypeError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_final_state.py::test_cli_is_rerunnable",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 2901,
+                "start": 1780314597365,
+                "stop": 1780314600266,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_cli_is_rerunnable():\n        \"\"\"A second invocation of the CLI must also succeed and emit the same markers.\"\"\"\n        result = subprocess.run(\n            [\"python3\", \"main.py\"],\n            cwd=PROJECT_DIR,\n            capture_output=True,\n            text=True,\n            env=os.environ.copy(),\n            timeout=300,\n        )\n>       assert result.returncode == 0, (\n            f\"Second `python3 main.py` exited with code {result.returncode}.\\n\"\n            f\"STDOUT:\\n{result.stdout}\\nSTDERR:\\n{result.stderr}\"\n        )\nE       AssertionError: Second `python3 main.py` exited with code 1.\nE         STDOUT:\nE         \nE         STDERR:\nE         Traceback (most recent call last):\nE           File \"/home/user/myproject/main.py\", line 142, in <module>\nE             main()\nE           File \"/home/user/myproject/main.py\", line 86, in main\nE             client.v1.context.add(\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\nE             return self._post(\nE                    ^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\nE             return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\nE                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\nE             raise self._make_status_error_from_response(err.response) from None\nE         alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"object\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected object, received undefined\"\\n  },\\n  {\\n    \"expected\": \"record\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\"\\n    ],\\n    \"message\": \"Invalid input: expected record, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...adata\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected record, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:205: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}
