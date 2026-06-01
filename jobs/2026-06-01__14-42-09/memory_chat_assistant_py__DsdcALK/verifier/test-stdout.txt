@@ -1,0 +1,46 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 7 items
+
+tests/test_final_state.py ......F                                        [100%]
+
+=================================== FAILURES ===================================
+__________________ test_memory_persisted_to_alchemyst_backend __________________
+
+ids = {'session_id': 'harbor-session-zr-dsdcalk', 'user_id': 'harbor-user-zr-dsdcalk'}
+
+    def test_memory_persisted_to_alchemyst_backend(ids):
+        """Independently confirm memory.add really wrote to the live Alchemyst service
+        by performing a server-side semantic search and looking for 'Maya'.
+        """
+        api_key = os.environ.get("ALCHEMYST_AI_API_KEY")
+        assert api_key, "ALCHEMYST_AI_API_KEY must be set for backend verification."
+    
+        try:
+            from alchemyst_ai import AlchemystAI
+        except ImportError as e:
+            pytest.fail(f"Cannot import alchemyst_ai SDK in verifier env: {e}")
+    
+        client = AlchemystAI(api_key=api_key)
+    
+        # v0.10.0 has NO memory.search — verify via context.search.
+>       response = client.v1.context.search(
+            query="Maya vegan peanut",
+            scope="internal",
+            similarity_threshold=0.1,
+        )
+E       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'
+
+tests/test_final_state.py:204: TypeError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_main_py_uses_correct_alchemyst_apis
+PASSED tests/test_final_state.py::test_cli_exit_code
+PASSED tests/test_final_state.py::test_cli_stdout_has_one_assistant_line_per_turn
+PASSED tests/test_final_state.py::test_transcript_file_exists
+PASSED tests/test_final_state.py::test_transcript_structure
+PASSED tests/test_final_state.py::test_final_assistant_reply_references_earlier_facts
+FAILED tests/test_final_state.py::test_memory_persisted_to_alchemyst_backend
+========================= 1 failed, 6 passed in 51.09s =========================

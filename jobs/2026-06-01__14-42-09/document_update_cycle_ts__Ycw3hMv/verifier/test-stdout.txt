@@ -1,0 +1,112 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 4 items
+
+tests/test_final_state.py .FFF                                           [100%]
+
+=================================== FAILURES ===================================
+__________________ test_cli_first_run_completes_update_cycle ___________________
+
+env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff693626390>, 'file_name': 'policy-zr-ycw3hmv.md', 'run_id': 'zr-ycw3hmv'}
+
+    def test_cli_first_run_completes_update_cycle(env_ready):
+        result = _run_cli()
+>       assert result.returncode == 0, (
+            f"`node dist/main.js` failed (exit {result.returncode}).\n"
+            f"stdout={result.stdout!r}\nstderr={result.stderr!r}"
+        )
+E       AssertionError: `node dist/main.js` failed (exit 1).
+E         stdout=''
+E         stderr='Pre-cleanup: deleted any existing policy-zr-ycw3hmv.md\nUnhandled error: BadRequestError: 400 Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileType"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]\n    at APIError.generate (/home/user/update-task/node_modules/@alchemystai/sdk/core/error.js:40:20)\n    at AlchemystAI.makeStatusError (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:126:32)\n    at AlchemystAI.makeRequest (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:267:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (/home/user/update-task/dist/main.js:47:5) {\n  status: 400,\n  headers: Headers {\n    date: \'Mon, 01 Jun 2026 15:02:36 GMT\',\n    \'content-type\': \'application/json; charset=utf-8\',\n    \'content-length\': \'751\',\n    connection: \'keep-alive\',\n    vary: \'Origin, Accept-Encoding\',\n    \'access-control-allow-credentials\': \'true\',\n    \'content-security-policy\': "default-src \'self\';base-uri \'self\';font-src \'self\' https: data:;form-action \'self\';frame-ancestors \'self\';img-src \'self\' data:;object-src \'none\';script-src \'self\';script-src-attr \'none\';style-src \'self\' https: \'unsafe-inline\';upgrade-insecure-requests",\n    \'cross-origin-opener-policy\': \'same-origin\',\n    \'cross-origin-resource-policy\': \'same-origin\',\n    \'origin-agent-cluster\': \'?1\',\n    \'referrer-policy\': \'no-referrer\',\n    \'strict-transport-security\': \'max-age=31536000; includeSubDomains\',\n    \'x-content-type-options\': \'nosniff\',\n    \'x-dns-prefetch-control\': \'off\',\n    \'x-download-options\': \'noopen\',\n    \'x-frame-options\': \'SAMEORIGIN\',\n    \'x-permitted-cross-domain-policies\': \'none\',\n    \'x-xss-protection\': \'0\',\n    etag: \'W/"2ef-mATKyCdLmPoXs3761k4sYD5X2JQ"\'\n  },\n  error: {\n    statusText: \'BAD_REQUEST\',\n    success: false,\n    message: \'Fields missing. Detailed error: [\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "number",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "fileSize"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected number, received undefined"\\n\' +\n      \'  },\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "string",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "fileType"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected string, received undefined"\\n\' +\n      \'  },\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "string",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "lastModified"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n'
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', 'dist/main.js'], returncode=1, stdout='', stderr='Pre-cleanup: deleted any existing pol...valid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n').returncode
+
+tests/test_final_state.py:136: AssertionError
+____________________________ test_cli_is_rerunnable ____________________________
+
+env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff693626390>, 'file_name': 'policy-zr-ycw3hmv.md', 'run_id': 'zr-ycw3hmv'}
+
+    def test_cli_is_rerunnable(env_ready):
+        # Allow indexing to settle from the previous test.
+        time.sleep(3)
+        result = _run_cli()
+>       assert result.returncode == 0, (
+            f"Second `node dist/main.js` invocation failed (exit {result.returncode}). "
+            f"The CLI must be safely rerunnable.\n"
+            f"stdout={result.stdout!r}\nstderr={result.stderr!r}"
+        )
+E       AssertionError: Second `node dist/main.js` invocation failed (exit 1). The CLI must be safely rerunnable.
+E         stdout=''
+E         stderr='Pre-cleanup: deleted any existing policy-zr-ycw3hmv.md\nUnhandled error: BadRequestError: 400 Fields missing. Detailed error: [\n  {\n    "expected": "number",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileSize"\n    ],\n    "message": "Invalid input: expected number, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "fileType"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  },\n  {\n    "expected": "string",\n    "code": "invalid_type",\n    "path": [\n      "metadata",\n      "lastModified"\n    ],\n    "message": "Invalid input: expected string, received undefined"\n  }\n]\n    at APIError.generate (/home/user/update-task/node_modules/@alchemystai/sdk/core/error.js:40:20)\n    at AlchemystAI.makeStatusError (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:126:32)\n    at AlchemystAI.makeRequest (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:267:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (/home/user/update-task/dist/main.js:47:5) {\n  status: 400,\n  headers: Headers {\n    date: \'Mon, 01 Jun 2026 15:02:42 GMT\',\n    \'content-type\': \'application/json; charset=utf-8\',\n    \'content-length\': \'751\',\n    connection: \'keep-alive\',\n    vary: \'Origin, Accept-Encoding\',\n    \'access-control-allow-credentials\': \'true\',\n    \'content-security-policy\': "default-src \'self\';base-uri \'self\';font-src \'self\' https: data:;form-action \'self\';frame-ancestors \'self\';img-src \'self\' data:;object-src \'none\';script-src \'self\';script-src-attr \'none\';style-src \'self\' https: \'unsafe-inline\';upgrade-insecure-requests",\n    \'cross-origin-opener-policy\': \'same-origin\',\n    \'cross-origin-resource-policy\': \'same-origin\',\n    \'origin-agent-cluster\': \'?1\',\n    \'referrer-policy\': \'no-referrer\',\n    \'strict-transport-security\': \'max-age=31536000; includeSubDomains\',\n    \'x-content-type-options\': \'nosniff\',\n    \'x-dns-prefetch-control\': \'off\',\n    \'x-download-options\': \'noopen\',\n    \'x-frame-options\': \'SAMEORIGIN\',\n    \'x-permitted-cross-domain-policies\': \'none\',\n    \'x-xss-protection\': \'0\',\n    etag: \'W/"2ef-mATKyCdLmPoXs3761k4sYD5X2JQ"\'\n  },\n  error: {\n    statusText: \'BAD_REQUEST\',\n    success: false,\n    message: \'Fields missing. Detailed error: [\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "number",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "fileSize"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected number, received undefined"\\n\' +\n      \'  },\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "string",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "fileType"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected string, received undefined"\\n\' +\n      \'  },\\n\' +\n      \'  {\\n\' +\n      \'    "expected": "string",\\n\' +\n      \'    "code": "invalid_type",\\n\' +\n      \'    "path": [\\n\' +\n      \'      "metadata",\\n\' +\n      \'      "lastModified"\\n\' +\n      \'    ],\\n\' +\n      \'    "message": "Invalid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n'
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', 'dist/main.js'], returncode=1, stdout='', stderr='Pre-cleanup: deleted any existing pol...valid input: expected string, received undefined"\\n\' +\n      \'  }\\n\' +\n      \']\',\n    status: 400\n  }\n}\n').returncode
+
+tests/test_final_state.py:163: AssertionError
+______________________ test_v2_searchable_via_python_sdk _______________________
+
+env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff693626390>, 'file_name': 'policy-zr-ycw3hmv.md', 'run_id': 'zr-ycw3hmv'}
+
+    def test_v2_searchable_via_python_sdk(env_ready):
+        client = env_ready["client"]
+        fname = env_ready["file_name"]
+    
+        last_contexts = []
+        last_err = None
+        for _ in range(5):
+            try:
+                result = client.v1.context.search(
+                    query=SEARCH_QUERY,
+                    similarity_threshold=0.5,
+                    scope="internal",
+                )
+                contexts = getattr(result, "contexts", None) or []
+                last_contexts = contexts
+                # Look for chunks belonging to this run's file_name.
+                mine = []
+                for ctx in contexts:
+                    meta = getattr(ctx, "metadata", None) or {}
+                    # metadata can be dict-like or attr-like
+                    file_name = None
+                    if isinstance(meta, dict):
+                        file_name = meta.get("file_name") or meta.get("fileName")
+                    else:
+                        file_name = getattr(meta, "file_name", None) or getattr(meta, "fileName", None)
+                    if file_name == fname:
+                        mine.append(ctx)
+                if mine:
+                    has_new = any(NEW_MARKER in (getattr(c, "content", "") or "") for c in mine)
+                    has_old = any(OLD_MARKER in (getattr(c, "content", "") or "") for c in mine)
+                    if has_new and not has_old:
+                        return
+                # Fallback: if metadata isn't surfaced, accept any chunk that
+                # clearly contains the v2 marker.
+                new_anywhere = any(NEW_MARKER in (getattr(c, "content", "") or "") for c in contexts)
+                old_anywhere = any(OLD_MARKER in (getattr(c, "content", "") or "") for c in contexts)
+                if new_anywhere and not old_anywhere:
+                    return
+            except Exception as e:
+                last_err = e
+            time.sleep(3)
+    
+        snippet = [getattr(c, "content", "") for c in last_contexts][:5]
+>       raise AssertionError(
+            "Independent Python-SDK search did not confirm v2 indexing for "
+            f"file_name={env_ready['file_name']!r}. Expected at least one returned "
+            f"context whose content contains {NEW_MARKER!r} and none containing "
+            f"{OLD_MARKER!r}.\n"
+            f"Last error: {last_err!r}\nLast contexts (truncated): {snippet!r}"
+        )
+E       AssertionError: Independent Python-SDK search did not confirm v2 indexing for file_name='policy-zr-ycw3hmv.md'. Expected at least one returned context whose content contains '30-day' and none containing '14-day'.
+E       Last error: TypeError("ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'")
+E       Last contexts (truncated): []
+
+tests/test_final_state.py:222: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_dist_main_present
+FAILED tests/test_final_state.py::test_cli_first_run_completes_update_cycle
+FAILED tests/test_final_state.py::test_cli_is_rerunnable - AssertionError: Se...
+FAILED tests/test_final_state.py::test_v2_searchable_via_python_sdk - Asserti...
+========================= 3 failed, 1 passed in 25.83s =========================

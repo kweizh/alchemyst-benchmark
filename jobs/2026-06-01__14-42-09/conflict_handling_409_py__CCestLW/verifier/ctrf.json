@@ -1,0 +1,70 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 1,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780325963427,
+            "stop": 1780325968560
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_main_py_exists",
+                "status": "passed",
+                "duration": 345,
+                "start": 1780325963458,
+                "stop": 1780325963803,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_first_invocation_clean_add",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1507,
+                "start": 1780325963803,
+                "stop": 1780325965310,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_first_invocation_clean_add():\n        proc = _run_cli()\n>       assert proc.returncode == 0, (\n            f\"First `python3 main.py` invocation exited with rc={proc.returncode}.\\n\"\n            f\"STDOUT:\\n{proc.stdout}\\nSTDERR:\\n{proc.stderr}\"\n        )\nE       AssertionError: First `python3 main.py` invocation exited with rc=1.\nE         STDOUT:\nE         \nE         STDERR:\nE         Traceback (most recent call last):\nE           File \"/home/user/myproject/main.py\", line 90, in <module>\nE             sys.exit(main())\nE                      ^^^^^^\nE           File \"/home/user/myproject/main.py\", line 60, in main\nE             do_add()\nE           File \"/home/user/myproject/main.py\", line 50, in do_add\nE             client.v1.context.add(\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\nE             return self._post(\nE                    ^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\nE             return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\nE                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\nE             raise self._make_status_error_from_response(err.response) from None\nE         alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"number\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileSize\"\\n    ],\\n    \"message\": \"Invalid input: expected number, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileType\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...ified\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected string, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:145: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_second_invocation_handles_409_cleanly",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1571,
+                "start": 1780325965310,
+                "stop": 1780325966881,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_second_invocation_handles_409_cleanly():\n        proc = _run_cli()\n>       assert proc.returncode == 0, (\n            f\"Second `python3 main.py` invocation must succeed (rc=0); got rc={proc.returncode}.\\n\"\n            f\"STDOUT:\\n{proc.stdout}\\nSTDERR:\\n{proc.stderr}\"\n        )\nE       AssertionError: Second `python3 main.py` invocation must succeed (rc=0); got rc=1.\nE         STDOUT:\nE         \nE         STDERR:\nE         Traceback (most recent call last):\nE           File \"/home/user/myproject/main.py\", line 90, in <module>\nE             sys.exit(main())\nE                      ^^^^^^\nE           File \"/home/user/myproject/main.py\", line 60, in main\nE             do_add()\nE           File \"/home/user/myproject/main.py\", line 50, in do_add\nE             client.v1.context.add(\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/resources/v1/context/context.py\", line 192, in add\nE             return self._post(\nE                    ^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1277, in post\nE             return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\nE                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           File \"/usr/local/lib/python3.12/dist-packages/alchemyst_ai/_base_client.py\", line 1064, in request\nE             raise self._make_status_error_from_response(err.response) from None\nE         alchemyst_ai.BadRequestError: Error code: 400 - {'statusText': 'BAD_REQUEST', 'success': False, 'message': 'Fields missing. Detailed error: [\\n  {\\n    \"expected\": \"number\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileSize\"\\n    ],\\n    \"message\": \"Invalid input: expected number, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"fileType\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  },\\n  {\\n    \"expected\": \"string\",\\n    \"code\": \"invalid_type\",\\n    \"path\": [\\n      \"metadata\",\\n      \"lastModified\"\\n    ],\\n    \"message\": \"Invalid input: expected string, received undefined\"\\n  }\\n]', 'status': 400}\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='', stderr='Traceback (most recent call last):\\n  F...ified\"\\\\n    ],\\\\n    \"message\": \"Invalid input: expected string, received undefined\"\\\\n  }\\\\n]\\', \\'status\\': 400}\\n').returncode\n\ntests/test_final_state.py:161: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_document_visible_on_alchemyst_after_runs",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 1677,
+                "start": 1780325966882,
+                "stop": 1780325968559,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "alchemyst_client = <alchemyst_ai.AlchemystAI object at 0x7f8ded5b37d0>\n\n    def test_document_visible_on_alchemyst_after_runs(alchemyst_client):\n        file_names = _list_doc_file_names(alchemyst_client)\n        expected = _file_name()\n>       assert expected in file_names, (\n            f\"Expected to find a document with file_name=={expected!r} on the Alchemyst \"\n            f\"side after both CLI runs. Observed file names: {file_names!r}\"\n        )\nE       AssertionError: Expected to find a document with file_name=='conflict-doc-zr-ccestlw.md' on the Alchemyst side after both CLI runs. Observed file names: []\nE       assert 'conflict-doc-zr-ccestlw.md' in []\n\ntests/test_final_state.py:179: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

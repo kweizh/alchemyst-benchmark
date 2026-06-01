@@ -1,0 +1,91 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 7,
+            "passed": 6,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780325579456,
+            "stop": 1780325630554
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_main_py_uses_correct_alchemyst_apis",
+                "status": "passed",
+                "duration": 50720,
+                "start": 1780325579500,
+                "stop": 1780325630220,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_exit_code",
+                "status": "passed",
+                "duration": 0,
+                "start": 1780325630221,
+                "stop": 1780325630221,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_stdout_has_one_assistant_line_per_turn",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780325630222,
+                "stop": 1780325630223,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_transcript_file_exists",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780325630223,
+                "stop": 1780325630224,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_transcript_structure",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780325630224,
+                "stop": 1780325630225,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_final_assistant_reply_references_earlier_facts",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780325630226,
+                "stop": 1780325630227,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_memory_persisted_to_alchemyst_backend",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 327,
+                "start": 1780325630227,
+                "stop": 1780325630554,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "ids = {'session_id': 'harbor-session-zr-dsdcalk', 'user_id': 'harbor-user-zr-dsdcalk'}\n\n    def test_memory_persisted_to_alchemyst_backend(ids):\n        \"\"\"Independently confirm memory.add really wrote to the live Alchemyst service\n        by performing a server-side semantic search and looking for 'Maya'.\n        \"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for backend verification.\"\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n        except ImportError as e:\n            pytest.fail(f\"Cannot import alchemyst_ai SDK in verifier env: {e}\")\n    \n        client = AlchemystAI(api_key=api_key)\n    \n        # v0.10.0 has NO memory.search \u2014 verify via context.search.\n>       response = client.v1.context.search(\n            query=\"Maya vegan peanut\",\n            scope=\"internal\",\n            similarity_threshold=0.1,\n        )\nE       TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:204: TypeError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "alchemyst-rag-cli",
+  "version": "1.0.0",
+  "description": "Minimal Alchemyst RAG CLI",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/main.js"
+  },
+  "dependencies": {
+    "@alchemystai/sdk": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^22.0.0"
+  }
+}
