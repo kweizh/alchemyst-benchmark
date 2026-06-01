@@ -1,0 +1,130 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 10,
+            "passed": 5,
+            "failed": 5,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780310428153,
+            "stop": 1780310826503
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_exits_zero",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 201014,
+                "start": 1780310428186,
+                "stop": 1780310629200,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n')\n\n    def test_cli_exits_zero(cli_run):\n>       assert cli_run.returncode == 0, (\n            f\"`python3 main.py` exited with code {cli_run.returncode}.\\n\"\n            f\"STDOUT:\\n{cli_run.stdout}\\nSTDERR:\\n{cli_run.stderr}\"\n        )\nE       AssertionError: `python3 main.py` exited with code 1.\nE         STDOUT:\nE         Discovering organization ID...\nE         Organization ID discovered: 6a1c78370e72cf365a482d40\nE         Performing initial cleanup for policy-zr-n8d74bf.md...\nE         Step 1: Adding v1 refund policy...\nE         Added v1 document: policy-zr-n8d74bf.md\nE         Step 2: Attempting to add duplicate document to trigger conflict...\nE         Observed expected 409 Conflict in response payload.\nE         Step 3: Deleting existing document by file_name...\nE         Deleted policy-zr-n8d74bf.md from the platform.\nE         Step 4: Adding v2 refund policy...\nE         Added v2 document: policy-zr-n8d74bf.md\nE         Step 5: Searching and verifying updated v2 policy...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         \nE         STDERR:\nE         Error: Timeout waiting for v2 policy to be indexed.\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n').returncode\n\ntests/test_final_state.py:75: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_added_v1",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780310629200,
+                "stop": 1780310629201,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_409",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780310629202,
+                "stop": 1780310629203,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_deleted",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780310629203,
+                "stop": 1780310629204,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_added_v2",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780310629204,
+                "stop": 1780310629205,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_contains_v2_keyword",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 7,
+                "start": 1780310629205,
+                "stop": 1780310629212,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n')\n\n    def test_stdout_contains_v2_keyword(cli_run):\n>       assert \"60-day\" in cli_run.stdout, (\n            f\"Expected stdout to contain '60-day' (v2 content). Stdout was:\\n{cli_run.stdout}\"\n        )\nE       AssertionError: Expected stdout to contain '60-day' (v2 content). Stdout was:\nE         Discovering organization ID...\nE         Organization ID discovered: 6a1c78370e72cf365a482d40\nE         Performing initial cleanup for policy-zr-n8d74bf.md...\nE         Step 1: Adding v1 refund policy...\nE         Added v1 document: policy-zr-n8d74bf.md\nE         Step 2: Attempting to add duplicate document to trigger conflict...\nE         Observed expected 409 Conflict in response payload.\nE         Step 3: Deleting existing document by file_name...\nE         Deleted policy-zr-n8d74bf.md from the platform.\nE         Step 4: Adding v2 refund policy...\nE         Added v2 document: policy-zr-n8d74bf.md\nE         Step 5: Searching and verifying updated v2 policy...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         \nE       assert '60-day' in 'Discovering organization ID...\\nOrganization ID discovered: 6a1c78370e72cf365a482d40\\nPerforming initial cleanup for ... policy not yet indexed. Retrying search in 5 seconds...\\nv2 policy not yet indexed. Retrying search in 5 seconds...\\n'\nE        +  where 'Discovering organization ID...\\nOrganization ID discovered: 6a1c78370e72cf365a482d40\\nPerforming initial cleanup for ... policy not yet indexed. Retrying search in 5 seconds...\\nv2 policy not yet indexed. Retrying search in 5 seconds...\\n' = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n').stdout\n\ntests/test_final_state.py:106: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_marker_ordering",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 9,
+                "start": 1780310629212,
+                "stop": 1780310629221,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n')\n\n    def test_stdout_marker_ordering(cli_run):\n        \"\"\"The required substrings must appear in the documented order.\"\"\"\n        stdout = cli_run.stdout\n        markers = [\"Added v1\", \"409\", \"Deleted\", \"Added v2\", \"60-day\"]\n        positions = []\n        for m in markers:\n            idx = stdout.find(m)\n>           assert idx != -1, (\n                f\"Marker '{m}' not found in stdout. Stdout was:\\n{stdout}\"\n            )\nE           AssertionError: Marker '60-day' not found in stdout. Stdout was:\nE             Discovering organization ID...\nE             Organization ID discovered: 6a1c78370e72cf365a482d40\nE             Performing initial cleanup for policy-zr-n8d74bf.md...\nE             Step 1: Adding v1 refund policy...\nE             Added v1 document: policy-zr-n8d74bf.md\nE             Step 2: Attempting to add duplicate document to trigger conflict...\nE             Observed expected 409 Conflict in response payload.\nE             Step 3: Deleting existing document by file_name...\nE             Deleted policy-zr-n8d74bf.md from the platform.\nE             Step 4: Adding v2 refund policy...\nE             Added v2 document: policy-zr-n8d74bf.md\nE             Step 5: Searching and verifying updated v2 policy...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             v2 policy not yet indexed. Retrying search in 5 seconds...\nE             \nE           assert -1 != -1\n\ntests/test_final_state.py:118: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_stdout_no_stale_v1_content",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780310629221,
+                "stop": 1780310629222,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_live_service_search_returns_v2",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 71,
+                "start": 1780310629223,
+                "stop": 1780310629294,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "cli_run = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n')\n\n    def test_live_service_search_returns_v2(cli_run):\n        \"\"\"After the CLI runs, the live service must return the v2 content for a refund query.\"\"\"\n        client = _make_client()\n        file_name = _file_name(_run_id())\n    \n        # Poll because indexing may be near-real-time but not synchronous.\n        deadline = time.time() + 60\n        last_contexts = []\n        while time.time() < deadline:\n>           result = client.v1.context.search(\n                query=\"What is the refund policy?\",\n                similarity_threshold=0.5,\n                scope=\"internal\",\n            )\nE           TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:149: TypeError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_final_state.py::test_cli_is_rerunnable",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 197208,
+                "start": 1780310629295,
+                "stop": 1780310826503,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_cli_is_rerunnable():\n        \"\"\"A second invocation of the CLI must also succeed and emit the same markers.\"\"\"\n        result = subprocess.run(\n            [\"python3\", \"main.py\"],\n            cwd=PROJECT_DIR,\n            capture_output=True,\n            text=True,\n            env=os.environ.copy(),\n            timeout=300,\n        )\n>       assert result.returncode == 0, (\n            f\"Second `python3 main.py` exited with code {result.returncode}.\\n\"\n            f\"STDOUT:\\n{result.stdout}\\nSTDERR:\\n{result.stderr}\"\n        )\nE       AssertionError: Second `python3 main.py` exited with code 1.\nE         STDOUT:\nE         Discovering organization ID...\nE         Organization ID discovered: 6a1c78370e72cf365a482d40\nE         Performing initial cleanup for policy-zr-n8d74bf.md...\nE         Step 1: Adding v1 refund policy...\nE         Added v1 document: policy-zr-n8d74bf.md\nE         Step 2: Attempting to add duplicate document to trigger conflict...\nE         Observed expected 409 Conflict in response payload.\nE         Step 3: Deleting existing document by file_name...\nE         Deleted policy-zr-n8d74bf.md from the platform.\nE         Step 4: Adding v2 refund policy...\nE         Added v2 document: policy-zr-n8d74bf.md\nE         Step 5: Searching and verifying updated v2 policy...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         v2 policy not yet indexed. Retrying search in 5 seconds...\nE         \nE         STDERR:\nE         Error: Timeout waiting for v2 policy to be indexed.\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['python3', 'main.py'], returncode=1, stdout='Discovering organization ID...\\nOrganization ID di...cy not yet indexed. Retrying search in 5 seconds...\\n', stderr='Error: Timeout waiting for v2 policy to be indexed.\\n').returncode\n\ntests/test_final_state.py:205: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

@@ -1,0 +1,85 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 4,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780309750414,
+            "stop": 1780309763779
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_cli_entrypoint_exists",
+                "status": "passed",
+                "duration": 2,
+                "start": 1780309750444,
+                "stop": 1780309750446,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_then_ask_returns_grounded_answer",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 7949,
+                "start": 1780309750447,
+                "stop": 1780309758396,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_ingest_then_ask_returns_grounded_answer():\n        \"\"\"\n        Verification Step 1: Run `ingest` then `ask`, and confirm OpenAI's\n        answer references the 30-day refund period taken from the ingested\n        document.\n        \"\"\"\n        ingest = _run([\"ingest\", NOTES_FILE])\n        assert ingest.returncode == 0, (\n            f\"`python3 main.py ingest {NOTES_FILE}` exited with rc={ingest.returncode}.\\n\"\n            f\"stdout:\\n{ingest.stdout}\\nstderr:\\n{ingest.stderr}\"\n        )\n    \n        ask = _run([\"ask\", \"What is the refund period?\"])\n        assert ask.returncode == 0, (\n            f\"`python3 main.py ask ...` exited with rc={ask.returncode}.\\n\"\n            f\"stdout:\\n{ask.stdout}\\nstderr:\\n{ask.stderr}\"\n        )\n        combined = (ask.stdout or \"\") + \"\\n\" + (ask.stderr or \"\")\n        # The OpenAI answer must reference the 30-day window drawn from the\n        # ingested context.\n>       assert re.search(r\"30[\\s-]*days?\", combined, re.IGNORECASE), (\n            \"Expected the OpenAI answer to reference a '30 day' / '30-day' refund \"\n            \"period drawn from the ingested context, but it was not found in the \"\n            f\"CLI output.\\nstdout:\\n{ask.stdout}\\nstderr:\\n{ask.stderr}\"\n        )\nE       AssertionError: Expected the OpenAI answer to reference a '30 day' / '30-day' refund period drawn from the ingested context, but it was not found in the CLI output.\nE         stdout:\nE         The refund period is 60 days, according to the updated refund policy.\nE         \nE         stderr:\nE         \nE       assert None\nE        +  where None = <function search at 0x7f712f39bba0>('30[\\\\s-]*days?', 'The refund period is 60 days, according to the updated refund policy.\\n\\n', re.IGNORECASE)\nE        +    where <function search at 0x7f712f39bba0> = re.search\nE        +    and   re.IGNORECASE = re.IGNORECASE\n\ntests/test_final_state.py:51: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_ingest_is_idempotent",
+                "status": "passed",
+                "duration": 5076,
+                "start": 1780309758396,
+                "stop": 1780309763472,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_document_persisted_to_alchemyst_backend",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 303,
+                "start": 1780309763473,
+                "stop": 1780309763776,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "def test_document_persisted_to_alchemyst_backend():\n        \"\"\"\n        Verification Step 3: Independently confirm via the Python SDK that the\n        document content was actually persisted to the live Alchemyst service.\n        \"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for backend verification.\"\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n        except ImportError as exc:  # noqa: BLE001\n            pytest.fail(f\"Cannot import alchemyst_ai SDK in verifier env: {exc}\")\n    \n        client = AlchemystAI(api_key=api_key)\n        try:\n>           response = client.v1.context.search(\n                query=\"refund period\",\n                scope=\"internal\",\n                similarity_threshold=0.3,\n            )\nE           TypeError: ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\n\ntests/test_final_state.py:87: TypeError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_document_persisted_to_alchemyst_backend():\n        \"\"\"\n        Verification Step 3: Independently confirm via the Python SDK that the\n        document content was actually persisted to the live Alchemyst service.\n        \"\"\"\n        api_key = os.environ.get(\"ALCHEMYST_AI_API_KEY\")\n        assert api_key, \"ALCHEMYST_AI_API_KEY must be set for backend verification.\"\n    \n        try:\n            from alchemyst_ai import AlchemystAI\n        except ImportError as exc:  # noqa: BLE001\n            pytest.fail(f\"Cannot import alchemyst_ai SDK in verifier env: {exc}\")\n    \n        client = AlchemystAI(api_key=api_key)\n        try:\n            response = client.v1.context.search(\n                query=\"refund period\",\n                scope=\"internal\",\n                similarity_threshold=0.3,\n            )\n        except Exception as exc:  # noqa: BLE001\n>           pytest.fail(f\"client.v1.context.search raised an exception: {exc!r}\")\nE           Failed: client.v1.context.search raised an exception: TypeError(\"ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\")\n\ntests/test_final_state.py:93: Failed",
+                "message": "The test failed in the call phase due to an exception"
+            },
+            {
+                "name": "test_final_state.py::test_main_py_reads_env_vars_and_does_not_hardcode_keys",
+                "status": "passed",
+                "duration": 1,
+                "start": 1780309763776,
+                "stop": 1780309763777,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_main_py_imports_openai",
+                "status": "passed",
+                "duration": 2,
+                "start": 1780309763777,
+                "stop": 1780309763779,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            }
+        ]
+    }
+}

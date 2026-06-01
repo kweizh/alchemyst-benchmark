@@ -1,0 +1,67 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "7.4.4"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 2,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1780311338197,
+            "stop": 1780311405621
+        },
+        "environment": {
+            "buildName": "Pytest JSON CTRF Report",
+            "buildNumber": "000",
+            "buildUrl": "https://ctrf.io"
+        },
+        "tests": [
+            {
+                "name": "test_final_state.py::test_dist_main_present",
+                "status": "passed",
+                "duration": 424,
+                "start": 1780311338227,
+                "stop": 1780311338651,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_first_run_completes_update_cycle",
+                "status": "passed",
+                "duration": 23654,
+                "start": 1780311338651,
+                "stop": 1780311362305,
+                "retries": 0,
+                "file_path": "test_final_state.py"
+            },
+            {
+                "name": "test_final_state.py::test_cli_is_rerunnable",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 28304,
+                "start": 1780311362306,
+                "stop": 1780311390610,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff70039a690>, 'file_name': 'policy-zr-nr4etgm.md', 'run_id': 'zr-nr4etgm'}\n\n    def test_cli_is_rerunnable(env_ready):\n        # Allow indexing to settle from the previous test.\n        time.sleep(3)\n        result = _run_cli()\n>       assert result.returncode == 0, (\n            f\"Second `node dist/main.js` invocation failed (exit {result.returncode}). \"\n            f\"The CLI must be safely rerunnable.\\n\"\n            f\"stdout={result.stdout!r}\\nstderr={result.stderr!r}\"\n        )\nE       AssertionError: Second `node dist/main.js` invocation failed (exit 1). The CLI must be safely rerunnable.\nE         stdout=''\nE         stderr='Starting run with ID: zr-nr4etgm\\nTarget file name: policy-zr-nr4etgm.md\\nStep 0: Best-effort pre-cleanup delete...\\nPre-cleanup delete call sent.\\nStep 1: Adding document v1...\\nDocument v1 added successfully: {\"statusText\":\"CREATED\",\"success\":true}\\nWaiting 5s for indexing to complete before duplicate add...\\nStep 2: Attempting duplicate add (expecting 409 Conflict)...\\nWARNING: Duplicate add did not fail! Response was: {\"statusText\":\"CREATED\",\"success\":true}\\nStep 3: Deleting existing document...\\nDeletion call sent.\\nWaiting for deletion propagation...\\nStep 4: Adding document v2...\\nDocument v2 added successfully: {\"statusText\":\"CREATED\",\"success\":true}\\nWaiting for indexing propagation...\\nStep 5: Searching for v2 content...\\nUnhandled error in main: InternalServerError: 502 <html>\\n<head><title>502 Bad Gateway</title></head>\\n<body>\\n<center><h1>502 Bad Gateway</h1></center>\\n</body>\\n</html>\\n\\n    at APIError.generate (/home/user/update-task/node_modules/@alchemystai/sdk/core/error.js:61:20)\\n    at AlchemystAI.makeStatusError (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:126:32)\\n    at AlchemystAI.makeRequest (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:267:30)\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\\n    at async main (/home/user/update-task/dist/main.js:129:28) {\\n  status: 502,\\n  headers: Headers {\\n    server: \\'awselb/2.0\\',\\n    date: \\'Mon, 01 Jun 2026 10:56:30 GMT\\',\\n    \\'content-type\\': \\'text/html\\',\\n    \\'content-length\\': \\'122\\',\\n    connection: \\'keep-alive\\'\\n  },\\n  error: undefined\\n}\\n'\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['node', 'dist/main.js'], returncode=1, stdout='', stderr='Starting run with ID: zr-nr4etgm\\nTar...pe\\': \\'text/html\\',\\n    \\'content-length\\': \\'122\\',\\n    connection: \\'keep-alive\\'\\n  },\\n  error: undefined\\n}\\n').returncode\n\ntests/test_final_state.py:163: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_final_state.py::test_v2_searchable_via_python_sdk",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 15010,
+                "start": 1780311390610,
+                "stop": 1780311405620,
+                "retries": 0,
+                "file_path": "test_final_state.py",
+                "trace": "env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff70039a690>, 'file_name': 'policy-zr-nr4etgm.md', 'run_id': 'zr-nr4etgm'}\n\n    def test_v2_searchable_via_python_sdk(env_ready):\n        client = env_ready[\"client\"]\n        fname = env_ready[\"file_name\"]\n    \n        last_contexts = []\n        last_err = None\n        for _ in range(5):\n            try:\n                result = client.v1.context.search(\n                    query=SEARCH_QUERY,\n                    similarity_threshold=0.5,\n                    scope=\"internal\",\n                )\n                contexts = getattr(result, \"contexts\", None) or []\n                last_contexts = contexts\n                # Look for chunks belonging to this run's file_name.\n                mine = []\n                for ctx in contexts:\n                    meta = getattr(ctx, \"metadata\", None) or {}\n                    # metadata can be dict-like or attr-like\n                    file_name = None\n                    if isinstance(meta, dict):\n                        file_name = meta.get(\"file_name\") or meta.get(\"fileName\")\n                    else:\n                        file_name = getattr(meta, \"file_name\", None) or getattr(meta, \"fileName\", None)\n                    if file_name == fname:\n                        mine.append(ctx)\n                if mine:\n                    has_new = any(NEW_MARKER in (getattr(c, \"content\", \"\") or \"\") for c in mine)\n                    has_old = any(OLD_MARKER in (getattr(c, \"content\", \"\") or \"\") for c in mine)\n                    if has_new and not has_old:\n                        return\n                # Fallback: if metadata isn't surfaced, accept any chunk that\n                # clearly contains the v2 marker.\n                new_anywhere = any(NEW_MARKER in (getattr(c, \"content\", \"\") or \"\") for c in contexts)\n                old_anywhere = any(OLD_MARKER in (getattr(c, \"content\", \"\") or \"\") for c in contexts)\n                if new_anywhere and not old_anywhere:\n                    return\n            except Exception as e:\n                last_err = e\n            time.sleep(3)\n    \n        snippet = [getattr(c, \"content\", \"\") for c in last_contexts][:5]\n>       raise AssertionError(\n            \"Independent Python-SDK search did not confirm v2 indexing for \"\n            f\"file_name={env_ready['file_name']!r}. Expected at least one returned \"\n            f\"context whose content contains {NEW_MARKER!r} and none containing \"\n            f\"{OLD_MARKER!r}.\\n\"\n            f\"Last error: {last_err!r}\\nLast contexts (truncated): {snippet!r}\"\n        )\nE       AssertionError: Independent Python-SDK search did not confirm v2 indexing for file_name='policy-zr-nr4etgm.md'. Expected at least one returned context whose content contains '30-day' and none containing '14-day'.\nE       Last error: TypeError(\"ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'\")\nE       Last contexts (truncated): []\n\ntests/test_final_state.py:222: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

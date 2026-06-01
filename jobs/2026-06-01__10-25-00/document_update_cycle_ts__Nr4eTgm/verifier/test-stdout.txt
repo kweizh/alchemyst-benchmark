@@ -1,0 +1,95 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /tests
+plugins: anyio-4.13.0, json-ctrf-0.5.0
+collected 4 items
+
+tests/test_final_state.py ..FF                                           [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_cli_is_rerunnable ____________________________
+
+env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff70039a690>, 'file_name': 'policy-zr-nr4etgm.md', 'run_id': 'zr-nr4etgm'}
+
+    def test_cli_is_rerunnable(env_ready):
+        # Allow indexing to settle from the previous test.
+        time.sleep(3)
+        result = _run_cli()
+>       assert result.returncode == 0, (
+            f"Second `node dist/main.js` invocation failed (exit {result.returncode}). "
+            f"The CLI must be safely rerunnable.\n"
+            f"stdout={result.stdout!r}\nstderr={result.stderr!r}"
+        )
+E       AssertionError: Second `node dist/main.js` invocation failed (exit 1). The CLI must be safely rerunnable.
+E         stdout=''
+E         stderr='Starting run with ID: zr-nr4etgm\nTarget file name: policy-zr-nr4etgm.md\nStep 0: Best-effort pre-cleanup delete...\nPre-cleanup delete call sent.\nStep 1: Adding document v1...\nDocument v1 added successfully: {"statusText":"CREATED","success":true}\nWaiting 5s for indexing to complete before duplicate add...\nStep 2: Attempting duplicate add (expecting 409 Conflict)...\nWARNING: Duplicate add did not fail! Response was: {"statusText":"CREATED","success":true}\nStep 3: Deleting existing document...\nDeletion call sent.\nWaiting for deletion propagation...\nStep 4: Adding document v2...\nDocument v2 added successfully: {"statusText":"CREATED","success":true}\nWaiting for indexing propagation...\nStep 5: Searching for v2 content...\nUnhandled error in main: InternalServerError: 502 <html>\n<head><title>502 Bad Gateway</title></head>\n<body>\n<center><h1>502 Bad Gateway</h1></center>\n</body>\n</html>\n\n    at APIError.generate (/home/user/update-task/node_modules/@alchemystai/sdk/core/error.js:61:20)\n    at AlchemystAI.makeStatusError (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:126:32)\n    at AlchemystAI.makeRequest (/home/user/update-task/node_modules/@alchemystai/sdk/client.js:267:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (/home/user/update-task/dist/main.js:129:28) {\n  status: 502,\n  headers: Headers {\n    server: \'awselb/2.0\',\n    date: \'Mon, 01 Jun 2026 10:56:30 GMT\',\n    \'content-type\': \'text/html\',\n    \'content-length\': \'122\',\n    connection: \'keep-alive\'\n  },\n  error: undefined\n}\n'
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', 'dist/main.js'], returncode=1, stdout='', stderr='Starting run with ID: zr-nr4etgm\nTar...pe\': \'text/html\',\n    \'content-length\': \'122\',\n    connection: \'keep-alive\'\n  },\n  error: undefined\n}\n').returncode
+
+tests/test_final_state.py:163: AssertionError
+______________________ test_v2_searchable_via_python_sdk _______________________
+
+env_ready = {'client': <alchemyst_ai.AlchemystAI object at 0x7ff70039a690>, 'file_name': 'policy-zr-nr4etgm.md', 'run_id': 'zr-nr4etgm'}
+
+    def test_v2_searchable_via_python_sdk(env_ready):
+        client = env_ready["client"]
+        fname = env_ready["file_name"]
+    
+        last_contexts = []
+        last_err = None
+        for _ in range(5):
+            try:
+                result = client.v1.context.search(
+                    query=SEARCH_QUERY,
+                    similarity_threshold=0.5,
+                    scope="internal",
+                )
+                contexts = getattr(result, "contexts", None) or []
+                last_contexts = contexts
+                # Look for chunks belonging to this run's file_name.
+                mine = []
+                for ctx in contexts:
+                    meta = getattr(ctx, "metadata", None) or {}
+                    # metadata can be dict-like or attr-like
+                    file_name = None
+                    if isinstance(meta, dict):
+                        file_name = meta.get("file_name") or meta.get("fileName")
+                    else:
+                        file_name = getattr(meta, "file_name", None) or getattr(meta, "fileName", None)
+                    if file_name == fname:
+                        mine.append(ctx)
+                if mine:
+                    has_new = any(NEW_MARKER in (getattr(c, "content", "") or "") for c in mine)
+                    has_old = any(OLD_MARKER in (getattr(c, "content", "") or "") for c in mine)
+                    if has_new and not has_old:
+                        return
+                # Fallback: if metadata isn't surfaced, accept any chunk that
+                # clearly contains the v2 marker.
+                new_anywhere = any(NEW_MARKER in (getattr(c, "content", "") or "") for c in contexts)
+                old_anywhere = any(OLD_MARKER in (getattr(c, "content", "") or "") for c in contexts)
+                if new_anywhere and not old_anywhere:
+                    return
+            except Exception as e:
+                last_err = e
+            time.sleep(3)
+    
+        snippet = [getattr(c, "content", "") for c in last_contexts][:5]
+>       raise AssertionError(
+            "Independent Python-SDK search did not confirm v2 indexing for "
+            f"file_name={env_ready['file_name']!r}. Expected at least one returned "
+            f"context whose content contains {NEW_MARKER!r} and none containing "
+            f"{OLD_MARKER!r}.\n"
+            f"Last error: {last_err!r}\nLast contexts (truncated): {snippet!r}"
+        )
+E       AssertionError: Independent Python-SDK search did not confirm v2 indexing for file_name='policy-zr-nr4etgm.md'. Expected at least one returned context whose content contains '30-day' and none containing '14-day'.
+E       Last error: TypeError("ContextResource.search() missing 1 required keyword-only argument: 'minimum_similarity_threshold'")
+E       Last contexts (truncated): []
+
+tests/test_final_state.py:222: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_final_state.py::test_dist_main_present
+PASSED tests/test_final_state.py::test_cli_first_run_completes_update_cycle
+FAILED tests/test_final_state.py::test_cli_is_rerunnable - AssertionError: Se...
+FAILED tests/test_final_state.py::test_v2_searchable_via_python_sdk - Asserti...
+==================== 2 failed, 2 passed in 67.42s (0:01:07) ====================
